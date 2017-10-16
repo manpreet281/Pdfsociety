@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "776284914387",
+    "firebase_url": "https://pdfsociety-936a1.firebaseio.com",
+    "project_id": "pdfsociety-936a1",
+    "storage_bucket": "pdfsociety-936a1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:776284914387:android:02bd30ed80355007",
+        "android_client_info": {
+          "package_name": "com.navjot.deepak.manpreet.pdfsociety"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "776284914387-8s2ij5hj3h123oo6q1ft4h4pv4k3pbfo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.navjot.deepak.manpreet.pdfsociety",
+            "certificate_hash": "b93f8380db9d694e01955ee02d748ddbd2fbee2e"
+          }
+        },
+        {
+          "client_id": "776284914387-hfou07ekpan7jeunu4ortv3gn95vr337.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCFi0puFZwR65rDD2PT85tDl4x9JXymv0Y"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "776284914387-hfou07ekpan7jeunu4ortv3gn95vr337.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
