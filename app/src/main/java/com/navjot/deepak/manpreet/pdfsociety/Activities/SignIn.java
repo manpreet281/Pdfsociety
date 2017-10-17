@@ -1,4 +1,4 @@
-package com.navjot.deepak.manpreet.pdfsociety.Activity;
+package com.navjot.deepak.manpreet.pdfsociety.Activities;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -69,9 +69,8 @@ public class SignIn extends AppCompatActivity {
     }
 
 
-//    public void onclick(View view) {
-//        Intent intent = new Intent(SignIn.this,ok.class);
-//        startActivity(intent);
-//    }
+    public void onclick(View view) {
+        startActivity(new Intent(SignIn.this, SignUp.class));
+    }
 
 }
