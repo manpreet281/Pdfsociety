@@ -9,8 +9,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activities.SignIn" />
+
+        <activity android:name=".Activities.SignIn">
+
+        </activity>
         <activity android:name=".Activities.SignUp" />
+        <activity android:name=".Activities.Feedback"/>
+
 
         <service
             android:name=".Services.MyFirebaseInstanceIdService"
@@ -22,6 +27,7 @@
         </service>
 
         <activity android:name=".Activities.SplashActivity">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
