@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<ScrollView android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:padding="16dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+<LinearLayout
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -14,25 +19,13 @@
         android:layout_marginBottom="24dp"
         android:layout_gravity="center_horizontal" />
 
-    <!-- Name Label -->
-    <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp">
-        <EditText android:id="@+id/username"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:hint="UserName" />
-    </android.support.design.widget.TextInputLayout>
-
     <!--  Email Label -->
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp">
+
         <EditText android:id="@+id/email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -45,16 +38,19 @@
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:passwordToggleEnabled="true"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp">
+
         <EditText android:id="@+id/password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPassword"
             android:hint="Password"/>
+    </android.support.design.widget.TextInputLayout>
 
-
-        <RelativeLayout
+        <LinearLayout
+            android:orientation="horizontal"
 
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -69,6 +65,7 @@
                 android:textSize="20dp"
                 android:fontFamily="@string/hint_password"/>
             <RadioGroup
+                android:id="@+id/radioGroup"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@+id/gender_textview"
@@ -79,7 +76,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/male"
-                    android:checked="true"
                     />
                 <RadioButton
 
@@ -89,26 +85,39 @@
                     android:text = "@string/female"
                     />
             </RadioGroup>
-        </RelativeLayout>
+        </LinearLayout>
+
+
 
         <TextView
-            android:id="@+id/text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Please choose Date"
-            android:textStyle="bold" />
-
-        <Button
             android:id="@+id/btn_date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:textSize="20dp"
             android:layout_below="@+id/text"
-            android:text="Show Date Picker" />
+            android:text="Select Date of Birth" />
 
 
 
 
-    </android.support.design.widget.TextInputLayout>
+        <AutoCompleteTextView
+            android:id="@+id/ac_city"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="City"
+            android:layout_marginTop="28dp"
+            />
+
+        <Button
+            android:id="@+id/btnregister"
+            android:layout_marginTop="33dp"
+            android:onClick="btnRegister"
+            android:text="Register"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
 
 
 </LinearLayout>
+</ScrollView>

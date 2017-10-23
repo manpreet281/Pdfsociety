@@ -9,11 +9,25 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity android:name=".Activities.SignIn">
 
         </activity>
         <activity android:name=".Activities.SignUp" />
-        <activity android:name=".Activities.Feedback">
+        <activity android:name=".Activities.Feedback"/>
+
+
+        <service
+            android:name=".Services.MyFirebaseInstanceIdService"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>
+
+        <activity android:name=".Activities.SplashActivity">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
