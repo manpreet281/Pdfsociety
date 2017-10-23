@@ -16,6 +16,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.navjot.deepak.manpreet.pdfsociety.Activities.NavDrawer.HomeActivity;
 import com.navjot.deepak.manpreet.pdfsociety.R;
 
 import java.util.regex.Matcher;
@@ -55,11 +56,9 @@ public class SignIn extends Progressdialog {
     public void updateUI(FirebaseUser user){
         hideProgressDialog();
         if(user != null){
-//            startActivity(
-//                    new Intent(SignIn.this, SignUp.class)
-//                    .putExtra("UserEmail", user.getEmail())
-//            );
-            Toast.makeText(this,"Signin Success", Toast.LENGTH_SHORT).show();
+            startActivity(
+                    new Intent(SignIn.this, HomeActivity.class)
+            );
         }
     }
 

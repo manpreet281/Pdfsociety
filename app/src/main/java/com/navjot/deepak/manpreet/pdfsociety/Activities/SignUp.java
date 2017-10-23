@@ -1,6 +1,7 @@
 package com.navjot.deepak.manpreet.pdfsociety.Activities;
 
 
+import android.content.Intent;
 import android.graphics.Color;
 import java.util.Calendar;
 
@@ -28,6 +29,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.iid.FirebaseInstanceId;
+import com.navjot.deepak.manpreet.pdfsociety.Activities.NavDrawer.HomeActivity;
 import com.navjot.deepak.manpreet.pdfsociety.Models.User;
 import com.navjot.deepak.manpreet.pdfsociety.R;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
@@ -188,7 +190,7 @@ public class SignUp extends Progressdialog implements DatePickerDialog.OnDateSet
         hideProgressDialog();
 
         if (user != null){
-            Toast.makeText(this, "Register success", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(SignUp.this, HomeActivity.class));
         }
     }
 
