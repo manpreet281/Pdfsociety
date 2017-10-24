@@ -1,5 +1,6 @@
 package com.navjot.deepak.manpreet.pdfsociety.Activities.NavDrawer;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -13,6 +14,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.navjot.deepak.manpreet.pdfsociety.Activities.UploadPdfActivity;
 import com.navjot.deepak.manpreet.pdfsociety.R;
 
 public class HomeActivity extends AppCompatActivity
@@ -94,6 +96,8 @@ public class HomeActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_send) {
 
+        } else if (id == R.id.upload) {
+            startActivity(new Intent(HomeActivity.this, UploadPdfActivity.class));
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activities.SignIn"></activity>
+        <activity android:name=".Activities.SignIn" />
         <activity android:name=".Activities.SignUp" />
         <activity android:name=".Activities.Feedback" />
 
@@ -32,7 +32,19 @@
         <activity
             android:name=".Activities.NavDrawer.HomeActivity"
             android:label="@string/title_activity_home"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <service
+            android:name=".Services.MyBaseTaskService"
+            android:enabled="true"
+            android:exported="true" />
+
+        <activity android:name=".Activities.UploadPdfActivity" />
+
+        <service
+            android:name=".Services.MyUploadService"
+            android:enabled="true"
+            android:exported="true"></service>
     </application>
 
 </manifest>
