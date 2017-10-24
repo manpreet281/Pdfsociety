@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "776284914387-s53f4v53kng3ddsrubtgrjt6isbseujv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.navjot.deepak.manpreet.pdfsociety",
+            "certificate_hash": "3f3d142f16669d925eed0964b67cbe68ec3d16dd"
+          }
+        },
+        {
           "client_id": "776284914387-8s2ij5hj3h123oo6q1ft4h4pv4k3pbfo.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
