@@ -1,10 +1,14 @@
 package com.navjot.deepak.manpreet.pdfsociety.Activities.NavDrawer;
 
 
+import android.content.Intent;
+
+
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.net.Uri;
+
 import android.os.Bundle;
 
 import android.os.Handler;
@@ -21,9 +25,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+
+import com.navjot.deepak.manpreet.pdfsociety.Activities.UploadPdfActivity;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.navjot.deepak.manpreet.pdfsociety.Activities.FeedbackActivity;
 import com.navjot.deepak.manpreet.pdfsociety.Activities.SignIn;
+
 import com.navjot.deepak.manpreet.pdfsociety.R;
 
 import java.io.File;
@@ -48,8 +56,7 @@ public class HomeActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                startActivity(new Intent(HomeActivity.this, UploadPdfActivity.class));
             }
         });
 

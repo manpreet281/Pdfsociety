@@ -93,7 +93,6 @@ public class SignIn extends Progressdialog {
                         } else {
                             Toast.makeText(SignIn.this, task.getException().getMessage(),
                                     Toast.LENGTH_LONG).show();
-                            updateUI(null);
                         }
 
                         hideProgressDialog();
