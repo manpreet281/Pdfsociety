@@ -1,21 +1,25 @@
 package com.navjot.deepak.manpreet.pdfsociety.Services;
 
-import android.app.Service;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.IBinder;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.navjot.deepak.manpreet.pdfsociety.Activities.NavDrawer.HomeActivity;
+import com.navjot.deepak.manpreet.pdfsociety.Models.Pdf;
 import com.navjot.deepak.manpreet.pdfsociety.R;
 
 public class MyUploadService extends MyBaseTaskService {
@@ -28,12 +32,17 @@ public class MyUploadService extends MyBaseTaskService {
     public static final String UPLOAD_ERROR = "upload_error";
     public static final String EXTRA_DOWNLOAD_URL = "extra_download_url";
 
+    public static String description;
+    public static String uid;
+
     public StorageReference mStorageRef;
+    public DatabaseReference dbref;
 
     @Override
     public void onCreate() {
         super.onCreate();
         mStorageRef = FirebaseStorage.getInstance().getReference();
+        dbref = FirebaseDatabase.getInstance().getReference();
         TAG = getString(R.string.tag);
     }
 
@@ -41,6 +50,9 @@ public class MyUploadService extends MyBaseTaskService {
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.d(TAG, "onStartCommand:intent: " + intent + ":startId: " + startId);
         if (ACTION_UPLOAD.equals(intent.getAction())) {
+            description = intent.getStringExtra("description");
+            uid = intent.getStringExtra("uid");
+
             Uri fileUri = intent.getParcelableExtra(EXTRA_FILE_URI);
             uploadFromUri(fileUri);
         }
@@ -49,22 +61,20 @@ public class MyUploadService extends MyBaseTaskService {
     }
 
     public void uploadFromUri(final Uri fileUri) {
-        Log.d(TAG, "uploadFromUri:src(fileuri.tostring): " + fileUri.toString());
+        Log.d(TAG, "uploadFromUri");
+        Log.d(TAG, "fileUri.toString()" + fileUri.toString());
 
-        // [START_EXCLUDE]
         taskStarted();
         showProgressNotification(getString(R.string.progress_uploading), 0, 0);
-        // [END_EXCLUDE]
 
-        // [START get_child_ref]
         // Get a reference to store file at photos/<FILENAME>.jpg
-        final StorageReference photoRef = mStorageRef.child("photos")
+        Log.d(TAG, "fileUri.getLastPathSegment(): "+fileUri.getLastPathSegment());
+        final StorageReference pdfref = mStorageRef.child(getString(R.string.storage_pdfs))
                 .child(fileUri.getLastPathSegment());
-        // [END get_child_ref]
 
         // Upload file to Firebase Storage
-        Log.d(TAG, "uploadFromUri:dst:" + photoRef.getPath());
-        photoRef.putFile(fileUri).
+        Log.d(TAG, "pdfref.getPath(): " + pdfref.getPath());
+        pdfref.putFile(fileUri).
                 addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
@@ -77,23 +87,27 @@ public class MyUploadService extends MyBaseTaskService {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                         // Upload succeeded
-                        Log.d(TAG, "uploadFromUri:onSuccess");
+                        Log.d(TAG, "OnSuccessListener");
 
-                        // Get the public download URL
+                       //  Get the public download URL
                         Uri downloadUri = taskSnapshot.getMetadata().getDownloadUrl();
+                        Log.d(TAG, "downloadUri: "+downloadUri);
 
-                        // [START_EXCLUDE]
+                        Toast.makeText(MyUploadService.this, getString(R.string.upload_success), Toast.LENGTH_LONG).show();
+
+                        uploadOnDB(downloadUri.toString(), pdfref.getName());
+
                         broadcastUploadFinished(downloadUri, fileUri);
                         showUploadFinishedNotification(downloadUri, fileUri);
                         taskCompleted();
-                        // [END_EXCLUDE]
+
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception exception) {
                         // Upload failed
-                        Log.w(TAG, "uploadFromUri:onFailure", exception);
+                        Log.w(TAG, "uploadFromUri:onFailure", exception.getCause());
 
                         // [START_EXCLUDE]
                         broadcastUploadFinished(null, fileUri);
@@ -104,7 +118,7 @@ public class MyUploadService extends MyBaseTaskService {
                 });
     }
 
-    private boolean broadcastUploadFinished(@Nullable Uri downloadUrl, @Nullable Uri fileUri) {
+    private boolean broadcastUploadFinished(Uri downloadUrl, Uri fileUri) {
         boolean success = downloadUrl != null;
 
         String action = success ? UPLOAD_COMPLETED : UPLOAD_ERROR;
@@ -116,7 +130,7 @@ public class MyUploadService extends MyBaseTaskService {
                 .sendBroadcast(broadcast);
     }
 
-    private void showUploadFinishedNotification(@Nullable Uri downloadUrl, @Nullable Uri fileUri) {
+    private void showUploadFinishedNotification( Uri downloadUrl,  Uri fileUri) {
         // Hide the progress notification
         dismissProgressNotification();
 
@@ -129,6 +143,27 @@ public class MyUploadService extends MyBaseTaskService {
         boolean success = downloadUrl != null;
         String caption = success ? getString(R.string.upload_success) : getString(R.string.upload_failure);
         showFinishedNotification(caption, intent, success);
+    }
+
+    public static IntentFilter getIntentFilter() {
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(UPLOAD_COMPLETED);
+        filter.addAction(UPLOAD_ERROR);
+
+        return filter;
+    }
+
+    public void uploadOnDB(String downloadUrl, String pdfname){
+        Pdf pdf = new Pdf(
+                pdfname,
+                description,
+                uid,
+                0,
+                downloadUrl
+        );
+        Log.d(TAG, ""+pdf);
+        String pdfkey = dbref.child(getString(R.string.DB_Pdfs)).push().getKey();
+        dbref.child(getString(R.string.DB_Pdfs)).child(pdfkey).setValue(pdf);
     }
 
     @Override

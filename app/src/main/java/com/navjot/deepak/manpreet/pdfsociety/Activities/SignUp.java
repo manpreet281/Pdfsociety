@@ -126,7 +126,6 @@ public class SignUp extends Progressdialog implements DatePickerDialog.OnDateSet
                                 Log.w(TAG, "createUserWithEmail:failure", task.getException());
                                 Toast.makeText(SignUp.this, ""+task.getException().getMessage(),
                                         Toast.LENGTH_LONG).show();
-                                updateUI(null);
                             }
 
                             // [START_EXCLUDE]
