@@ -53,7 +53,7 @@
             android:exported="false"></service>
 
 
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar"/>
 
     </application>
 
