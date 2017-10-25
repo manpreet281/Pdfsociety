@@ -1,7 +1,17 @@
 package com.navjot.deepak.manpreet.pdfsociety.Activities.NavDrawer;
 
+
 import android.content.Intent;
+
+
+import android.app.ProgressDialog;
+import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.net.Uri;
+
 import android.os.Bundle;
+
+import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.view.View;
@@ -13,13 +23,28 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
+
 
 import com.navjot.deepak.manpreet.pdfsociety.Activities.UploadPdfActivity;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.navjot.deepak.manpreet.pdfsociety.Activities.FeedbackActivity;
+import com.navjot.deepak.manpreet.pdfsociety.Activities.SignIn;
+
 import com.navjot.deepak.manpreet.pdfsociety.R;
 
-public class HomeActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+import java.io.File;
 
+public class HomeActivity extends AppCompatActivity
+
+        implements NavigationView.OnNavigationItemSelectedListener
+
+{
+    public ProgressDialog mProgressDialog;
+
+
+    boolean doubleBackToExitPressedOnce = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,19 +72,43 @@ public class HomeActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
+
+
+            if (doubleBackToExitPressedOnce) {
+                super.onBackPressed();
+                return;
+            }
+
+            this.doubleBackToExitPressedOnce = true;
+            Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
+
+            new Handler().postDelayed(new Runnable() {
+
+                @Override
+                public void run() {
+                    doubleBackToExitPressedOnce=false;
+                }
+            }, 2000);
+    }
+
+    @Override
+    protected void onDestroy() {
+
+        finish();
+        System.exit(0);
+        super.onDestroy();
+
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.home, menu);
+        // Inflate menu resource file.
+
+
         return true;
+
     }
 
     @Override
@@ -73,6 +122,15 @@ public class HomeActivity extends AppCompatActivity
         if (id == R.id.action_settings) {
             return true;
         }
+        if (id == R.id.action_logout) {
+
+
+                    showProgressDialog();
+                    FirebaseAuth.getInstance().signOut();
+                    startActivity(new Intent(HomeActivity.this, SignIn.class));
+                    return true;
+                }
+
 
         return super.onOptionsItemSelected(item);
     }
@@ -92,13 +150,44 @@ public class HomeActivity extends AppCompatActivity
         } else if (id == R.id.nav_manage) {
 
         } else if (id == R.id.nav_share) {
+            item.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                @Override
+                public boolean onMenuItemClick(MenuItem menuItem) {
+                    ApplicationInfo applicationInfo = getApplicationContext().getApplicationInfo();
+                    String apkPath = applicationInfo.sourceDir;
+                    Intent intent = new Intent(Intent.ACTION_SEND);
+                    intent.setType("application/vnd.android.package-archieve");
+                    intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(apkPath)));
+                    startActivity(Intent.createChooser(intent, "Share App Using"));
+
+                    return false;
+                }
+            });
 
         } else if (id == R.id.nav_send) {
 
+            Intent intent = new Intent(HomeActivity.this, FeedbackActivity.class);
+            startActivity(intent);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+    public void showProgressDialog() {
+        if (mProgressDialog == null) {
+            mProgressDialog = new ProgressDialog(this);
+            mProgressDialog.setMessage(getString(R.string.loading));
+            mProgressDialog.setIndeterminate(true);
+        }
+
+        mProgressDialog.show();
+    }
+
+
+
 }
+
+
+

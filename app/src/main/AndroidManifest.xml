@@ -16,7 +16,7 @@
         android:theme="@style/AppTheme">
         <activity android:name=".Activities.SignIn" />
         <activity android:name=".Activities.SignUp" />
-        <activity android:name=".Activities.Feedback" />
+        <activity android:name=".Activities.FeedbackActivity" />
 
         <service
             android:name=".Services.MyFirebaseInstanceIdService"
@@ -37,6 +37,7 @@
         <activity
             android:name=".Activities.NavDrawer.HomeActivity"
             android:label="@string/title_activity_home"
+
             android:theme="@style/AppTheme.NoActionBar" />
 
         <service
@@ -50,6 +51,10 @@
             android:name=".Services.MyUploadService"
             android:enabled="true"
             android:exported="false"></service>
+
+
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+
     </application>
 
 </manifest>

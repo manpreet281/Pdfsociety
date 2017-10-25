@@ -10,6 +10,7 @@
     <string name="loading">loading</string>
     <string name="tag">Pdfsociety</string>
 
+    <string name="DB_Feedbacks">Feedbacks</string>
     <string name="DB_Users">Users</string>
     <string name="DB_Pdfs">Pdfs</string>
 
