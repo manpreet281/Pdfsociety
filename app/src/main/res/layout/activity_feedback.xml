@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:layout_margin="16dp"
     android:orientation="vertical"
-    tools:context="com.navjot.deepak.manpreet.pdfsociety.Activities.Feedback"
+    tools:context="com.navjot.deepak.manpreet.pdfsociety.Activities.FeedbackActivity"
     android:weightSum="1">
 
     <TextView

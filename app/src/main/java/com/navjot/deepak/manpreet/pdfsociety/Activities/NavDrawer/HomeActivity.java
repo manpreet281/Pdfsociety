@@ -22,6 +22,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.navjot.deepak.manpreet.pdfsociety.Activities.FeedbackActivity;
 import com.navjot.deepak.manpreet.pdfsociety.Activities.SignIn;
 import com.navjot.deepak.manpreet.pdfsociety.R;
 
@@ -158,6 +159,8 @@ public class HomeActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_send) {
 
+            Intent intent = new Intent(HomeActivity.this, FeedbackActivity.class);
+            startActivity(intent);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -174,6 +177,9 @@ public class HomeActivity extends AppCompatActivity
 
         mProgressDialog.show();
     }
+
+
+
 }
 
 
