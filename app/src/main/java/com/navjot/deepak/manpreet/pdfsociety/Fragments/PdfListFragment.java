@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -24,6 +25,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.Transaction;
 import com.navjot.deepak.manpreet.pdfsociety.Models.Pdf;
 import com.navjot.deepak.manpreet.pdfsociety.R;
+import com.navjot.deepak.manpreet.pdfsociety.Viewholders.PdfViewHolder;
 
 import static android.content.ContentValues.TAG;
 
@@ -97,11 +99,11 @@ public abstract class PdfListFragment extends Fragment {
                 });
 
                 // Determine if the current user has liked this Pdf and set UI accordingly
-                if (model.stars.containsKey(getUid())) {
-                    viewHolder.starView.setImageResource(R.drawable.ic_toggle_star_24);
-                } else {
-                    viewHolder.starView.setImageResource(R.drawable.ic_toggle_star_outline_24);
-                }
+//                if (model.stars.containsKey(getUid())) {
+//                    viewHolder.starView.setImageResource(R.drawable.ic_toggle_star_24);
+//                } else {
+//                    viewHolder.starView.setImageResource(R.drawable.ic_toggle_star_outline_24);
+//                }
 
                 // Bind Pdf to ViewHolder, setting OnClickListener for the star button
                 viewHolder.bindToPdf(model, new View.OnClickListener() {
@@ -109,7 +111,7 @@ public abstract class PdfListFragment extends Fragment {
                     public void onClick(View starView) {
                         // Need to write to both places the Pdf is stored
                         DatabaseReference globalPdfRef = mDatabase.child("Pdfs").child(PdfRef.getKey());
-                        DatabaseReference userPdfRef = mDatabase.child("user-Pdfs").child(model.uid).child(PdfRef.getKey());
+                        DatabaseReference userPdfRef = mDatabase.child("user-Pdfs").child(model.getUid()).child(PdfRef.getKey());
 
                         // Run two transactions
                         onStarClicked(globalPdfRef);
@@ -131,15 +133,15 @@ public abstract class PdfListFragment extends Fragment {
                     return Transaction.success(mutableData);
                 }
 
-                if (p.stars.containsKey(getUid())) {
-                    // Unstar the Pdf and remove self from stars
-                    p.starCount = p.starCount - 1;
-                    p.stars.remove(getUid());
-                } else {
-                    // Star the Pdf and add self to stars
-                    p.starCount = p.starCount + 1;
-                    p.stars.put(getUid(), true);
-                }
+//                if (p.stars.containsKey(getUid())) {
+//                    // Unstar the Pdf and remove self from stars
+//                    p.starCount = p.starCount - 1;
+//                    p.stars.remove(getUid());
+//                } else {
+//                    // Star the Pdf and add self to stars
+//                    p.starCount = p.starCount + 1;
+//                    p.stars.put(getUid(), true);
+//                }
 
                 // Set value and report transaction success
                 mutableData.setValue(p);
