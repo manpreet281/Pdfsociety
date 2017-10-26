@@ -5,7 +5,6 @@ import android.content.Intent;
 
 
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.net.Uri;
 
@@ -13,7 +12,6 @@ import android.os.Bundle;
 
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -164,7 +162,7 @@ public class HomeActivity extends AppCompatActivity
                 }
             });
 
-        } else if (id == R.id.nav_send) {
+        } else if (id == R.id.nav_feedback) {
 
             Intent intent = new Intent(HomeActivity.this, FeedbackActivity.class);
             startActivity(intent);
