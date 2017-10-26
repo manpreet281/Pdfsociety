@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    tools:context="com.navjot.deepak.manpreet.pdfsociety.Activities.PdfDetailActivity">
+
+
+
+    <TextView
+        android:id="@+id/userName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="userName" />
+
+    <TextView
+        android:id="@+id/pdfName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="pdfName" />
+
+    <TextView
+        android:id="@+id/pdfDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="pdfDescription" />
+
+    <TextView
+        android:id="@+id/downloadsNo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="downloadsNo" />
+
+    <Button
+        android:id="@+id/btnDownload"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Download" />
+
+
+</LinearLayout>
