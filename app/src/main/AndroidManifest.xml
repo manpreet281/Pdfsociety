@@ -5,7 +5,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
@@ -37,7 +37,6 @@
         <activity
             android:name=".Activities.NavDrawer.HomeActivity"
             android:label="@string/title_activity_home"
-
             android:theme="@style/AppTheme.NoActionBar" />
 
         <service
@@ -50,11 +49,9 @@
         <service
             android:name=".Services.MyUploadService"
             android:enabled="true"
-            android:exported="false"></service>
-
-
-            android:theme="@style/AppTheme.NoActionBar"/>
-
+            android:exported="false" />
+        android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".Activities.PdfDetailActivity"></activity>
     </application>
 
 </manifest>
