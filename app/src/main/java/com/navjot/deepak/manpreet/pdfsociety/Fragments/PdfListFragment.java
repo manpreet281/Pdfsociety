@@ -1,10 +1,12 @@
 package com.navjot.deepak.manpreet.pdfsociety.Fragments;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -23,13 +25,12 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.MutableData;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.Transaction;
+import com.navjot.deepak.manpreet.pdfsociety.Activities.PdfDetailActivity;
 import com.navjot.deepak.manpreet.pdfsociety.Models.Pdf;
 import com.navjot.deepak.manpreet.pdfsociety.R;
 import com.navjot.deepak.manpreet.pdfsociety.Viewholders.PdfViewHolder;
 
-import static android.content.ContentValues.TAG;
-
-public abstract class PdfListFragment extends Fragment {
+public  class PdfListFragment extends Fragment {
 
     // [START define_database_reference]
     private DatabaseReference mDatabase;
@@ -42,8 +43,7 @@ public abstract class PdfListFragment extends Fragment {
     public PdfListFragment() {}
 
     @Override
-    public View onCreateView (LayoutInflater inflater, ViewGroup container,
-                              Bundle savedInstanceState) {
+    public View onCreateView (LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         View rootView = inflater.inflate(R.layout.fragment_all_pdfs, container, false);
 
@@ -51,9 +51,8 @@ public abstract class PdfListFragment extends Fragment {
         mDatabase = FirebaseDatabase.getInstance().getReference();
         // [END create_database_reference]
 
-        mRecycler = rootView.findViewById(R.id.messages_list);
+        mRecycler =  rootView.findViewById(R.id.messages_list);
         mRecycler.setHasFixedSize(true);
-
         return rootView;
     }
 
@@ -78,6 +77,7 @@ public abstract class PdfListFragment extends Fragment {
 
             @Override
             public PdfViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+                Log.d(getString(R.string.tag), "PostListFragment PostViewHolder onCreateViewHolder");
                 LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
                 return new PdfViewHolder(inflater.inflate(R.layout.item_pdf, viewGroup, false));
             }
@@ -85,15 +85,16 @@ public abstract class PdfListFragment extends Fragment {
             @Override
             protected void onBindViewHolder(PdfViewHolder viewHolder, int position, final Pdf model) {
                 final DatabaseReference PdfRef = getRef(position);
-
+                Log.d(getString(R.string.tag), "PostListFragment onBindViewHolder position: "+position);
                 // Set click listener for the whole Pdf view
                 final String PdfKey = PdfRef.getKey();
                 viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        Log.d(getString(R.string.tag), "PostListFragment onBindViewHolder viewHolder onClick");
                         // Launch PdfDetailActivity
                         Intent intent = new Intent(getActivity(), PdfDetailActivity.class);
-                        intent.putExtra(PdfDetailActivity.EXTRA_Pdf_KEY, PdfKey);
+//                        intent.putExtra(PdfDetailActivity.EXTRA_Pdf_KEY, PdfKey);
                         startActivity(intent);
                     }
                 });
@@ -109,8 +110,9 @@ public abstract class PdfListFragment extends Fragment {
                 viewHolder.bindToPdf(model, new View.OnClickListener() {
                     @Override
                     public void onClick(View starView) {
+                        Log.d(getString(R.string.tag), "PostListFragment viewholder bindToPost onClick");
                         // Need to write to both places the Pdf is stored
-                        DatabaseReference globalPdfRef = mDatabase.child("Pdfs").child(PdfRef.getKey());
+                        DatabaseReference globalPdfRef = mDatabase.child(getString(R.string.DB_Pdfs)).child(PdfRef.getKey());
                         DatabaseReference userPdfRef = mDatabase.child("user-Pdfs").child(model.getUid()).child(PdfRef.getKey());
 
                         // Run two transactions
@@ -152,7 +154,7 @@ public abstract class PdfListFragment extends Fragment {
             public void onComplete(DatabaseError databaseError, boolean b,
                                    DataSnapshot dataSnapshot) {
                 // Transaction completed
-                Log.d(TAG, "PdfTransaction:onComplete:" + databaseError);
+                Log.d(getString(R.string.tag), "PdfTransaction:onComplete:" + databaseError);
             }
         });
     }
@@ -180,6 +182,14 @@ public abstract class PdfListFragment extends Fragment {
         return FirebaseAuth.getInstance().getCurrentUser().getUid();
     }
 
-    public abstract Query getQuery(DatabaseReference databaseReference);
+    public  Query getQuery(DatabaseReference databaseReference){
+        // [START recent_posts_query]
+        // Last 100 posts, these are automatically the 100 most recent
+        // due to sorting by push() keys
+        Query recentPostsQuery = databaseReference.child(getString(R.string.DB_Pdfs)).limitToFirst(100);
+        // [END recent_posts_query]
+
+        return recentPostsQuery;
+    }
 
 }

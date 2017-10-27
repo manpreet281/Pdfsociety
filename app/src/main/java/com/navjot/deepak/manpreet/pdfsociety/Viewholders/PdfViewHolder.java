@@ -1,6 +1,8 @@
 package com.navjot.deepak.manpreet.pdfsociety.Viewholders;
 
+import android.content.res.Resources;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -24,12 +26,14 @@ public class PdfViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void bindToPdf(Pdf Pdf, View.OnClickListener starClickListener) {
+        Log.d(Resources.getSystem().getString(R.string.tag), "bindToPdf pdf: " + Pdf);
         pdfname.setText(Pdf.getPdfname());
-        authorView.setText(Pdf.author);
-        numStarsView.setText(String.valueOf(Pdf.starCount));
-        bodyView.setText(Pdf.body);
-
-        starView.setOnClickListener(starClickListener);
+        no_of_downloads.setText(Pdf.getNo_of_downloads());
+//        authorView.setText(Pdf.author);
+//        numStarsView.setText(String.valueOf(Pdf.starCount));
+//        bodyView.setText(Pdf.body);
+//
+//        starView.setOnClickListener(starClickListener);
     }
 
 }

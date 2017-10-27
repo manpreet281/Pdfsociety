@@ -12,8 +12,6 @@ import android.util.Log;
 
 import com.navjot.deepak.manpreet.pdfsociety.R;
 
-import static com.google.android.gms.internal.zzs.TAG;
-
 public class MyBaseTaskService extends Service {
 
     public MyBaseTaskService() {}
@@ -37,7 +35,7 @@ public class MyBaseTaskService extends Service {
 
         // If there are no tasks left, stop the service
         if (mNumTasks <= 0) {
-            Log.d(TAG, "stopping");
+            Log.d(getString(R.string.tag), "stopping");
             stopSelf();
         }
     }
