@@ -26,9 +26,9 @@ public class PdfViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void bindToPdf(Pdf Pdf, View.OnClickListener starClickListener) {
-        Log.d(Resources.getSystem().getString(R.string.tag), "bindToPdf pdf: " + Pdf);
+        Log.d("Pdfsociety", "bindToPdf pdf: " + Pdf);
         pdfname.setText(Pdf.getPdfname());
-        no_of_downloads.setText(Pdf.getNo_of_downloads());
+        no_of_downloads.setText(""+Pdf.getNo_of_downloads()+"downloads");
 //        authorView.setText(Pdf.author);
 //        numStarsView.setText(String.valueOf(Pdf.starCount));
 //        bodyView.setText(Pdf.body);
