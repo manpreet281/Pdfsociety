@@ -12,6 +12,7 @@ import android.os.Bundle;
 
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -24,12 +25,15 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.Query;
 import com.navjot.deepak.manpreet.pdfsociety.Activities.UploadPdfActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.navjot.deepak.manpreet.pdfsociety.Activities.FeedbackActivity;
 import com.navjot.deepak.manpreet.pdfsociety.Activities.SignIn;
 
+import com.navjot.deepak.manpreet.pdfsociety.Fragments.PdfListFragment;
 import com.navjot.deepak.manpreet.pdfsociety.R;
 
 import java.io.File;
@@ -44,9 +48,13 @@ public class HomeActivity extends AppCompatActivity
 
     boolean doubleBackToExitPressedOnce = false;
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        init();
+    }
+
+    public void init(){
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -67,6 +75,17 @@ public class HomeActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
     }
+
+//    @Override
+//    public Query getQuery(DatabaseReference databaseReference) {
+//        // [START recent_posts_query]
+//        // Last 100 posts, these are automatically the 100 most recent
+//        // due to sorting by push() keys
+//        Query recentPostsQuery = databaseReference.child(getString(R.string.DB_Pdfs)).limitToFirst(100);
+//        // [END recent_posts_query]
+//
+//        return recentPostsQuery;
+//    }
 
     @Override
     public void onBackPressed() {

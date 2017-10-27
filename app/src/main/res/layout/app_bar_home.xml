@@ -20,7 +20,10 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_home" />
+    <include layout="@layout/content_home"
+        android:id="@+id/include" />
+
+
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
@@ -29,5 +32,13 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
         app:srcCompat="@drawable/ic_file_upload_white_24dp" />
+
+    <fragment
+        android:id="@+id/pdfListFragment"
+        android:name="com.navjot.deepak.manpreet.pdfsociety.Fragments.PdfListFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="50dp"
+        tools:layout="@layout/fragment_all_pdfs" />
 
 </android.support.design.widget.CoordinatorLayout>

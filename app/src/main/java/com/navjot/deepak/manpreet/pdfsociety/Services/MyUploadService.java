@@ -68,7 +68,7 @@ public class MyUploadService extends MyBaseTaskService {
         showProgressNotification(getString(R.string.progress_uploading), 0, 0);
 
         // Get a reference to store file at photos/<FILENAME>.jpg
-        Log.d(TAG, "fileUri.getLastPathSegment(): "+fileUri.getLastPathSegment());
+        Log.d(TAG, "fileUri.getLastPathSegment(): " + fileUri.getLastPathSegment());
         final StorageReference pdfref = mStorageRef.child(getString(R.string.storage_pdfs))
                 .child(fileUri.getLastPathSegment());
 
@@ -89,9 +89,9 @@ public class MyUploadService extends MyBaseTaskService {
                         // Upload succeeded
                         Log.d(TAG, "OnSuccessListener");
 
-                       //  Get the public download URL
+                        //  Get the public download URL
                         Uri downloadUri = taskSnapshot.getMetadata().getDownloadUrl();
-                        Log.d(TAG, "downloadUri: "+downloadUri);
+                        Log.d(TAG, "downloadUri: " + downloadUri);
 
                         Toast.makeText(MyUploadService.this, getString(R.string.upload_success), Toast.LENGTH_LONG).show();
 
@@ -130,7 +130,7 @@ public class MyUploadService extends MyBaseTaskService {
                 .sendBroadcast(broadcast);
     }
 
-    private void showUploadFinishedNotification( Uri downloadUrl,  Uri fileUri) {
+    private void showUploadFinishedNotification(Uri downloadUrl, Uri fileUri) {
         // Hide the progress notification
         dismissProgressNotification();
 
@@ -153,7 +153,7 @@ public class MyUploadService extends MyBaseTaskService {
         return filter;
     }
 
-    public void uploadOnDB(String downloadUrl, String pdfname){
+    public void uploadOnDB(String downloadUrl, String pdfname) {
         Pdf pdf = new Pdf(
                 pdfname,
                 description,
@@ -161,7 +161,7 @@ public class MyUploadService extends MyBaseTaskService {
                 0,
                 downloadUrl
         );
-        Log.d(TAG, ""+pdf);
+        Log.d(TAG, "" + pdf);
         String pdfkey = dbref.child(getString(R.string.DB_Pdfs)).push().getKey();
         dbref.child(getString(R.string.DB_Pdfs)).child(pdfkey).setValue(pdf);
     }

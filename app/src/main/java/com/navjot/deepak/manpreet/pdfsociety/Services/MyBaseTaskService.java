@@ -12,7 +12,6 @@ import android.util.Log;
 
 import com.navjot.deepak.manpreet.pdfsociety.R;
 
-
 public class MyBaseTaskService extends Service {
 
     public MyBaseTaskService() {}
