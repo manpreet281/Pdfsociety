@@ -34,6 +34,7 @@ public class MyUploadService extends MyBaseTaskService {
 
     public static String description;
     public static String uid;
+    public static String username;
 
     public StorageReference mStorageRef;
     public DatabaseReference dbref;
@@ -52,6 +53,7 @@ public class MyUploadService extends MyBaseTaskService {
         if (ACTION_UPLOAD.equals(intent.getAction())) {
             description = intent.getStringExtra("description");
             uid = intent.getStringExtra("uid");
+            username = intent.getStringExtra("username");
 
             Uri fileUri = intent.getParcelableExtra(EXTRA_FILE_URI);
             uploadFromUri(fileUri);
@@ -159,7 +161,8 @@ public class MyUploadService extends MyBaseTaskService {
                 description,
                 uid,
                 0,
-                downloadUrl
+                downloadUrl,
+                username
         );
         Log.d(TAG, "" + pdf);
         String pdfkey = dbref.child(getString(R.string.DB_Pdfs)).push().getKey();

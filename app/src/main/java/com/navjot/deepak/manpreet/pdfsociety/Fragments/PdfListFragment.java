@@ -94,7 +94,7 @@ public  class PdfListFragment extends Fragment {
                         Log.d(getString(R.string.tag), "PostListFragment onBindViewHolder viewHolder onClick");
                         // Launch PdfDetailActivity
                         Intent intent = new Intent(getActivity(), PdfDetailActivity.class);
-//                        intent.putExtra(PdfDetailActivity.EXTRA_Pdf_KEY, PdfKey);
+                        intent.putExtra("pdfkey", PdfKey);
                         startActivity(intent);
                     }
                 });

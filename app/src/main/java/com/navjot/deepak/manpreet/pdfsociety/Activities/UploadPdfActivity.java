@@ -16,6 +16,11 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.navjot.deepak.manpreet.pdfsociety.Models.User;
 import com.navjot.deepak.manpreet.pdfsociety.R;
 import com.navjot.deepak.manpreet.pdfsociety.Services.MyUploadService;
 
@@ -32,6 +37,7 @@ public class UploadPdfActivity extends Progressdialog {
     private Uri mDownloadUrl = null;
     private static final String KEY_FILE_URI = "key_file_uri";
     private static final String KEY_DOWNLOAD_URL = "key_download_url";
+    private static String username;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +45,7 @@ public class UploadPdfActivity extends Progressdialog {
         setContentView(R.layout.activity_upload_pdf);
 
         initViews();
+        getusername();
         restoreInstanceState(savedInstanceState);
         broadcastReceive();
     }
@@ -114,11 +121,30 @@ public class UploadPdfActivity extends Progressdialog {
                 .putExtra(MyUploadService.EXTRA_FILE_URI, fileUri)
                 .putExtra("description", description.getText().toString().trim())
                 .putExtra("uid", FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .putExtra("username",username)
                 .setAction(MyUploadService.ACTION_UPLOAD));
 
         // Show loading spinner
 //        showStorageProgressDialog(getString(R.string.progress_uploading));
         Toast.makeText(this, getString(R.string.progress_uploading), Toast.LENGTH_LONG).show();
+    }
+
+    public void getusername(){
+        FirebaseDatabase.getInstance().getReference()
+                .child(getString(R.string.DB_Users))
+                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        User user = dataSnapshot.getValue(User.class);
+                        username = user.getUsername();
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        Log.d(getString(R.string.tag), "onCancelled: getusername");
+                    }
+                });
     }
 
     public void restoreInstanceState(Bundle savedInstanceState){
