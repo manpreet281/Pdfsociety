@@ -9,6 +9,7 @@
     android:weightSum="1"
     android:padding="16dp">
 
+
     <TextView
         android:id="@+id/textViewTitle"
         android:layout_width="match_parent"
@@ -58,6 +59,7 @@
     </android.support.design.widget.TextInputLayout>
 
         <Button
+            android:theme="@style/ButtonStyle"
             android:id="@+id/ButtonSignIn"
             android:background="@color/colorPrimary"
             android:textColor="@color/white"
@@ -91,6 +93,9 @@
             android:layout_marginLeft="3dp"
             android:layout_toRightOf="@+id/textView1"  />
     </LinearLayout>
+
+
+
 
 
 </LinearLayout>

@@ -110,6 +110,7 @@
             />
 
         <Button
+            android:theme="@style/ButtonStyle"
             android:id="@+id/btnregister"
             android:layout_marginTop="33dp"
             android:onClick="btnRegister"

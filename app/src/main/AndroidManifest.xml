@@ -36,6 +36,7 @@
         </activity>
         <activity
             android:name=".Activities.NavDrawer.HomeActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/title_activity_home"
             android:theme="@style/AppTheme.NoActionBar" />
 

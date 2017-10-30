@@ -26,6 +26,7 @@
     </android.support.design.widget.TextInputLayout>
 
     <Button
+        android:theme="@style/ButtonStyle"
         android:layout_marginTop="30dp"
         android:id="@+id/UploadButton"
         android:onClick="uploadbtnClicked"
