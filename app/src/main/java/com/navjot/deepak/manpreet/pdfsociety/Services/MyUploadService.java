@@ -167,6 +167,7 @@ public class MyUploadService extends MyBaseTaskService {
         Log.d(TAG, "" + pdf);
         String pdfkey = dbref.child(getString(R.string.DB_Pdfs)).push().getKey();
         dbref.child(getString(R.string.DB_Pdfs)).child(pdfkey).setValue(pdf);
+        dbref.child(getString(R.string.DB_user_pdfs)).child(uid).child(pdfkey).setValue(pdf);
     }
 
     @Override
