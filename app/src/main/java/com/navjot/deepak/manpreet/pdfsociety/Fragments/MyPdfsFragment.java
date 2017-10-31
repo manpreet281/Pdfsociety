@@ -20,8 +20,7 @@ public class MyPdfsFragment extends PdfListFragment {
         // [START my_top_pdfs_query]
         // My top pdfs by number of stars
         String myUserId = getUid();
-        Query myToppdfsQuery = databaseReference.child("user-pdfs").child(myUserId)
-                .orderByChild("starCount");
+        Query myToppdfsQuery = databaseReference.child(getString(R.string.DB_user_pdfs)).child(getUid());
         // [END my_top_pdfs_query]
 
         return myToppdfsQuery;
