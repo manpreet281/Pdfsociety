@@ -59,6 +59,7 @@ public class SignIn extends Progressdialog {
             startActivity(
                     new Intent(SignIn.this, HomeActivity.class)
             );
+            finish();
         }
     }
 
