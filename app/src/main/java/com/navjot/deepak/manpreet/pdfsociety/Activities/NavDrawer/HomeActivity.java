@@ -1,6 +1,7 @@
 package com.navjot.deepak.manpreet.pdfsociety.Activities.NavDrawer;
 
 
+import android.app.ActionBar;
 import android.content.Intent;
 
 
@@ -22,6 +23,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -37,6 +39,7 @@ import com.navjot.deepak.manpreet.pdfsociety.Fragments.PdfListFragment;
 import com.navjot.deepak.manpreet.pdfsociety.R;
 
 import java.io.File;
+
 
 public class HomeActivity extends AppCompatActivity
 
@@ -145,6 +148,7 @@ public class HomeActivity extends AppCompatActivity
                     showProgressDialog();
                     FirebaseAuth.getInstance().signOut();
                     startActivity(new Intent(HomeActivity.this, SignIn.class));
+                    finish();
                     return true;
                 }
 

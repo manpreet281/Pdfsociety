@@ -42,7 +42,10 @@ public class UploadPdfActivity extends Progressdialog {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_upload_pdf);
+        if(getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            setContentView(R.layout.activity_upload_pdf);
+        }
 
         initViews();
         getusername();
@@ -200,5 +203,9 @@ public class UploadPdfActivity extends Progressdialog {
             description.setError(null);
         }
         return valid;
+    }
+    public boolean onSupportNavigateUp(){
+        onBackPressed();
+        return true;
     }
 }

@@ -11,32 +11,68 @@
 
 
     <TextView
-        android:id="@+id/userName"
+        android:id="@+id/pdfName"
+        android:gravity="center_horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="userName" />
+        android:text="pdfName"
+        android:typeface="sans"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:textSize="25dp"/>
 
     <TextView
-        android:id="@+id/pdfName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="pdfName" />
+        android:textSize="20dp"
+        android:textColor="@color/black"
+        android:layout_marginTop="50dp"
+        android:text="Description" />
 
     <TextView
         android:id="@+id/pdfDescription"
+        android:layout_marginTop="7dp"
+        android:textSize="15dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="pdfDescription" />
 
     <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18dp"
+        android:textColor="@color/black"
+        android:layout_marginTop="30dp"
+        android:text="Uploaded by" />
+
+    <TextView
+        android:id="@+id/userName"
+        android:layout_marginTop="7dp"
+        android:textSize="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="userName" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Downloads"
+        android:textColor="@color/black"
+        android:textSize="18dp"
+        android:layout_marginTop="30dp"/>
+
+    <TextView
         android:id="@+id/downloadsNo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="downloadsNo" />
+        android:text="downloadsNo"
+        android:textSize="15dp"
+        android:layout_marginTop="7dp"/>
 
     <Button
         android:theme="@style/ButtonStyle"
         android:id="@+id/btnDownload"
+        android:layout_marginTop="80dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Download" />

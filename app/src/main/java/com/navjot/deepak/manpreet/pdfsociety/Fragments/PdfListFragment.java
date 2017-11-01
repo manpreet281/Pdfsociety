@@ -77,6 +77,7 @@ public  class PdfListFragment extends Fragment {
 
             @Override
             public PdfViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+
                 Log.d(getString(R.string.tag), "PostListFragment PostViewHolder onCreateViewHolder");
                 LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
                 return new PdfViewHolder(inflater.inflate(R.layout.item_pdf, viewGroup, false));

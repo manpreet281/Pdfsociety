@@ -102,7 +102,7 @@ public class SignUp extends Progressdialog implements DatePickerDialog.OnDateSet
                 datepickerdialog.vibrate(true); //vibrate on choosing date?
                 datepickerdialog.dismissOnPause(true); //dismiss dialog when onPause() called?
                 datepickerdialog.showYearPickerFirst(false); //choose year first?
-                datepickerdialog.setAccentColor(Color.parseColor("#9C27A0")); // custom accent color
+                datepickerdialog.setAccentColor(Color.parseColor("#5c0000")); // custom accent color
                 datepickerdialog.setTitle("Date of birth"); //dialog title
                 datepickerdialog.show(getFragmentManager(), "Datepickerdialog"); //show dialog
             }

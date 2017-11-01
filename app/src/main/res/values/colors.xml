@@ -4,4 +4,8 @@
     <color name="colorPrimaryDark">#000000</color>
     <color name="colorAccent">#bc0000</color>
     <color name="white">#ffffff</color>
+    <color name="offwhite">#ededed</color>
+    <color name="black">#000000</color>
+    <color name="datepickercolor">#5c0000</color>
+    <color name="pdfnamecolor">#970000</color>
 </resources>

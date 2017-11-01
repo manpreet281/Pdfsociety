@@ -14,9 +14,12 @@
         android:roundIcon="@drawable/a"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activities.SignIn" />
-        <activity android:name=".Activities.SignUp" />
-        <activity android:name=".Activities.FeedbackActivity" />
+        <activity android:name=".Activities.SignIn"
+            android:label="PDF Society"/>
+        <activity android:name=".Activities.SignUp"
+            android:label="PDF Society"/>
+        <activity android:name=".Activities.FeedbackActivity"
+            android:label="Feedback"/>
 
         <service
             android:name=".Services.MyFirebaseInstanceIdService"
@@ -27,9 +30,9 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".Activities.SplashActivity"
-
-              android:theme="@style/AppTheme.NoActionBar"                                          >
+        <activity
+            android:name=".Activities.SplashActivity"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -39,7 +42,7 @@
         <activity
             android:name=".Activities.NavDrawer.HomeActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:label="@string/title_activity_home"
+            android:label="PDF Society"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <service
@@ -47,14 +50,18 @@
             android:enabled="true"
             android:exported="true" />
 
-        <activity android:name=".Activities.UploadPdfActivity" />
+        <activity android:name=".Activities.UploadPdfActivity"
+            android:label="Upload"/>
 
         <service
             android:name=".Services.MyUploadService"
             android:enabled="true"
             android:exported="false" />
         android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".Activities.PdfDetailActivity"></activity>
+        <activity android:name=".Activities.PdfDetailActivity"
+            android:label="Description"/>
+        <activity android:name=".Activities.UserDetailActivity"
+            android:label="User"></activity>
     </application>
 
 </manifest>

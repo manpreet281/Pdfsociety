@@ -27,12 +27,12 @@
 
     <Button
         android:theme="@style/ButtonStyle"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="50dp"
         android:id="@+id/UploadButton"
         android:onClick="uploadbtnClicked"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Upload Pdf"
+        android:text="Select Pdf"
         />
 
 </LinearLayout>
