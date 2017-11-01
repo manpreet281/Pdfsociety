@@ -1,11 +1,14 @@
 package com.navjot.deepak.manpreet.pdfsociety.Activities;
 
 import android.content.Intent;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.ActionMenuView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RatingBar;
@@ -29,6 +32,11 @@ public class FeedbackActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if(getSupportActionBar() != null){
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        }
+
         setContentView(R.layout.activity_feedback);
         RatingBar = (RatingBar) findViewById(R.id.RatingBar);
         txtComment = (EditText) findViewById(R.id.editTextComment);
@@ -81,6 +89,12 @@ public class FeedbackActivity extends AppCompatActivity {
                 }
 
         }
+
+
+    public boolean onSupportNavigateUp(){
+        onBackPressed();
+        return true;
+    }
 }
 
 

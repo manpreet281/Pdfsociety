@@ -4,12 +4,12 @@
     <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"
-        android:title="@string/action_settings"
+        android:title="User Details"
         app:showAsAction="never" />
 
     <item
         android:id="@+id/action_logout"
         android:orderInCategory="101"
-        android:title="LogOut"
+        android:title="Log Out"
         app:showAsAction="never" />
 </menu>

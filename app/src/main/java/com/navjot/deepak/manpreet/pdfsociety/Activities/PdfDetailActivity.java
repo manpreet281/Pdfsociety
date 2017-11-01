@@ -31,6 +31,9 @@ public class PdfDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pdf_detail);
+        if(getSupportActionBar() != null){
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
 
         pdfid = getIntent().getStringExtra("pdfkey");
         init();
@@ -74,5 +77,10 @@ public class PdfDetailActivity extends AppCompatActivity {
             Log.d(getString(R.string.tag), "pdfListener stopped");
             mPdfReference.removeEventListener(mPdfListener);
         }
+    }
+
+    public boolean onSupportNavigateUp(){
+        onBackPressed();
+        return true;
     }
 }
