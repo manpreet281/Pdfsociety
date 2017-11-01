@@ -1,19 +1,17 @@
 package com.navjot.deepak.manpreet.pdfsociety.Activities.NavDrawer;
 
-
 import android.app.ActionBar;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.content.Intent;
-
-
 import android.app.ProgressDialog;
 import android.content.pm.ApplicationInfo;
 import android.net.Uri;
-
 import android.os.Bundle;
-
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
-import android.util.Log;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -25,49 +23,69 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
-
-
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.Query;
 import com.navjot.deepak.manpreet.pdfsociety.Activities.UploadPdfActivity;
-
 import com.google.firebase.auth.FirebaseAuth;
 import com.navjot.deepak.manpreet.pdfsociety.Activities.FeedbackActivity;
 import com.navjot.deepak.manpreet.pdfsociety.Activities.SignIn;
-
-import com.navjot.deepak.manpreet.pdfsociety.Fragments.PdfListFragment;
+import com.navjot.deepak.manpreet.pdfsociety.Fragments.MyPdfsFragment;
+import com.navjot.deepak.manpreet.pdfsociety.Fragments.RecentPdfsFragment;
 import com.navjot.deepak.manpreet.pdfsociety.R;
-
 import java.io.File;
 
-
-public class HomeActivity extends AppCompatActivity
-
-        implements NavigationView.OnNavigationItemSelectedListener
-
+public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,
+        View.OnClickListener
 {
     public ProgressDialog mProgressDialog;
-
-
+    private FloatingActionButton fab;
+    private FragmentPagerAdapter mPagerAdapter;
+    private ViewPager mViewPager;
     boolean doubleBackToExitPressedOnce = false;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         init();
+        initViewPager();
+    }
+
+    public void initViewPager(){
+        // Create the adapter that will return a fragment for each section
+        mPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
+            private final Fragment[] mFragments = new Fragment[] {
+                    new RecentPdfsFragment(),
+                    new MyPdfsFragment(),
+            };
+            private final String[] mFragmentNames = new String[] {
+                    "Recent",
+                    "My Pdfs"
+            };
+            @Override
+            public Fragment getItem(int position) {
+                return mFragments[position];
+            }
+            @Override
+            public int getCount() {
+                return mFragments.length;
+            }
+            @Override
+            public CharSequence getPageTitle(int position) {
+                return mFragmentNames[position];
+            }
+        };
+        // Set up the ViewPager with the sections adapter.
+        mViewPager = (ViewPager) findViewById(R.id.container);
+        mViewPager.setAdapter(mPagerAdapter);
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+        tabLayout.setupWithViewPager(mViewPager);
     }
 
     public void init(){
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(HomeActivity.this, UploadPdfActivity.class));
-            }
-        });
+        fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(this);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -78,17 +96,6 @@ public class HomeActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
     }
-
-//    @Override
-//    public Query getQuery(DatabaseReference databaseReference) {
-//        // [START recent_posts_query]
-//        // Last 100 posts, these are automatically the 100 most recent
-//        // due to sorting by push() keys
-//        Query recentPostsQuery = databaseReference.child(getString(R.string.DB_Pdfs)).limitToFirst(100);
-//        // [END recent_posts_query]
-//
-//        return recentPostsQuery;
-//    }
 
     @Override
     public void onBackPressed() {
@@ -206,8 +213,14 @@ public class HomeActivity extends AppCompatActivity
         mProgressDialog.show();
     }
 
-
-
+    @Override
+    public void onClick(View view) {
+        switch(view.getId()){
+            case R.id.fab:
+                startActivity(new Intent(HomeActivity.this, UploadPdfActivity.class));
+                break;
+        }
+    }
 }
 
 

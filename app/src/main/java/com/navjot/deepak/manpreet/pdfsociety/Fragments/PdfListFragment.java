@@ -30,12 +30,9 @@ import com.navjot.deepak.manpreet.pdfsociety.Models.Pdf;
 import com.navjot.deepak.manpreet.pdfsociety.R;
 import com.navjot.deepak.manpreet.pdfsociety.Viewholders.PdfViewHolder;
 
-public  class PdfListFragment extends Fragment {
+public abstract class PdfListFragment extends Fragment {
 
-    // [START define_database_reference]
     private DatabaseReference mDatabase;
-    // [END define_database_reference]
-
     private FirebaseRecyclerAdapter<Pdf, PdfViewHolder> mAdapter;
     private RecyclerView mRecycler;
     private LinearLayoutManager mManager;
@@ -183,14 +180,6 @@ public  class PdfListFragment extends Fragment {
         return FirebaseAuth.getInstance().getCurrentUser().getUid();
     }
 
-    public  Query getQuery(DatabaseReference databaseReference){
-        // [START recent_posts_query]
-        // Last 100 posts, these are automatically the 100 most recent
-        // due to sorting by push() keys
-        Query recentPostsQuery = databaseReference.child(getString(R.string.DB_Pdfs)).limitToFirst(100);
-        // [END recent_posts_query]
-
-        return recentPostsQuery;
-    }
+    public abstract Query getQuery(DatabaseReference databaseReference);
 
 }
