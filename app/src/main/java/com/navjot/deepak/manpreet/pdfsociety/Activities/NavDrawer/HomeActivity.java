@@ -155,7 +155,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                     showProgressDialog();
                     FirebaseAuth.getInstance().signOut();
                     startActivity(new Intent(HomeActivity.this, SignIn.class));
-                    finish();
                     return true;
                 }
 
