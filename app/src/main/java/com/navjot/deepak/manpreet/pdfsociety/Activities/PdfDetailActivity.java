@@ -52,6 +52,7 @@ public class PdfDetailActivity extends AppCompatActivity implements View.OnClick
     private DatabaseReference mPdfReference;
     private ValueEventListener mPdfListener;
     private static String pdfid;
+    Pdf pdf;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +72,6 @@ public class PdfDetailActivity extends AppCompatActivity implements View.OnClick
         userName = (TextView) findViewById(R.id.userName);
         pdfName = (TextView) findViewById(R.id.pdfName);
         pdfDescription = (TextView) findViewById(R.id.pdfDescription);
-        downloadUrl = (TextView) findViewById(R.id.downloadurl);
         downloadNo = (TextView) findViewById(R.id.downloadsNo);
         mPdfReference = FirebaseDatabase.getInstance().getReference().child(getString(R.string.DB_Pdfs)).child(pdfid);
         btndownload = (Button) findViewById(R.id.btnDownload);
@@ -82,14 +82,12 @@ public class PdfDetailActivity extends AppCompatActivity implements View.OnClick
         mPdfListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Pdf pdf = dataSnapshot.getValue(Pdf.class);
+                pdf = dataSnapshot.getValue(Pdf.class);
                 Log.d(getString(R.string.tag), "onDataChange: " + pdf);
                 pdfName.setText(pdf.getPdfname());
                 pdfDescription.setText(pdf.getDescription());
                 downloadNo.setText(pdf.getNo_of_downloads() + " downloads");
                 userName.setText(pdf.getUsername());
-                downloadUrl.setText(pdf.getDownload_url());
-
             }
 
             @Override
@@ -156,7 +154,7 @@ public class PdfDetailActivity extends AppCompatActivity implements View.OnClick
             case R.id.action_sendurl:
                 Intent shareIntent = new Intent();
                 shareIntent.setAction(Intent.ACTION_SEND);
-                shareIntent.putExtra(Intent.EXTRA_TEXT, downloadUrl.getText().toString());
+                shareIntent.putExtra(Intent.EXTRA_TEXT, pdf.getDownload_url());
                 shareIntent.setType("text/plain");
                 startActivity(Intent.createChooser(shareIntent, "Send to"));
                 return true;
