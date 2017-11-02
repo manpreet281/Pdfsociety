@@ -217,6 +217,15 @@
 
     <string name="storage_pdfs">Pdfs</string>
 
+
+    <string name="download_success">Download finished</string>
+    <string name="download_failure">Download failure</string>
+
+    <string name="progress_downloading">Downloading…</string>
+
+    <string name="send_to">Send To…</string>
+
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

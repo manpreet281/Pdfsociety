@@ -6,6 +6,7 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
+import android.support.annotation.DrawableRes;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
@@ -71,7 +72,7 @@ public class MyBaseTaskService extends Service {
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* requestCode */, intent,
                 PendingIntent.FLAG_UPDATE_CURRENT);
 
-        int icon = success ? R.drawable.ic_check_white_24 : R.drawable.ic_error_white_24dp;
+        int icon = success ? R.drawable.ic_check_white_24 : R.drawable.ic_failure;
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
                 .setSmallIcon(icon)
@@ -94,6 +95,46 @@ public class MyBaseTaskService extends Service {
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
         manager.cancel(PROGRESS_NOTIFICATION_ID);
+    }
+
+    protected void showDownloadProgressNotification(String caption, long completedUnits, long totalUnits) {
+        int percentComplete = 0;
+        if (totalUnits > 0) {
+            percentComplete = (int) (100 * completedUnits / totalUnits);
+        }
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
+                .setSmallIcon(R.drawable.ic_download)
+                .setContentTitle(getString(R.string.app_name))
+                .setContentText(caption)
+                .setProgress(100, percentComplete, false)
+                .setOngoing(true)
+                .setAutoCancel(false);
+
+        NotificationManager manager =
+                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+        manager.notify(PROGRESS_NOTIFICATION_ID, builder.build());
+    }
+
+    protected void showfailiureFinishedNotification(String caption, Intent intent, boolean success) {
+        // Make PendingIntent for notification
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* requestCode */, intent,
+                PendingIntent.FLAG_UPDATE_CURRENT);
+
+        int icon = success ? R.drawable.ic_check_white_24 : R.drawable.ic_error_white_24dp;
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
+                .setSmallIcon(icon)
+                .setContentTitle(getString(R.string.app_name))
+                .setContentText(caption)
+                .setAutoCancel(true)
+                .setContentIntent(pendingIntent);
+
+        NotificationManager manager =
+                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+        manager.notify(FINISHED_NOTIFICATION_ID, builder.build());
     }
 
     @Nullable
