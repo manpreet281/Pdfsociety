@@ -62,20 +62,30 @@ public class MyUploadService extends MyBaseTaskService {
         return START_REDELIVER_INTENT;
     }
 
+    public String getFileName(String uri){
+        int index;
+        while(uri.contains(":")){
+            index = uri.indexOf(":");
+            uri = uri.substring(index+1);
+        }
+        while (uri.contains("/")){
+            index = uri.indexOf("/");
+            uri = uri.substring(index+1);
+        }
+        return uri;
+    }
+
     public void uploadFromUri(final Uri fileUri) {
         Log.d(TAG, "uploadFromUri");
-        Log.d(TAG, "fileUri.toString()" + fileUri.toString());
 
         taskStarted();
         showProgressNotification(getString(R.string.progress_uploading), 0, 0);
 
         // Get a reference to store file at photos/<FILENAME>.jpg
-        Log.d(TAG, "fileUri.getLastPathSegment(): " + fileUri.getLastPathSegment());
         final StorageReference pdfref = mStorageRef.child(getString(R.string.storage_pdfs))
-                .child(fileUri.getLastPathSegment());
+                .child(getFileName(fileUri.getLastPathSegment()));
 
         // Upload file to Firebase Storage
-        Log.d(TAG, "pdfref.getPath(): " + pdfref.getPath());
         pdfref.putFile(fileUri).
                 addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
                     @Override

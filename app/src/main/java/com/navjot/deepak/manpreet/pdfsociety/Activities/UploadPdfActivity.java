@@ -93,7 +93,7 @@ public class UploadPdfActivity extends Progressdialog {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Log.d(getString(R.string.tag), "onActivityResult: Requestcode: " + requestCode + " :resultcode: " + resultCode + ": data : " + data);
+        Log.d(getString(R.string.tag), "onActivityResult data : " + data);
         if (requestCode == RC_TAKE_PDF) {
             if (resultCode == RESULT_OK) {
                 mFileUri = data.getData();
@@ -117,7 +117,6 @@ public class UploadPdfActivity extends Progressdialog {
 
         // Clear the last download, if any
         mDownloadUrl = null;
-
         // Start MyUploadService to upload the file, so that the file is uploaded
         // even if this Activity is killed or put in the background
         startService(new Intent(this, MyUploadService.class)
@@ -127,8 +126,6 @@ public class UploadPdfActivity extends Progressdialog {
                 .putExtra("username",username)
                 .setAction(MyUploadService.ACTION_UPLOAD));
 
-        // Show loading spinner
-//        showStorageProgressDialog(getString(R.string.progress_uploading));
         Toast.makeText(this, getString(R.string.progress_uploading), Toast.LENGTH_LONG).show();
     }
 
