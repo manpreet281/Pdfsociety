@@ -6,7 +6,6 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
-import android.support.annotation.DrawableRes;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
@@ -72,7 +71,7 @@ public class MyBaseTaskService extends Service {
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* requestCode */, intent,
                 PendingIntent.FLAG_UPDATE_CURRENT);
 
-        int icon = success ? R.drawable.ic_check_white_24 : R.drawable.ic_failure;
+        int icon = success ? R.drawable.ic_check_white_24 : R.drawable.ic_cross;
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
                 .setSmallIcon(icon)

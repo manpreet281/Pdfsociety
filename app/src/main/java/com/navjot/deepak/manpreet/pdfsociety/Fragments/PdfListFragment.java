@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -36,13 +37,15 @@ public abstract class PdfListFragment extends Fragment {
     private FirebaseRecyclerAdapter<Pdf, PdfViewHolder> mAdapter;
     private RecyclerView mRecycler;
     private LinearLayoutManager mManager;
-
+    private ProgressBar mProgressBar;
     public PdfListFragment() {}
 
     @Override
     public View onCreateView (LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         View rootView = inflater.inflate(R.layout.fragment_all_pdfs, container, false);
+
+        mProgressBar = rootView.findViewById(R.id.mProgressBar);
 
         // [START create_database_reference]
         mDatabase = FirebaseDatabase.getInstance().getReference();
@@ -72,9 +75,10 @@ public abstract class PdfListFragment extends Fragment {
 
         mAdapter = new FirebaseRecyclerAdapter<Pdf, PdfViewHolder>(options) {
 
+
             @Override
             public PdfViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-
+                mProgressBar.setVisibility(View.GONE);
                 Log.d(getString(R.string.tag), "PostListFragment PostViewHolder onCreateViewHolder");
                 LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
                 return new PdfViewHolder(inflater.inflate(R.layout.item_pdf, viewGroup, false));
