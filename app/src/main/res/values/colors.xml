@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#212121</color>
-    <color name="colorPrimaryDark">#000000</color>
+    <color name="colorPrimaryDark">#131313</color>
     <color name="colorAccent">#bc0000</color>
     <color name="white">#ffffff</color>
     <color name="offwhite">#ededed</color>
     <color name="black">#000000</color>
     <color name="datepickercolor">#5c0000</color>
-    <color name="pdfnamecolor">#970000</color>
+    <color name="buttongray">#3d3d3d</color>
+
 </resources>
