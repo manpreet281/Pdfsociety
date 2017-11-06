@@ -25,7 +25,7 @@ public class Progressdialog extends AppCompatActivity {
         }
     }
 
-    public void showStorageProgressDialog(String caption) {
+    public void showCaptionProgressDialog(String caption) {
         if (mProgressDialog == null) {
             mProgressDialog = new ProgressDialog(this);
             mProgressDialog.setMessage(caption);
