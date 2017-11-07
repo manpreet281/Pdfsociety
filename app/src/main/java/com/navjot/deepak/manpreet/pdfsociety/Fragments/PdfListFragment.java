@@ -90,6 +90,7 @@ public abstract class PdfListFragment extends Fragment {
                 Log.d(getString(R.string.tag), "PostListFragment onBindViewHolder position: "+position);
                 // Set click listener for the whole Pdf view
                 final String PdfKey = PdfRef.getKey();
+                Log.d(getString(R.string.tag), "PdfKey: "+PdfKey);
                 viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

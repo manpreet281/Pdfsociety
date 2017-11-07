@@ -35,6 +35,7 @@ public class MyUploadService extends MyBaseTaskService {
     public static String description;
     public static String uid;
     public static String username;
+    public static String pdfkey;
 
     public StorageReference mStorageRef;
     public DatabaseReference dbref;
@@ -54,6 +55,7 @@ public class MyUploadService extends MyBaseTaskService {
             description = intent.getStringExtra("description");
             uid = intent.getStringExtra("uid");
             username = intent.getStringExtra("username");
+            pdfkey = intent.getStringExtra("pdfkey");
 
             Uri fileUri = intent.getParcelableExtra(EXTRA_FILE_URI);
             uploadFromUri(fileUri);
@@ -77,12 +79,15 @@ public class MyUploadService extends MyBaseTaskService {
 
     public void uploadFromUri(final Uri fileUri) {
         Log.d(TAG, "uploadFromUri");
+        pdfkey = dbref.child(getString(R.string.DB_Pdfs)).push().getKey();
 
         taskStarted();
         showProgressNotification(getString(R.string.progress_uploading), 0, 0);
 
         // Get a reference to store file at photos/<FILENAME>.jpg
-        final StorageReference pdfref = mStorageRef.child(getString(R.string.storage_pdfs))
+        final StorageReference pdfref = mStorageRef
+                .child(uid)
+                .child(pdfkey)
                 .child(getFileName(fileUri.getLastPathSegment()));
 
         // Upload file to Firebase Storage
@@ -175,7 +180,7 @@ public class MyUploadService extends MyBaseTaskService {
                 username
         );
         Log.d(TAG, "" + pdf);
-        String pdfkey = dbref.child(getString(R.string.DB_Pdfs)).push().getKey();
+
         dbref.child(getString(R.string.DB_Pdfs)).child(pdfkey).setValue(pdf);
         dbref.child(getString(R.string.DB_user_pdfs)).child(uid).child(pdfkey).setValue(pdf);
     }

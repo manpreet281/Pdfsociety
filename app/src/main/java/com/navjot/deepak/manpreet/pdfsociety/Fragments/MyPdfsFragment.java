@@ -37,6 +37,7 @@ public class MyPdfsFragment extends PdfListFragment {
     Pdf pdf;
     DatabaseReference PdfRef;
     ProgressDialog mprogress;
+    private static String PdfKey;
 
     public MyPdfsFragment() {}
 
@@ -81,7 +82,7 @@ public class MyPdfsFragment extends PdfListFragment {
                 PdfRef = getRef(position);
                 Log.d(getString(R.string.tag), "PostListFragment onBindViewHolder position: "+position);
                 // Set click listener for the whole Pdf view
-                final String PdfKey = PdfRef.getKey();
+                PdfKey = PdfRef.getKey();
                 viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -132,7 +133,8 @@ public class MyPdfsFragment extends PdfListFragment {
     public void deletePdfOnStorage(){
         Log.d(getString(R.string.tag), "pdf.getPdfname(): "+pdf.getPdfname());
         FirebaseStorage.getInstance().getReference()
-                .child(getString(R.string.DB_Pdfs))
+                .child(getUid())
+                .child(PdfKey)
                 .child(pdf.getPdfname())
                 .delete()
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
