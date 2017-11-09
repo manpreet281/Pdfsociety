@@ -47,6 +47,8 @@ public class PdfDetailActivity extends AppCompatActivity implements View.OnClick
     TextView pdfDescription;
     TextView downloadNo;
     TextView downloadUrl;
+    TextView pdfsize;
+    TextView uploaddate;
     Button btndownload;
 
     private DatabaseReference mPdfReference;
@@ -71,8 +73,10 @@ public class PdfDetailActivity extends AppCompatActivity implements View.OnClick
         findViewById(R.id.btnDownload).setOnClickListener(this);
         userName = (TextView) findViewById(R.id.userName);
         pdfName = (TextView) findViewById(R.id.pdfName);
+        pdfsize = (TextView) findViewById(R.id.textViewSize);
         pdfDescription = (TextView) findViewById(R.id.pdfDescription);
         downloadNo = (TextView) findViewById(R.id.downloadsNo);
+        uploaddate = (TextView) findViewById(R.id.uploaddate) ;
         mPdfReference = FirebaseDatabase.getInstance().getReference().child(getString(R.string.DB_Pdfs)).child(pdfid);
         btndownload = (Button) findViewById(R.id.btnDownload);
         btndownload.setOnClickListener(this);
@@ -88,6 +92,8 @@ public class PdfDetailActivity extends AppCompatActivity implements View.OnClick
                 pdfDescription.setText(pdf.getDescription());
                 downloadNo.setText(pdf.getNo_of_downloads() + " downloads");
                 userName.setText(pdf.getUsername());
+                pdfsize.setText(String.format( "%.2f MB",pdf.getPdfsize()));
+                uploaddate.setText(pdf.getUploaddate());
             }
 
             @Override

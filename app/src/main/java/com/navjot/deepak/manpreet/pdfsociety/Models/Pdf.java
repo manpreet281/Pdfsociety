@@ -8,16 +8,21 @@ public class Pdf {
     private int no_of_downloads;
     private String download_url;
     private String username;
+    private double pdfsize;
+    private String uploaddate;
 
-    Pdf(){}
+    Pdf() {
+    }
 
-    public Pdf(String pdfname, String description, String uid, int no_of_downloads, String download_url, String username) {
+    public Pdf(String pdfname, String description, String uid, int no_of_downloads, String download_url, String username, double pdfsize, String uploaddate) {
         this.pdfname = pdfname;
         this.description = description;
         this.uid = uid;
         this.no_of_downloads = no_of_downloads;
         this.download_url = download_url;
         this.username = username;
+        this.pdfsize = pdfsize;
+        this.uploaddate = uploaddate;
     }
 
     public String getPdfname() {
@@ -68,6 +73,22 @@ public class Pdf {
         this.username = username;
     }
 
+    public double getPdfsize() {
+        return pdfsize;
+    }
+
+    public void setPdfsize(double pdfsize) {
+        this.pdfsize = pdfsize;
+    }
+
+    public String getUploaddate() {
+        return uploaddate;
+    }
+
+    public void setUploaddate(String uploaddate) {
+        this.uploaddate = uploaddate;
+    }
+
     @Override
     public String toString() {
         return "Pdf{" +
@@ -77,6 +98,8 @@ public class Pdf {
                 ", no_of_downloads=" + no_of_downloads +
                 ", download_url='" + download_url + '\'' +
                 ", username='" + username + '\'' +
+                ", pdfsize=" + pdfsize +
+                ", uploaddate='" + uploaddate + '\'' +
                 '}';
     }
 }

@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -22,6 +23,10 @@ import com.navjot.deepak.manpreet.pdfsociety.Activities.NavDrawer.HomeActivity;
 import com.navjot.deepak.manpreet.pdfsociety.Models.Pdf;
 import com.navjot.deepak.manpreet.pdfsociety.R;
 
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class MyUploadService extends MyBaseTaskService {
 
     public static String TAG;
@@ -35,6 +40,9 @@ public class MyUploadService extends MyBaseTaskService {
     public static String description;
     public static String uid;
     public static String username;
+    private static double pdfsize;
+    private static String uploaddate;
+
 
     public StorageReference mStorageRef;
     public DatabaseReference dbref;
@@ -105,6 +113,17 @@ public class MyUploadService extends MyBaseTaskService {
                         Uri downloadUri = taskSnapshot.getMetadata().getDownloadUrl();
                         Log.d(TAG, "downloadUri: " + downloadUri);
 
+                        // Get the file size
+                        pdfsize = taskSnapshot.getMetadata().getSizeBytes();
+                        pdfsize = pdfsize/1048576;
+                        Log.d(TAG, "onSuccess: fileSize"+pdfsize);
+
+
+                        uploaddate = FindCurrentDate();
+
+
+
+
                         Toast.makeText(MyUploadService.this, getString(R.string.upload_success), Toast.LENGTH_LONG).show();
 
                         uploadOnDB(downloadUri.toString(), pdfref.getName());
@@ -129,6 +148,7 @@ public class MyUploadService extends MyBaseTaskService {
                     }
                 });
     }
+
 
     private boolean broadcastUploadFinished(Uri downloadUrl, Uri fileUri) {
         boolean success = downloadUrl != null;
@@ -172,13 +192,22 @@ public class MyUploadService extends MyBaseTaskService {
                 uid,
                 0,
                 downloadUrl,
-                username
+                username,
+                pdfsize,
+                uploaddate
         );
         Log.d(TAG, "" + pdf);
         String pdfkey = dbref.child(getString(R.string.DB_Pdfs)).push().getKey();
         dbref.child(getString(R.string.DB_Pdfs)).child(pdfkey).setValue(pdf);
         dbref.child(getString(R.string.DB_user_pdfs)).child(uid).child(pdfkey).setValue(pdf);
     }
+
+    String FindCurrentDate() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        String currentdate = dateFormat.format(new Date());
+        Log.i("test", currentdate);
+
+        return currentdate;}
 
     @Override
     public IBinder onBind(Intent intent) {
