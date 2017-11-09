@@ -33,18 +33,18 @@ import com.navjot.deepak.manpreet.pdfsociety.Viewholders.PdfViewHolder;
 
 public abstract class PdfListFragment extends Fragment {
 
-    private DatabaseReference mDatabase;
+    protected DatabaseReference mDatabase;
     private FirebaseRecyclerAdapter<Pdf, PdfViewHolder> mAdapter;
-    private RecyclerView mRecycler;
-    private LinearLayoutManager mManager;
-    private ProgressBar mProgressBar;
+    protected RecyclerView mRecycler;
+    protected LinearLayoutManager mManager;
+    protected ProgressBar mProgressBar;
     public PdfListFragment() {}
 
     @Override
     public View onCreateView (LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         View rootView = inflater.inflate(R.layout.fragment_all_pdfs, container, false);
-
+        Log.d(getString(R.string.tag), "onCreateView: container: "+container);
         mProgressBar = rootView.findViewById(R.id.mProgressBar);
 
         // [START create_database_reference]
@@ -90,6 +90,7 @@ public abstract class PdfListFragment extends Fragment {
                 Log.d(getString(R.string.tag), "PostListFragment onBindViewHolder position: "+position);
                 // Set click listener for the whole Pdf view
                 final String PdfKey = PdfRef.getKey();
+                Log.d(getString(R.string.tag), "PdfKey: "+PdfKey);
                 viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -128,7 +129,7 @@ public abstract class PdfListFragment extends Fragment {
     }
 
     // [START Pdf_stars_transaction]
-    private void onStarClicked(DatabaseReference PdfRef) {
+    protected void onStarClicked(DatabaseReference PdfRef) {
         PdfRef.runTransaction(new Transaction.Handler() {
             @Override
             public Transaction.Result doTransaction(MutableData mutableData) {

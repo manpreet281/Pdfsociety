@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
@@ -41,7 +42,6 @@ public class MyDownloadService extends MyBaseTaskService{
     private StorageReference mStorageRef;
     private static String TAG;
 
-
     @Override
     public void onCreate() {
         super.onCreate();
@@ -59,8 +59,10 @@ public class MyDownloadService extends MyBaseTaskService{
         Log.d(TAG, "onStartCommand:" + intent + ":" + startId);
 
         if (ACTION_DOWNLOAD.equals(intent.getAction())) {
-            String pdfNAME = intent.getStringExtra("pdfname");
-            mStorageRef = FirebaseStorage.getInstance().getReferenceFromUrl("gs://pdfsociety-936a1.appspot.com").child(getString(R.string.DB_Pdfs)).child(pdfNAME);
+            mStorageRef = FirebaseStorage.getInstance().getReferenceFromUrl("gs://pdfsociety-936a1.appspot.com")
+                    .child(intent.getStringExtra("uid"))
+                    .child(intent.getStringExtra("pdfkey"))
+                    .child(intent.getStringExtra("pdfname"));
             String downloadFileName = mStorageRef.getName();
             downloadFromPath(downloadFileName);
         }

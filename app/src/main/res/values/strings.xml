@@ -15,6 +15,7 @@
     <string name="DB_Pdfs">Pdfs</string>
     <string name="DB_user_pdfs">User-pdfs</string>
 
+    <string name="storage_pdfs">Pdfs</string>
 
     <string-array name="india_cities">
         <item>Agartala</item>
@@ -214,9 +215,6 @@
     <string name="progress_uploading">Uploading…</string>
     <string name="upload_success">Upload finished</string>
     <string name="upload_failure">Upload failed</string>
-
-    <string name="storage_pdfs">Pdfs</string>
-
 
     <string name="download_success">Download finished</string>
     <string name="download_failure">Download failure</string>

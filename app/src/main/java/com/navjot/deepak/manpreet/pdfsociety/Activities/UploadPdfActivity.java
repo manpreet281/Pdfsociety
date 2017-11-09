@@ -20,6 +20,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.navjot.deepak.manpreet.pdfsociety.Activities.NavDrawer.HomeActivity;
 import com.navjot.deepak.manpreet.pdfsociety.Models.User;
 import com.navjot.deepak.manpreet.pdfsociety.R;
 import com.navjot.deepak.manpreet.pdfsociety.Services.MyUploadService;
@@ -38,6 +39,7 @@ public class UploadPdfActivity extends Progressdialog {
     private static final String KEY_FILE_URI = "key_file_uri";
     private static final String KEY_DOWNLOAD_URL = "key_download_url";
     private static String username;
+    private static String pdfkey;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +61,8 @@ public class UploadPdfActivity extends Progressdialog {
         // Register receiver for uploads and downloads
         LocalBroadcastManager manager = LocalBroadcastManager.getInstance(this);
         manager.registerReceiver(mBroadcastReceiver, MyUploadService.getIntentFilter());
+
+        pdfkey = getIntent().getStringExtra("pdfkey");
     }
 
     @Override
@@ -124,9 +128,13 @@ public class UploadPdfActivity extends Progressdialog {
                 .putExtra("description", description.getText().toString().trim())
                 .putExtra("uid", FirebaseAuth.getInstance().getCurrentUser().getUid())
                 .putExtra("username",username)
+                .putExtra("pdfkey", pdfkey)
                 .setAction(MyUploadService.ACTION_UPLOAD));
 
         Toast.makeText(this, getString(R.string.progress_uploading), Toast.LENGTH_LONG).show();
+
+        startActivity(new Intent(UploadPdfActivity.this, HomeActivity.class));
+        finish();
     }
 
     public void getusername(){
