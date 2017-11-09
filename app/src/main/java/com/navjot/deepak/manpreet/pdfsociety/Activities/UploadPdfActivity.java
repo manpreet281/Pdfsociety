@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -31,7 +33,9 @@ public class UploadPdfActivity extends Progressdialog {
 
     EditText description;
     Button uploadbtn;
-    private BroadcastReceiver mBroadcastReceiver;
+    TextView selectPdf;
+    EditText pdfName;
+    TextInputLayout textInputPdfName;
 
     private static final int RC_TAKE_PDF = 101;
     private Uri mFileUri = null;
@@ -52,16 +56,10 @@ public class UploadPdfActivity extends Progressdialog {
         initViews();
         getusername();
         restoreInstanceState(savedInstanceState);
-        broadcastReceive();
     }
 
     public void onStart() {
         super.onStart();
-
-        // Register receiver for uploads and downloads
-        LocalBroadcastManager manager = LocalBroadcastManager.getInstance(this);
-        manager.registerReceiver(mBroadcastReceiver, MyUploadService.getIntentFilter());
-
         pdfkey = getIntent().getStringExtra("pdfkey");
     }
 
@@ -73,26 +71,31 @@ public class UploadPdfActivity extends Progressdialog {
         Log.d(getString(R.string.tag), "onSaveInstanceState");
     }
 
-    @Override
-    public void onStop() {
-        super.onStop();
-        Log.d(getString(R.string.tag), "onStop");
-        // Unregister download receiver
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(mBroadcastReceiver);
-    }
-
     public void initViews(){
         description = (EditText)findViewById(R.id.Description);
-        uploadbtn   = (Button)  findViewById(R.id.UploadButton);
+        uploadbtn   = (Button) findViewById(R.id.UploadButton);
+        selectPdf = (TextView) findViewById(R.id.selectPdfTextView);
+        pdfName = (EditText) findViewById(R.id.pdfNameEditText);
+        textInputPdfName = (TextInputLayout)findViewById(R.id.pdfnameTextInputLayout);
     }
 
     public void uploadbtnClicked(View v){
         if(validateForm()){
-            // Pick a Pdf from storage
-            Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-            intent.setType("application/pdf");
-            startActivityForResult(intent, RC_TAKE_PDF);
+            uploadFromUri(mFileUri, pdfName.getText().toString().trim());
         }
+    }
+
+    public String getFileName(String uri){
+        int index;
+        while(uri.contains(":")){
+            index = uri.indexOf(":");
+            uri = uri.substring(index+1);
+        }
+        while (uri.contains("/")){
+            index = uri.indexOf("/");
+            uri = uri.substring(index+1);
+        }
+        return uri;
     }
 
     @Override
@@ -103,17 +106,23 @@ public class UploadPdfActivity extends Progressdialog {
                 mFileUri = data.getData();
 
                 if (mFileUri != null) {
-                    uploadFromUri(mFileUri);
-                } else {
+                    selectPdf.setError(null);
+                    pdfName.setError(null);
+                    textInputPdfName.setVisibility(View.VISIBLE);
+                    selectPdf.setText(getFileName(mFileUri.getLastPathSegment()) +" selected");
+                    pdfName.setText(getFileName(mFileUri.getLastPathSegment()));
+                }
+                else {
                     Log.w(getString(R.string.tag), "File URI is null");
                 }
-            } else {
+            }
+            else {
                 Toast.makeText(this, "Taking Pdf failed.", Toast.LENGTH_SHORT).show();
             }
         }
     }
 
-    private void uploadFromUri(Uri fileUri) {
+    private void uploadFromUri(Uri fileUri, String pdfname) {
         Log.d(getString(R.string.tag), "uploadFromUri:src(fileuri.tostring):" + fileUri.toString());
 
         // Save the File URI
@@ -129,6 +138,7 @@ public class UploadPdfActivity extends Progressdialog {
                 .putExtra("uid", FirebaseAuth.getInstance().getCurrentUser().getUid())
                 .putExtra("username",username)
                 .putExtra("pdfkey", pdfkey)
+                .putExtra("pdfname", pdfname)
                 .setAction(MyUploadService.ACTION_UPLOAD));
 
         Toast.makeText(this, getString(R.string.progress_uploading), Toast.LENGTH_LONG).show();
@@ -163,23 +173,6 @@ public class UploadPdfActivity extends Progressdialog {
         onNewIntent(getIntent());
     }
 
-    public void broadcastReceive(){
-        mBroadcastReceiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                Log.d(getString(R.string.tag), "onReceive:" + intent);
-                hideProgressDialog();
-
-                switch (intent.getAction()) {
-                    case MyUploadService.UPLOAD_COMPLETED:
-                    case MyUploadService.UPLOAD_ERROR:
-                        onUploadResultIntent(intent);
-                        break;
-                }
-            }
-        };
-    }
-
     @Override
     public void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
@@ -204,11 +197,30 @@ public class UploadPdfActivity extends Progressdialog {
         if(TextUtils.isEmpty(description.getText().toString().trim())){
             description.setError("Required");
             valid = false;
-        }else{
+        }
+        else if(selectPdf.getText().toString().trim() == getString(R.string.Select_Pdf)){
+            selectPdf.setError("Select Pdf");
+            valid = false;
+        }
+        else if(TextUtils.isEmpty(pdfName.getText().toString().trim())){
+            pdfName.setError("Please specify name of pdf");
+            valid = false;
+        }
+        else{
             description.setError(null);
+            selectPdf.setError(null);
+            pdfName.setError(null);
         }
         return valid;
     }
+
+    public void selectPdfClicked(View v){
+        // Pick a Pdf from storage
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("application/pdf");
+        startActivityForResult(intent, RC_TAKE_PDF);
+    }
+
     public boolean onSupportNavigateUp(){
         onBackPressed();
         return true;

@@ -41,6 +41,7 @@ public class MyUploadService extends MyBaseTaskService {
     private static double pdfsize;
     private static String uploaddate;
     public static String pdfkey;
+    public static String pdfname;
 
     public StorageReference mStorageRef;
     public DatabaseReference dbref;
@@ -61,25 +62,13 @@ public class MyUploadService extends MyBaseTaskService {
             uid = intent.getStringExtra("uid");
             username = intent.getStringExtra("username");
             pdfkey = intent.getStringExtra("pdfkey");
+            pdfname = intent.getStringExtra("pdfname");
 
             Uri fileUri = intent.getParcelableExtra(EXTRA_FILE_URI);
             uploadFromUri(fileUri);
         }
 
         return START_REDELIVER_INTENT;
-    }
-
-    public String getFileName(String uri){
-        int index;
-        while(uri.contains(":")){
-            index = uri.indexOf(":");
-            uri = uri.substring(index+1);
-        }
-        while (uri.contains("/")){
-            index = uri.indexOf("/");
-            uri = uri.substring(index+1);
-        }
-        return uri;
     }
 
     public void uploadFromUri(final Uri fileUri) {
@@ -93,7 +82,7 @@ public class MyUploadService extends MyBaseTaskService {
         final StorageReference pdfref = mStorageRef
                 .child(uid)
                 .child(pdfkey)
-                .child(getFileName(fileUri.getLastPathSegment()));
+                .child(pdfname);
 
         // Upload file to Firebase Storage
         pdfref.putFile(fileUri).
