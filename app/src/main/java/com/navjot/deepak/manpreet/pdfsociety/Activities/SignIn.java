@@ -50,7 +50,7 @@ public class SignIn extends Progressdialog {
     protected void onStart(){
         super.onStart();
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        updateUI(currentUser);
+        //updateUI(currentUser);
     }
 
     public void updateUI(FirebaseUser user){
@@ -88,9 +88,7 @@ public class SignIn extends Progressdialog {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            updateUI(user);
+                            checkIfEmailVerified();
                         } else {
                             Toast.makeText(SignIn.this, task.getException().getMessage(),
                                     Toast.LENGTH_LONG).show();
@@ -99,6 +97,20 @@ public class SignIn extends Progressdialog {
                         hideProgressDialog();
                     }
                 });
+    }
+
+    private void checkIfEmailVerified(){
+        FirebaseUser user=FirebaseAuth.getInstance().getCurrentUser();
+        if (user.isEmailVerified()){
+            Toast.makeText(getApplicationContext(),
+                    "Login successful", Toast.LENGTH_SHORT).show();
+            Intent sendToHome = new Intent(getApplicationContext(),
+                    HomeActivity.class);
+            startActivity(sendToHome);
+        } else {
+            Toast.makeText(getApplicationContext(),
+                    "Email verification is not complete",Toast.LENGTH_SHORT).show();
+        }
     }
 
     public boolean emailValidator(String email)

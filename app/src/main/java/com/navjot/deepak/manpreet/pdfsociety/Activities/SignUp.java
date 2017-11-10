@@ -23,8 +23,10 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseNetworkException;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -116,27 +118,56 @@ public class SignUp extends Progressdialog implements DatePickerDialog.OnDateSet
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()) {
-                                // Sign in success, update UI with the signed-in user's information
-                                Log.d(TAG, "createUserWithEmail:success");
-                                dbRegister(task.getResult().getUser());
-                                updateUI(task.getResult().getUser());
-                            } else {
-                                // If sign in fails, display a message to the user.
-                                Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                                Toast.makeText(SignUp.this, ""+task.getException().getMessage(),
-                                        Toast.LENGTH_LONG).show();
-                            }
-
                             // [START_EXCLUDE]
                             hideProgressDialog();
                             // [END_EXCLUDE]
+                            if (!task.isSuccessful()){
+                                try {
+                                    throw task.getException();
+                                } catch (FirebaseNetworkException e) {
+                                    Toast.makeText(SignUp.this,
+                                            "Network Problem!!",Toast.LENGTH_SHORT).show();
+                                } catch (Exception e) {
+                                    Toast.makeText(SignUp.this,
+                                            "Error"+String.valueOf(task.getException()),Toast.LENGTH_SHORT).show();
+                                }
+                                Toast.makeText(SignUp.this,
+                                        "Error"+String.valueOf(task.getException()),Toast.LENGTH_SHORT).show();
+
+
+                                if (task.getException() instanceof FirebaseAuthUserCollisionException){
+                                    Toast.makeText(SignUp.this,
+                                            "Email is already registered", Toast.LENGTH_LONG).show();
+                                }
+                            } else {
+                                Toast.makeText(SignUp.this,
+                                        "Check your Email for verification mail", Toast.LENGTH_LONG).show();
+                                sendVerificationEmail();
+                                // Sign in success, update UI with the signed-in user's information
+                                Log.d(TAG, "createUserWithEmail:success");
+                                dbRegister(task.getResult().getUser());
+                            }
                         }
                     });
 
         }else{
             Toast.makeText(SignUp.this, "Please fill all fields correctly", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public void sendVerificationEmail(){
+        FirebaseUser user=FirebaseAuth.getInstance().getCurrentUser();
+        user.sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()){
+
+                    Intent sendtoSignin=new Intent(getApplicationContext(),
+                            SignIn.class);
+                    startActivity(sendtoSignin);
+                }
+            }
+        });
     }
 
     public void dbRegister(FirebaseUser fuser){
@@ -183,14 +214,6 @@ public class SignUp extends Progressdialog implements DatePickerDialog.OnDateSet
             }
         });
         return gender;
-    }
-
-    public void updateUI(FirebaseUser user){
-        hideProgressDialog();
-
-        if (user != null){
-            startActivity(new Intent(SignUp.this, HomeActivity.class));
-        }
     }
 
     public boolean validateForm(){
