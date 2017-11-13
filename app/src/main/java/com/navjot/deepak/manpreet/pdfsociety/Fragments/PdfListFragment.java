@@ -96,73 +96,17 @@ public abstract class PdfListFragment extends Fragment {
                     public void onClick(View v) {
                         Log.d(getString(R.string.tag), "PostListFragment onBindViewHolder viewHolder onClick");
                         // Launch PdfDetailActivity
+                        Log.d(getString(R.string.tag), "PdfKey: "+PdfKey);
                         Intent intent = new Intent(getActivity(), PdfDetailActivity.class);
                         intent.putExtra("pdfkey", PdfKey);
                         startActivity(intent);
                     }
                 });
-
-                // Determine if the current user has liked this Pdf and set UI accordingly
-//                if (model.stars.containsKey(getUid())) {
-//                    viewHolder.starView.setImageResource(R.drawable.ic_toggle_star_24);
-//                } else {
-//                    viewHolder.starView.setImageResource(R.drawable.ic_toggle_star_outline_24);
-//                }
-
-                // Bind Pdf to ViewHolder, setting OnClickListener for the star button
-                viewHolder.bindToPdf(model, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View starView) {
-                        Log.d(getString(R.string.tag), "PostListFragment viewholder bindToPost onClick");
-                        // Need to write to both places the Pdf is stored
-                        DatabaseReference globalPdfRef = mDatabase.child(getString(R.string.DB_Pdfs)).child(PdfRef.getKey());
-                        DatabaseReference userPdfRef = mDatabase.child("user-Pdfs").child(model.getUid()).child(PdfRef.getKey());
-
-                        // Run two transactions
-                        onStarClicked(globalPdfRef);
-                        onStarClicked(userPdfRef);
-                    }
-                });
+                viewHolder.bindToPdf(model);
             }
         };
         mRecycler.setAdapter(mAdapter);
     }
-
-    // [START Pdf_stars_transaction]
-    protected void onStarClicked(DatabaseReference PdfRef) {
-        PdfRef.runTransaction(new Transaction.Handler() {
-            @Override
-            public Transaction.Result doTransaction(MutableData mutableData) {
-                Pdf p = mutableData.getValue(Pdf.class);
-                if (p == null) {
-                    return Transaction.success(mutableData);
-                }
-
-//                if (p.stars.containsKey(getUid())) {
-//                    // Unstar the Pdf and remove self from stars
-//                    p.starCount = p.starCount - 1;
-//                    p.stars.remove(getUid());
-//                } else {
-//                    // Star the Pdf and add self to stars
-//                    p.starCount = p.starCount + 1;
-//                    p.stars.put(getUid(), true);
-//                }
-
-                // Set value and report transaction success
-                mutableData.setValue(p);
-                return Transaction.success(mutableData);
-            }
-
-            @Override
-            public void onComplete(DatabaseError databaseError, boolean b,
-                                   DataSnapshot dataSnapshot) {
-                // Transaction completed
-                Log.d(getString(R.string.tag), "PdfTransaction:onComplete:" + databaseError);
-            }
-        });
-    }
-    // [END Pdf_stars_transaction]
-
 
     @Override
     public void onStart() {

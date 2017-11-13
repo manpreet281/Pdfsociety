@@ -27,7 +27,9 @@ public class MyFirebaseInstanceIdService extends FirebaseInstanceIdService {
         String refreshedToken = FirebaseInstanceId.getInstance().getToken();
         Log.d(TAG, "Refreshed token: " + refreshedToken);
 
-        saveTokeninDB(refreshedToken);
+        if(FirebaseAuth.getInstance().getCurrentUser() != null){
+            saveTokeninDB(refreshedToken);
+        }
     }
 
     public void saveTokeninDB(String token){

@@ -1,6 +1,7 @@
 package com.navjot.deepak.manpreet.pdfsociety.Activities;
 
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import java.util.Calendar;
@@ -8,6 +9,7 @@ import java.util.Calendar;
 import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -125,27 +127,14 @@ public class SignUp extends Progressdialog implements DatePickerDialog.OnDateSet
                                 try {
                                     throw task.getException();
                                 } catch (FirebaseNetworkException e) {
-                                    Toast.makeText(SignUp.this,
-                                            "Network Problem!!",Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(SignUp.this, "Check your internet connection",Toast.LENGTH_SHORT).show();
                                 } catch (Exception e) {
-                                    Toast.makeText(SignUp.this,
-                                            "Error"+String.valueOf(task.getException()),Toast.LENGTH_SHORT).show();
-                                }
-                                Toast.makeText(SignUp.this,
-                                        "Error"+String.valueOf(task.getException()),Toast.LENGTH_SHORT).show();
-
-
-                                if (task.getException() instanceof FirebaseAuthUserCollisionException){
-                                    Toast.makeText(SignUp.this,
-                                            "Email is already registered", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(SignUp.this, ""+task.getException().getMessage(),Toast.LENGTH_SHORT).show();
                                 }
                             } else {
-                                Toast.makeText(SignUp.this,
-                                        "Check your Email for verification mail", Toast.LENGTH_LONG).show();
-                                sendVerificationEmail();
-                                // Sign in success, update UI with the signed-in user's information
                                 Log.d(TAG, "createUserWithEmail:success");
                                 dbRegister(task.getResult().getUser());
+                                sendVerificationEmail();
                             }
                         }
                     });
@@ -161,10 +150,7 @@ public class SignUp extends Progressdialog implements DatePickerDialog.OnDateSet
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()){
-
-                    Intent sendtoSignin=new Intent(getApplicationContext(),
-                            SignIn.class);
-                    startActivity(sendtoSignin);
+                    checkEmailDialog();
                 }
             }
         });
@@ -249,6 +235,20 @@ public class SignUp extends Progressdialog implements DatePickerDialog.OnDateSet
         } else {
             return email;
         }
+    }
+
+    private void checkEmailDialog(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setCancelable(false);
+        builder.setMessage("Check your Email for verification");
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                startActivity(new Intent(getApplicationContext(), SignIn.class));
+                finish();
+            }
+        });
+        builder.create().show();
     }
 
     @Override

@@ -5,39 +5,30 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import android.widget.Toast;
-
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.storage.FirebaseStorage;
 import com.navjot.deepak.manpreet.pdfsociety.Activities.PdfDetailActivity;
-import com.navjot.deepak.manpreet.pdfsociety.Activities.Progressdialog;
 import com.navjot.deepak.manpreet.pdfsociety.Models.Pdf;
 import com.navjot.deepak.manpreet.pdfsociety.R;
 import com.navjot.deepak.manpreet.pdfsociety.Viewholders.MyPdfViewHolder;
-import com.navjot.deepak.manpreet.pdfsociety.Viewholders.PdfViewHolder;
 
 public class MyPdfsFragment extends PdfListFragment {
 
     private FirebaseRecyclerAdapter<Pdf, MyPdfViewHolder> mAdapter;
     Pdf pdf;
-    DatabaseReference PdfRef;
     ProgressDialog mprogress;
-    private static String PdfKey;
 
     public MyPdfsFragment() {}
 
@@ -68,7 +59,6 @@ public class MyPdfsFragment extends PdfListFragment {
 
         mAdapter = new FirebaseRecyclerAdapter<Pdf, MyPdfViewHolder>(options) {
 
-
             @Override
             public MyPdfViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
                 mProgressBar.setVisibility(View.GONE);
@@ -79,10 +69,10 @@ public class MyPdfsFragment extends PdfListFragment {
 
             @Override
             protected void onBindViewHolder(MyPdfViewHolder viewHolder, int position, final Pdf model) {
-                PdfRef = getRef(position);
+              final DatabaseReference PdfRef = getRef(position);
                 Log.d(getString(R.string.tag), "PostListFragment onBindViewHolder position: "+position);
                 // Set click listener for the whole Pdf view
-                PdfKey = PdfRef.getKey();
+                final String PdfKey = PdfRef.getKey();
                 viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -93,21 +83,13 @@ public class MyPdfsFragment extends PdfListFragment {
                         startActivity(intent);
                     }
                 });
-
-                // Determine if the current user has liked this Pdf and set UI accordingly
-//                if (model.stars.containsKey(getUid())) {
-//                    viewHolder.starView.setImageResource(R.drawable.ic_toggle_star_24);
-//                } else {
-//                    viewHolder.starView.setImageResource(R.drawable.ic_toggle_star_outline_24);
-//                }
-
                 // Bind Pdf to ViewHolder, setting OnClickListener for the deletepdf button
                 viewHolder.bindToPdf(model, new View.OnClickListener() {
                     @Override
                     public void onClick(View starView) {
                         pdf = model;
                         Log.d(getString(R.string.tag), "PostListFragment viewholder bindToPost onDeleteClicked");
-                        askForDeletion();
+                        askForDeletion(PdfKey);
                     }
                 });
             }
@@ -115,7 +97,7 @@ public class MyPdfsFragment extends PdfListFragment {
         mRecycler.setAdapter(mAdapter);
     }
 
-    public void askForDeletion(){
+    public void askForDeletion(final String pdfkey){
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle("Delete: "+pdf.getPdfname());
         builder.setMessage("Are you Sure ?");
@@ -123,15 +105,17 @@ public class MyPdfsFragment extends PdfListFragment {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 showCaptionProgressDialog("Deleting...");
-                deletePdfOnStorage();
+                deletePdfOnStorage(pdfkey);
             }
         });
         builder.setNegativeButton("Cancel",null);
         builder.create().show();
     }
 
-    public void deletePdfOnStorage(){
+    public void deletePdfOnStorage(final String PdfKey){
         Log.d(getString(R.string.tag), "pdf.getPdfname(): "+pdf.getPdfname());
+        Log.d(getString(R.string.tag), "getUid(): "+getUid());
+        Log.d(getString(R.string.tag), "PdfKey: "+PdfKey);
         FirebaseStorage.getInstance().getReference()
                 .child(getUid())
                 .child(PdfKey)
@@ -141,8 +125,8 @@ public class MyPdfsFragment extends PdfListFragment {
                     @Override
                     public void onSuccess(Void aVoid) {
                         Toast.makeText(getActivity(), pdf.getPdfname()+" deleted", Toast.LENGTH_SHORT).show();
-                        DatabaseReference globalPdfRef = mDatabase.child(getString(R.string.DB_Pdfs)).child(PdfRef.getKey());
-                        DatabaseReference userPdfRef = mDatabase.child(getString(R.string.DB_user_pdfs)).child(pdf.getUid()).child(PdfRef.getKey());
+                        DatabaseReference globalPdfRef = mDatabase.child(getString(R.string.DB_Pdfs)).child(PdfKey);
+                        DatabaseReference userPdfRef = mDatabase.child(getString(R.string.DB_user_pdfs)).child(pdf.getUid()).child(PdfKey);
                         deletePdfOnFirebaseDB(globalPdfRef);
                         deletePdfOnFirebaseDB(userPdfRef);
                     }
