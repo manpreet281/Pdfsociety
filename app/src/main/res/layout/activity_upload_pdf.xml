@@ -18,7 +18,9 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="textMultiLine"
-            android:lines="4"
+            android:maxLines="5"
+            android:minLines="1"
+            android:fadeScrollbars="false"
             android:gravity="top|left"
             android:scrollbars="vertical"
             android:hint="Description"
@@ -28,10 +30,12 @@
     <TextView
         android:id="@+id/selectPdfTextView"
         android:layout_marginTop="25dp"
-        android:text="@string/Select_Pdf"
-        android:background="@color/offwhite"
+        android:text=" Select Pdf "
+        android:textSize="20dp"
+        android:textColor="@color/white"
+        android:background="@drawable/selectbutton"
         android:onClick="selectPdfClicked"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
     <android.support.design.widget.TextInputLayout
