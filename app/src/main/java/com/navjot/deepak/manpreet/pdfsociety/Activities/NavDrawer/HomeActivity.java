@@ -1,6 +1,8 @@
 package com.navjot.deepak.manpreet.pdfsociety.Activities.NavDrawer;
 
 import android.app.ActionBar;
+import android.app.SearchManager;
+import android.content.Context;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.content.Intent;
@@ -11,7 +13,11 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.SearchView;
+import android.view.Gravity;
+import android.view.MenuInflater;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -21,6 +27,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+
 import android.widget.TextView;
 import android.widget.Toast;
 import com.navjot.deepak.manpreet.pdfsociety.Activities.UploadPdfActivity;
@@ -31,6 +38,7 @@ import com.navjot.deepak.manpreet.pdfsociety.Fragments.MyPdfsFragment;
 import com.navjot.deepak.manpreet.pdfsociety.Fragments.RecentPdfsFragment;
 import com.navjot.deepak.manpreet.pdfsociety.R;
 import java.io.File;
+import java.util.zip.Inflater;
 
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,
         View.OnClickListener
@@ -128,9 +136,36 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(Menu menu ) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.home, menu);
+
+
+            MenuItem item = menu.findItem(R.id.menusearch);
+        SearchView search = (SearchView) item.getActionView();
+
+
+        search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                @Override
+                public boolean onQueryTextSubmit(String s) {
+
+                    Toast.makeText(getApplicationContext(),"textChanged :"+s,Toast.LENGTH_LONG).show();
+
+                    return false;
+                }
+
+                @Override
+                public boolean onQueryTextChange(String query) {
+
+
+                    // **Here you can get the value "query" which is entered in the search box.**
+
+                    Toast.makeText(getApplicationContext(),"searchvalue :"+query,Toast.LENGTH_LONG).show();
+
+                    return false;
+                }
+            });
+            super.onCreateOptionsMenu(menu);
         // Inflate menu resource file.
 
 
@@ -213,6 +248,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 break;
         }
     }
+
+
 }
 
 

@@ -11,9 +11,14 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
 import android.widget.ProgressBar;
+import android.widget.SearchView;
 import android.widget.TextView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -54,6 +59,8 @@ public abstract class PdfListFragment extends Fragment {
         mRecycler =  rootView.findViewById(R.id.messages_list);
         mRecycler.setHasFixedSize(true);
         return rootView;
+
+
     }
 
     @Override
@@ -131,4 +138,26 @@ public abstract class PdfListFragment extends Fragment {
 
     public abstract Query getQuery(DatabaseReference databaseReference);
 
-}
+
+  /*  @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.home,menu);
+        MenuItem item = menu.findItem(R.id.menusearch);
+        SearchView searchView = (SearchView)item.getActionView();
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                mAdapter.notifyDataSetChanged();
+
+                return false;
+            }
+        });
+        super.onCreateOptionsMenu(menu, inflater);*/
+    }
+
