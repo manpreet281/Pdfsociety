@@ -46,10 +46,9 @@ public abstract class PdfListFragment extends Fragment {
     protected LinearLayoutManager mManager;
     protected ProgressBar mProgressBar;
     TextView Nopdf;
+    int i=0;
 
     public PdfListFragment() {}
-
-
 
     @Override
     public View onCreateView (LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
@@ -67,8 +66,6 @@ public abstract class PdfListFragment extends Fragment {
         mRecycler =  rootView.findViewById(R.id.messages_list);
         mRecycler.setHasFixedSize(true);
         return rootView;
-
-
     }
 
     @Override
@@ -91,10 +88,13 @@ public abstract class PdfListFragment extends Fragment {
         mAdapter = new FirebaseRecyclerAdapter<Pdf, PdfViewHolder>(options) {
 
             public void onDataChanged() {
+                if(i == 0){
+                    mProgressBar.setVisibility(View.GONE);
+                    Nopdf.setText("No Pdfs Uploaded Yet !!");
+                    Nopdf.setVisibility(View.VISIBLE);
+                    i = 1;
+                }
                 Log.d(getString(R.string.tag), "onDataChanged");
-                mProgressBar.setVisibility(View.GONE);
-                Nopdf.setText("No Pdfs Uploaded Yet !!");
-                Nopdf.setVisibility(View.VISIBLE);
             }
 
             @Override

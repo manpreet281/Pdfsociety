@@ -61,11 +61,14 @@ public class MyPdfsFragment extends PdfListFragment {
 
         mAdapter = new FirebaseRecyclerAdapter<Pdf, MyPdfViewHolder>(options) {
 
-            @Override
             public void onDataChanged() {
+                if(i == 0){
                     mProgressBar.setVisibility(View.GONE);
-                Nopdf.setText("No Pdfs Uploaded Yet !!");
-                Nopdf.setVisibility(View.VISIBLE);
+                    Nopdf.setText("No Pdfs Uploaded Yet !!");
+                    Nopdf.setVisibility(View.VISIBLE);
+                    i = 1;
+                }
+                Log.d(getString(R.string.tag), "onDataChanged");
             }
 
             @Override
