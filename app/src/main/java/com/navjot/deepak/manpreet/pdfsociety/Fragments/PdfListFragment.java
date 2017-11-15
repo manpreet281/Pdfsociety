@@ -36,6 +36,8 @@ import com.navjot.deepak.manpreet.pdfsociety.Models.Pdf;
 import com.navjot.deepak.manpreet.pdfsociety.R;
 import com.navjot.deepak.manpreet.pdfsociety.Viewholders.PdfViewHolder;
 
+import org.w3c.dom.Text;
+
 public abstract class PdfListFragment extends Fragment {
 
     protected DatabaseReference mDatabase;
@@ -43,13 +45,19 @@ public abstract class PdfListFragment extends Fragment {
     protected RecyclerView mRecycler;
     protected LinearLayoutManager mManager;
     protected ProgressBar mProgressBar;
+    TextView Nopdf;
+
     public PdfListFragment() {}
+
+
 
     @Override
     public View onCreateView (LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         View rootView = inflater.inflate(R.layout.fragment_all_pdfs, container, false);
         Log.d(getString(R.string.tag), "onCreateView: container: "+container);
+
+        Nopdf = rootView.findViewById(R.id.Nopdf);
         mProgressBar = rootView.findViewById(R.id.mProgressBar);
 
         // [START create_database_reference]
@@ -82,10 +90,17 @@ public abstract class PdfListFragment extends Fragment {
 
         mAdapter = new FirebaseRecyclerAdapter<Pdf, PdfViewHolder>(options) {
 
+            public void onDataChanged() {
+                Log.d(getString(R.string.tag), "onDataChanged");
+                mProgressBar.setVisibility(View.GONE);
+                Nopdf.setText("No Pdfs Uploaded Yet !!");
+                Nopdf.setVisibility(View.VISIBLE);
+            }
 
             @Override
             public PdfViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
                 mProgressBar.setVisibility(View.GONE);
+                Nopdf.setVisibility(View.GONE);
                 Log.d(getString(R.string.tag), "PostListFragment PostViewHolder onCreateViewHolder");
                 LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
                 return new PdfViewHolder(inflater.inflate(R.layout.item_pdf, viewGroup, false));
@@ -131,13 +146,11 @@ public abstract class PdfListFragment extends Fragment {
         }
     }
 
-
     public String getUid() {
         return FirebaseAuth.getInstance().getCurrentUser().getUid();
     }
 
     public abstract Query getQuery(DatabaseReference databaseReference);
-
 
   /*  @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
