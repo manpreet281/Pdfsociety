@@ -43,7 +43,7 @@ public class MyBaseTaskService extends Service {
     /**
      * Show notification with a progress bar.
      */
-    protected void showProgressNotification(String caption, long completedUnits, long totalUnits) {
+    protected void showProgressNotification(String Title, String caption, long completedUnits, long totalUnits) {
         int percentComplete = 0;
         if (totalUnits > 0) {
             percentComplete = (int) (100 * completedUnits / totalUnits);
@@ -51,7 +51,7 @@ public class MyBaseTaskService extends Service {
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.drawable.ic_file_upload_white_24dp)
-                .setContentTitle(getString(R.string.app_name))
+                .setContentTitle(Title)
                 .setContentText(caption)
                 .setProgress(100, percentComplete, false)
                 .setOngoing(true)
@@ -66,16 +66,33 @@ public class MyBaseTaskService extends Service {
     /**
      * Show notification that the activity finished.
      */
-    protected void showFinishedNotification(String caption, Intent intent, boolean success) {
-        // Make PendingIntent for notification
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* requestCode */, intent,
-                PendingIntent.FLAG_UPDATE_CURRENT);
+    protected void showFinishedNotification(String Title,String caption, PendingIntent pendingIntent, boolean success) {
 
         int icon = success ? R.drawable.ic_check_white_24 : R.drawable.ic_cross;
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
                 .setSmallIcon(icon)
-                .setContentTitle(getString(R.string.app_name))
+                .setContentTitle(Title)
+                .setContentText(caption)
+                .setAutoCancel(true)
+                .setContentIntent(pendingIntent);
+
+        NotificationManager manager =
+                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+        manager.notify(FINISHED_NOTIFICATION_ID, builder.build());
+    }
+
+    protected void showFinishedNotificationupload(String Title,String caption, Intent intent, boolean success) {
+
+        // Make PendingIntent for notification
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* requestCode */, intent,
+        PendingIntent.FLAG_UPDATE_CURRENT);
+        int icon = success ? R.drawable.ic_check_white_24 : R.drawable.ic_cross;
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
+                .setSmallIcon(icon)
+                .setContentTitle(Title)
                 .setContentText(caption)
                 .setAutoCancel(true)
                 .setContentIntent(pendingIntent);
@@ -96,7 +113,7 @@ public class MyBaseTaskService extends Service {
         manager.cancel(PROGRESS_NOTIFICATION_ID);
     }
 
-    protected void showDownloadProgressNotification(String caption, long completedUnits, long totalUnits) {
+    protected void showDownloadProgressNotification(String Title,String caption, long completedUnits, long totalUnits) {
         int percentComplete = 0;
         if (totalUnits > 0) {
             percentComplete = (int) (100 * completedUnits / totalUnits);
@@ -104,7 +121,7 @@ public class MyBaseTaskService extends Service {
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.drawable.ic_download)
-                .setContentTitle(getString(R.string.app_name))
+                .setContentTitle(Title)
                 .setContentText(caption)
                 .setProgress(100, percentComplete, false)
                 .setOngoing(true)

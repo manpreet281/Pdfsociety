@@ -1,13 +1,16 @@
 package com.navjot.deepak.manpreet.pdfsociety.Services;
 
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.net.Uri;
 import android.os.Environment;
 import android.os.IBinder;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
+import android.webkit.MimeTypeMap;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -41,6 +44,7 @@ public class MyDownloadService extends MyBaseTaskService{
 
     private StorageReference mStorageRef;
     private static String TAG;
+    private static String pdfname;
 
     @Override
     public void onCreate() {
@@ -57,6 +61,8 @@ public class MyDownloadService extends MyBaseTaskService{
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.d(TAG, "onStartCommand:" + intent + ":" + startId);
+
+        pdfname = intent.getStringExtra("pdfname");
 
         if (ACTION_DOWNLOAD.equals(intent.getAction())) {
             mStorageRef = FirebaseStorage.getInstance().getReferenceFromUrl("gs://pdfsociety-936a1.appspot.com")
@@ -75,7 +81,7 @@ public class MyDownloadService extends MyBaseTaskService{
 
         // Mark task started
         taskStarted();
-        showProgressNotification(getString(R.string.progress_downloading), 0, 0);
+        showProgressNotification(pdfname,getString(R.string.progress_downloading), 0, 0);
 
         File rootPath = new File(Environment.getExternalStorageDirectory(), getString(R.string.app_name));
         if(!rootPath.exists()) {
@@ -87,7 +93,7 @@ public class MyDownloadService extends MyBaseTaskService{
                 .addOnProgressListener(new OnProgressListener<FileDownloadTask.TaskSnapshot>() {
                     @Override
                     public void onProgress(FileDownloadTask.TaskSnapshot taskSnapshot) {
-                        showDownloadProgressNotification("Downloading", taskSnapshot.getBytesTransferred(), taskSnapshot.getTotalByteCount());
+                        showDownloadProgressNotification(pdfname,"Downloading", taskSnapshot.getBytesTransferred(), taskSnapshot.getTotalByteCount());
                     }
                 })
                 .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
@@ -96,7 +102,7 @@ public class MyDownloadService extends MyBaseTaskService{
                         //Log.d(TAG, "download:SUCCESS");
                         Log.e("firebase ",";local tem file created  created " +localFile.toString());
 
-                        showDownloadFinishedNotification(downloadPath, (int) taskSnapshot.getTotalByteCount());
+                        showDownloadFinishedNotification(pdfname,downloadPath, (int) taskSnapshot.getTotalByteCount());
 
                         // Mark task completed
                         taskCompleted();
@@ -107,7 +113,7 @@ public class MyDownloadService extends MyBaseTaskService{
                     @Override
                     public void onFailure(@NonNull Exception exception) {
                         Log.w(TAG, "download:FAILURE", exception);
-                        showDownloadFinishedNotification(downloadPath, -1);
+                        showDownloadFinishedNotification(pdfname,downloadPath, -1);
                         Toast.makeText(MyDownloadService.this, "Download Failed", Toast.LENGTH_SHORT).show();
                         // Mark task completed
                         taskCompleted();
@@ -115,15 +121,32 @@ public class MyDownloadService extends MyBaseTaskService{
                 });
     }
 
-    private void showDownloadFinishedNotification(String downloadPath, int bytesDownloaded) {
+    private void showDownloadFinishedNotification(String Title,String downloadPath, int bytesDownloaded) {
         // Hide the progress notification
         dismissProgressNotification();
 
-        Intent intent = new Intent(MyDownloadService.this, HomeActivity.class);
+       // Intent intent = new Intent(MyDownloadService.this, HomeActivity.class);
+        File rootPath = new File(Environment.getExternalStorageDirectory(), getString(R.string.app_name));
+
+        File localFile = new File(rootPath,downloadPath);
+        // Download and get total bytes
+        mStorageRef.getFile(localFile);
+
+        MimeTypeMap mime = MimeTypeMap.getSingleton();
+        String ext=localFile.getName().substring(localFile.getName().indexOf(".")+1);
+        String type = mime.getMimeTypeFromExtension(ext);
+        Intent openFile = new Intent(Intent.ACTION_VIEW, Uri.fromFile(localFile));
+        openFile.setDataAndType(Uri.fromFile(localFile), type);
+
+        openFile.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, openFile, 0);
+
+
 
         boolean success = bytesDownloaded != -1;
         String caption = success ? getString(R.string.download_success) : getString(R.string.download_failure);
-        showFinishedNotification(caption, intent, success);
+        showFinishedNotification(Title,caption, pendingIntent, success);
     }
 }
 

@@ -76,7 +76,7 @@ public class MyUploadService extends MyBaseTaskService {
         pdfkey = dbref.child(getString(R.string.DB_Pdfs)).push().getKey();
 
         taskStarted();
-        showProgressNotification(getString(R.string.progress_uploading), 0, 0);
+        showProgressNotification(pdfname,getString(R.string.progress_uploading), 0, 0);
 
         // Get a reference to store file at photos/<FILENAME>.jpg
         final StorageReference pdfref = mStorageRef
@@ -89,7 +89,7 @@ public class MyUploadService extends MyBaseTaskService {
                 addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-                        showProgressNotification(getString(R.string.progress_uploading),
+                        showProgressNotification(pdfname,getString(R.string.progress_uploading),
                                 taskSnapshot.getBytesTransferred(),
                                 taskSnapshot.getTotalByteCount());
                     }
@@ -120,7 +120,7 @@ public class MyUploadService extends MyBaseTaskService {
                         uploadOnDB(downloadUri.toString(), pdfref.getName());
 
                         broadcastUploadFinished(downloadUri, fileUri);
-                        showUploadFinishedNotification(downloadUri, fileUri);
+                        showUploadFinishedNotification(pdfname, downloadUri, fileUri);
                         taskCompleted();
 
                     }
@@ -133,7 +133,7 @@ public class MyUploadService extends MyBaseTaskService {
 
                         // [START_EXCLUDE]
                         broadcastUploadFinished(null, fileUri);
-                        showUploadFinishedNotification(null, fileUri);
+                        showUploadFinishedNotification(pdfname,null, fileUri);
                         taskCompleted();
                         // [END_EXCLUDE]
                     }
@@ -153,7 +153,7 @@ public class MyUploadService extends MyBaseTaskService {
                 .sendBroadcast(broadcast);
     }
 
-    private void showUploadFinishedNotification(Uri downloadUrl, Uri fileUri) {
+    private void showUploadFinishedNotification(String Title,Uri downloadUrl, Uri fileUri) {
         // Hide the progress notification
         dismissProgressNotification();
 
@@ -165,7 +165,7 @@ public class MyUploadService extends MyBaseTaskService {
 
         boolean success = downloadUrl != null;
         String caption = success ? getString(R.string.upload_success) : getString(R.string.upload_failure);
-        showFinishedNotification(caption, intent, success);
+        showFinishedNotificationupload(Title,caption, intent, success);
     }
 
     public static IntentFilter getIntentFilter() {
