@@ -206,6 +206,10 @@ public class UploadPdfActivity extends Progressdialog {
             pdfName.setError("Please specify name of pdf");
             valid = false;
         }
+        else if(!(selectPdf.getText().toString().trim().contains(".pdf") || selectPdf.getText().toString().trim().contains(".doc"))){
+            Toast.makeText(this,"Only Pdf and Doc format Supported",Toast.LENGTH_SHORT).show();
+            valid = false;
+        }
         else{
             description.setError(null);
             selectPdf.setError(null);
@@ -217,7 +221,7 @@ public class UploadPdfActivity extends Progressdialog {
     public void selectPdfClicked(View v){
         // Pick a Pdf from storage
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-        intent.setType("application/pdf");
+        intent.setType("application/pdf|application/msword");
         startActivityForResult(intent, RC_TAKE_PDF);
     }
 
