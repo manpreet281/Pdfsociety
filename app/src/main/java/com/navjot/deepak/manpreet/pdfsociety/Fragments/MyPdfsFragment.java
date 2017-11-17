@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
@@ -29,6 +30,7 @@ public class MyPdfsFragment extends PdfListFragment {
     private FirebaseRecyclerAdapter<Pdf, MyPdfViewHolder> mAdapter;
     Pdf pdf;
     ProgressDialog mprogress;
+
 
     public MyPdfsFragment() {}
 
@@ -59,9 +61,20 @@ public class MyPdfsFragment extends PdfListFragment {
 
         mAdapter = new FirebaseRecyclerAdapter<Pdf, MyPdfViewHolder>(options) {
 
+            public void onDataChanged() {
+                if(i == 0){
+                    mProgressBar.setVisibility(View.GONE);
+                    Nopdf.setText("No Pdfs Uploaded Yet !!");
+                    Nopdf.setVisibility(View.VISIBLE);
+                    i = 1;
+                }
+                Log.d(getString(R.string.tag), "onDataChanged");
+            }
+
             @Override
             public MyPdfViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
                 mProgressBar.setVisibility(View.GONE);
+                Nopdf.setVisibility(View.GONE);
                 Log.d(getString(R.string.tag), "PostListFragment PostViewHolder onCreateViewHolder");
                 LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
                 return new MyPdfViewHolder(inflater.inflate(R.layout.item_mypdf, viewGroup, false));
