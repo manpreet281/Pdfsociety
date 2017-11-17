@@ -221,7 +221,7 @@ public class UploadPdfActivity extends Progressdialog {
     public void selectPdfClicked(View v){
         // Pick a Pdf from storage
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-        intent.setType("application/pdf|application/msword");
+        intent.setType("application/pdf");
         startActivityForResult(intent, RC_TAKE_PDF);
     }
 
