@@ -48,11 +48,13 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private FragmentPagerAdapter mPagerAdapter;
     private ViewPager mViewPager;
     boolean doubleBackToExitPressedOnce = false;
+    public static HomeActivity homeActivityRef;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        homeActivityRef=HomeActivity.this;
         init();
         initViewPager();
     }
@@ -128,10 +130,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     protected void onDestroy() {
-
-        finish();
-        System.exit(0);
         super.onDestroy();
+//        //finish();
+//        System.exit(0);
+//
 
     }
 
@@ -182,14 +184,14 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+
             return true;
         }
         if (id == R.id.action_logout) {
-
-
                     showProgressDialog();
                     FirebaseAuth.getInstance().signOut();
                     startActivity(new Intent(HomeActivity.this, SignIn.class));
+                    finish();
                     return true;
                 }
 

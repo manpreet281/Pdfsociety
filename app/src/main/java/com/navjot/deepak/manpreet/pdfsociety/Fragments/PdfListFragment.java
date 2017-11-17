@@ -90,7 +90,7 @@ public abstract class PdfListFragment extends Fragment {
             public void onDataChanged() {
                 if(i == 0){
                     mProgressBar.setVisibility(View.GONE);
-                    Nopdf.setText("No Pdfs Uploaded Yet !!");
+                    Nopdf.setText("No PDF Uploaded");
                     Nopdf.setVisibility(View.VISIBLE);
                     i = 1;
                 }

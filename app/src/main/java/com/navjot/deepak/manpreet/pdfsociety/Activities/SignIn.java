@@ -49,10 +49,11 @@ public class SignIn extends Progressdialog {
     protected void onStart() {
         super.onStart();
         FirebaseUser user=FirebaseAuth.getInstance().getCurrentUser();
+        Log.i(getString(R.string.tag),user+"");
         if(user != null){
             if (user.isEmailVerified()){
                 startActivity(new Intent(getApplicationContext(), HomeActivity.class));
-                finish();
+                //finish();
             }
         }
     }
