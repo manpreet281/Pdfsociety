@@ -28,7 +28,6 @@ public class PdfAdapter extends RecyclerView.Adapter<PdfViewHolder> implements F
     ArrayList<Pdf> allDataList;
     Pdf pdf;
     Context context;
-    int i=0;
 
     public PdfAdapter( ProgressBar mprogressBar, TextView nopdf, ArrayList<Pdf> pdfarraylist, Context conText) {
         super();
@@ -38,16 +37,16 @@ public class PdfAdapter extends RecyclerView.Adapter<PdfViewHolder> implements F
         pdfList = pdfarraylist;
         allDataList = pdfarraylist;
         context = conText;
+        checkNoPdf();
     }
 
-    public void onDataChanged() {
-        if(i == 0){
+    private void checkNoPdf() {
+        if(allDataList.isEmpty()) {
             mProgressBar.setVisibility(View.GONE);
             Nopdf.setText("No PDF Uploaded");
             Nopdf.setVisibility(View.VISIBLE);
-            i = 1;
         }
-        Log.d("Pdfsociety", "onDataChanged");
+        Log.d("Pdfsociety", "checkNoPdf");
     }
 
     @Override

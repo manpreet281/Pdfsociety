@@ -41,7 +41,6 @@ public class MyPdfAdapter extends RecyclerView.Adapter<MyPdfViewHolder> implemen
     Context context;
     ProgressDialog mprogress;
     protected DatabaseReference mDatabase;
-    int i=0;
 
     public MyPdfAdapter( ProgressBar mprogressBar, TextView nopdf, ArrayList<Pdf> pdfarraylist, Context conText) {
         super();
@@ -50,6 +49,16 @@ public class MyPdfAdapter extends RecyclerView.Adapter<MyPdfViewHolder> implemen
         pdfList = pdfarraylist;
         allDataList = pdfarraylist;
         context = conText;
+        checkNoPdf();
+    }
+
+    private void checkNoPdf() {
+        if(allDataList.isEmpty()) {
+            mProgressBar.setVisibility(View.GONE);
+            Nopdf.setText("You haven't uploaded any Pdf yet !!");
+            Nopdf.setVisibility(View.VISIBLE);
+        }
+        Log.d("Pdfsociety", "checkNoPdf");
     }
 
     @Override
