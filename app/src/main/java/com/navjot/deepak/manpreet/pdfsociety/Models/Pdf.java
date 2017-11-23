@@ -10,11 +10,12 @@ public class Pdf {
     private String username;
     private double pdfsize;
     private String uploaddate;
+    private String pdfKey;
 
-    Pdf() {
+    public Pdf() {
     }
 
-    public Pdf(String pdfname, String description, String uid, int no_of_downloads, String download_url, String username, double pdfsize, String uploaddate) {
+    public Pdf(String pdfname, String description, String uid, int no_of_downloads, String download_url, String username, double pdfsize, String uploaddate, String pdfKey) {
         this.pdfname = pdfname;
         this.description = description;
         this.uid = uid;
@@ -23,6 +24,7 @@ public class Pdf {
         this.username = username;
         this.pdfsize = pdfsize;
         this.uploaddate = uploaddate;
+        this.pdfKey = pdfKey;
     }
 
     public String getPdfname() {
@@ -89,6 +91,14 @@ public class Pdf {
         this.uploaddate = uploaddate;
     }
 
+    public String getPdfKey() {
+        return pdfKey;
+    }
+
+    public void setPdfKey(String pdfKey) {
+        this.pdfKey = pdfKey;
+    }
+
     @Override
     public String toString() {
         return "Pdf{" +
@@ -100,6 +110,7 @@ public class Pdf {
                 ", username='" + username + '\'' +
                 ", pdfsize=" + pdfsize +
                 ", uploaddate='" + uploaddate + '\'' +
+                ", pdfKey='" + pdfKey + '\'' +
                 '}';
     }
 }

@@ -24,7 +24,6 @@
         android:layout_gravity="center"
         android:id="@+id/Nopdf"/>
 
-
     <android.support.v7.widget.RecyclerView
         android:id="@+id/messages_list"
         android:layout_width="match_parent"

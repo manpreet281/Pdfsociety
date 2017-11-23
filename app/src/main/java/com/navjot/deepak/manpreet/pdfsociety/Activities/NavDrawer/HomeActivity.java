@@ -16,6 +16,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.SearchView;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuInflater;
 import android.view.View;
@@ -49,6 +50,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private ViewPager mViewPager;
     boolean doubleBackToExitPressedOnce = false;
     public static HomeActivity homeActivityRef;
+    public SearchView searchview;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -57,6 +59,13 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         homeActivityRef=HomeActivity.this;
         init();
         initViewPager();
+    }
+
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+        Log.d("Pdfsociety", "onPostResume: ");
+        invalidateOptionsMenu();
     }
 
     public void initViewPager(){
@@ -137,43 +146,13 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu ) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.home, menu);
-
-
-            MenuItem item = menu.findItem(R.id.menusearch);
-        SearchView search = (SearchView) item.getActionView();
-
-
-        search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-                @Override
-                public boolean onQueryTextSubmit(String s) {
-
-                    Toast.makeText(getApplicationContext(),"textChanged :"+s,Toast.LENGTH_LONG).show();
-
-                    return false;
-                }
-
-                @Override
-                public boolean onQueryTextChange(String query) {
-
-
-                    // **Here you can get the value "query" which is entered in the search box.**
-
-                    Toast.makeText(getApplicationContext(),"searchvalue :"+query,Toast.LENGTH_LONG).show();
-
-                    return false;
-                }
-            });
-            super.onCreateOptionsMenu(menu);
-        // Inflate menu resource file.
-
-
-        return true;
-
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu ) {
+//        // Inflate the menu; this adds items to the action bar if it is present.
+//        getMenuInflater().inflate(R.menu.home, menu);
+//        super.onCreateOptionsMenu(menu);
+//        return true;
+//    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

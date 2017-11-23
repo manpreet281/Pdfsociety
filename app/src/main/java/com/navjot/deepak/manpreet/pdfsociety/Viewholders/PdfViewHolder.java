@@ -15,14 +15,12 @@ public class PdfViewHolder extends RecyclerView.ViewHolder {
 
     public PdfViewHolder(View itemView) {
         super(itemView);
-
         pdfname = itemView.findViewById(R.id.pdfname);
         username = itemView.findViewById(R.id.username);
         no_of_downloads = itemView.findViewById(R.id.no_of_downloads);
     }
 
     public void bindToPdf(Pdf Pdf) {
-        Log.d("Pdfsociety", "bindToPdf pdf: " + Pdf);
         pdfname.setText(Pdf.getPdfname());
         no_of_downloads.setText(""+Pdf.getNo_of_downloads()+" downloads");
         username.setText(Pdf.getUsername());

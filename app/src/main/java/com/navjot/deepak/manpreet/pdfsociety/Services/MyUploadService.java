@@ -185,7 +185,8 @@ public class MyUploadService extends MyBaseTaskService {
                 downloadUrl,
                 username,
                 pdfsize,
-                uploaddate
+                uploaddate,
+                pdfkey
         );
         Log.d(TAG, "" + pdf);
 
