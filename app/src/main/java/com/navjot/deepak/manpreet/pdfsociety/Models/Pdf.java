@@ -5,7 +5,6 @@ public class Pdf {
     private String pdfname;
     private String description;
     private String uid;
-    private int no_of_downloads;
     private String download_url;
     private String username;
     private double pdfsize;
@@ -15,11 +14,10 @@ public class Pdf {
     public Pdf() {
     }
 
-    public Pdf(String pdfname, String description, String uid, int no_of_downloads, String download_url, String username, double pdfsize, String uploaddate, String pdfKey) {
+    public Pdf(String pdfname, String description, String uid, String download_url, String username, double pdfsize, String uploaddate, String pdfKey) {
         this.pdfname = pdfname;
         this.description = description;
         this.uid = uid;
-        this.no_of_downloads = no_of_downloads;
         this.download_url = download_url;
         this.username = username;
         this.pdfsize = pdfsize;
@@ -49,14 +47,6 @@ public class Pdf {
 
     public void setUid(String uid) {
         this.uid = uid;
-    }
-
-    public int getNo_of_downloads() {
-        return no_of_downloads;
-    }
-
-    public void setNo_of_downloads(int no_of_downloads) {
-        this.no_of_downloads = no_of_downloads;
     }
 
     public String getDownload_url() {
@@ -105,7 +95,6 @@ public class Pdf {
                 "pdfname='" + pdfname + '\'' +
                 ", description='" + description + '\'' +
                 ", uid='" + uid + '\'' +
-                ", no_of_downloads=" + no_of_downloads +
                 ", download_url='" + download_url + '\'' +
                 ", username='" + username + '\'' +
                 ", pdfsize=" + pdfsize +

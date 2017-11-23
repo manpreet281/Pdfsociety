@@ -6,12 +6,12 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        
     </style>
 
     <style name="ButtonStyle" parent="android:Theme">
         <item name="android:buttonStyle">@style/CKButton</item>
     </style>
+
     <style name="CKButton" parent="android:Widget.Holo.Button.Borderless">
         <item name="android:textSize">18sp</item>
         <item name="android:textColor">@color/white</item>
@@ -21,6 +21,7 @@
     <style name="SelectButtonStyle" parent="android:Theme">
         <item name="android:buttonStyle">@style/CKButton</item>
     </style>
+
     <style name="Button" parent="android:Widget.Holo.Button.Borderless">
         <item name="android:textSize">18sp</item>
         <item name="android:textColor">@color/white</item>
@@ -31,8 +32,6 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
-
-
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 

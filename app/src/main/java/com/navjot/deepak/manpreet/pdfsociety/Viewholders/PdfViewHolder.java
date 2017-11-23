@@ -11,19 +11,19 @@ public class PdfViewHolder extends RecyclerView.ViewHolder {
 
     public TextView pdfname;
     public TextView username;
-    public TextView no_of_downloads;
+    public TextView uploadDate;
 
     public PdfViewHolder(View itemView) {
         super(itemView);
         pdfname = itemView.findViewById(R.id.pdfname);
         username = itemView.findViewById(R.id.username);
-        no_of_downloads = itemView.findViewById(R.id.no_of_downloads);
+        uploadDate = itemView.findViewById(R.id.uploadDate);
     }
 
     public void bindToPdf(Pdf Pdf) {
         pdfname.setText(Pdf.getPdfname());
-        no_of_downloads.setText(""+Pdf.getNo_of_downloads()+" downloads");
         username.setText(Pdf.getUsername());
+        uploadDate.setText(Pdf.getUploaddate());
     }
 
 }

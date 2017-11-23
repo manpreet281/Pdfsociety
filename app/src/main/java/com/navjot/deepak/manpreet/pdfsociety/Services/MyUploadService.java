@@ -181,7 +181,6 @@ public class MyUploadService extends MyBaseTaskService {
                 pdfname,
                 description,
                 uid,
-                0,
                 downloadUrl,
                 username,
                 pdfsize,
