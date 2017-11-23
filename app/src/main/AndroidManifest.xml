@@ -15,12 +15,15 @@
         android:roundIcon="@drawable/a"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activities.SignIn"
-            android:label="PDF Society"/>
-        <activity android:name=".Activities.SignUp"
-            android:label="PDF Society"/>
-        <activity android:name=".Activities.FeedbackActivity"
-            android:label="Feedback"/>
+        <activity
+            android:name=".Activities.SignIn"
+            android:label="PDF Society" />
+        <activity
+            android:name=".Activities.SignUp"
+            android:label="PDF Society" />
+        <activity
+            android:name=".Activities.FeedbackActivity"
+            android:label="Feedback" />
 
         <service
             android:name=".Services.MyFirebaseInstanceIdService"
@@ -51,23 +54,29 @@
             android:enabled="true"
             android:exported="true" />
 
-        <activity android:name=".Activities.UploadPdfActivity"
-            android:label="Upload"/>
+        <activity
+            android:name=".Activities.UploadPdfActivity"
+            android:label="Upload" />
 
         <service
             android:name=".Services.MyUploadService"
             android:enabled="true"
             android:exported="false" />
-
         <service
             android:name=".Services.MyDownloadService"
             android:enabled="true"
             android:exported="false" />
 
-        <activity android:name=".Activities.PdfDetailActivity"
-            android:label="Description"/>
-        <activity android:name=".Activities.UserDetailActivity"
-            android:label="User"></activity>
+        <activity
+            android:name=".Activities.PdfDetailActivity"
+            android:label="Description" />
+        <activity
+            android:name=".Activities.UserDetailActivity"
+            android:label="User" />
+        <activity android:name=".Activities.MadeByActivity"
+           android:label="Made by"
+            >
+        </activity>
     </application>
 
 </manifest>

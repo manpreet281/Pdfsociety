@@ -31,6 +31,8 @@ import android.view.MenuItem;
 
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.navjot.deepak.manpreet.pdfsociety.Activities.MadeByActivity;
 import com.navjot.deepak.manpreet.pdfsociety.Activities.UploadPdfActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.navjot.deepak.manpreet.pdfsociety.Activities.FeedbackActivity;
@@ -184,15 +186,15 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
 
-        } else if (id == R.id.nav_slideshow) {
+        if (id == R.id.nav_downloads){
 
-        } else if (id == R.id.nav_manage) {
 
-        } else if (id == R.id.nav_share) {
+
+
+        }
+
+        else if (id == R.id.nav_share) {
                     ApplicationInfo applicationInfo = getApplicationContext().getApplicationInfo();
                     String apkPath = applicationInfo.sourceDir;
                     Intent intent = new Intent(Intent.ACTION_SEND);
@@ -203,6 +205,12 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.nav_feedback) {
 
             Intent intent = new Intent(HomeActivity.this, FeedbackActivity.class);
+            startActivity(intent);
+        }
+
+        else if (id == R.id.nav_madeby) {
+
+            Intent intent = new Intent(HomeActivity.this, MadeByActivity.class);
             startActivity(intent);
         }
 
