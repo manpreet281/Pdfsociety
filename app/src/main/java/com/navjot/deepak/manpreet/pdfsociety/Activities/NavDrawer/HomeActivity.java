@@ -28,10 +28,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.navjot.deepak.manpreet.pdfsociety.Activities.MadeByActivity;
 import com.navjot.deepak.manpreet.pdfsociety.Activities.UploadPdfActivity;
 import com.google.firebase.auth.FirebaseAuth;
@@ -148,14 +146,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu ) {
-//        // Inflate the menu; this adds items to the action bar if it is present.
-//        getMenuInflater().inflate(R.menu.home, menu);
-//        super.onCreateOptionsMenu(menu);
-//        return true;
-//    }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -240,6 +230,3 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
 
 }
-
-
-

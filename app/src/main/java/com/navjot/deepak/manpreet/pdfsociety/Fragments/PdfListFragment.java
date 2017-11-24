@@ -16,17 +16,17 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.SearchView;
 import android.widget.TextView;
-
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.navjot.deepak.manpreet.pdfsociety.Models.Pdf;
 import com.navjot.deepak.manpreet.pdfsociety.Adapters.PdfAdapter;
 import com.navjot.deepak.manpreet.pdfsociety.R;
-
 import java.util.ArrayList;
 import java.util.Locale;
 
@@ -62,6 +62,8 @@ public abstract class PdfListFragment extends Fragment {
         mRecycler =  rootView.findViewById(R.id.messages_list);
         mRecycler.setHasFixedSize(true);
         return rootView;
+
+
     }
 
     @Override
@@ -123,4 +125,3 @@ public abstract class PdfListFragment extends Fragment {
     }
 
 }
-
