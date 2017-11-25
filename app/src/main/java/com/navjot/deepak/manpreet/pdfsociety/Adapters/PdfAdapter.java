@@ -79,6 +79,9 @@ public class PdfAdapter extends RecyclerView.Adapter<PdfViewHolder> implements F
                 // Launch PdfDetailActivity
                 Intent intent = new Intent(v.getContext(), PdfDetailActivity.class);
                 intent.putExtra("pdfkey", PdfKey);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 v.getContext().startActivity(intent);
             }
         });
