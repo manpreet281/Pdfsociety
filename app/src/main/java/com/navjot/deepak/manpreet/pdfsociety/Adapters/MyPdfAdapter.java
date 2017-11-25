@@ -77,6 +77,16 @@ public class MyPdfAdapter extends RecyclerView.Adapter<MyPdfViewHolder> implemen
         return pdfList.size();
     }
 
+    private void checkNoResultFound(){
+        if(pdfList.isEmpty()){
+            Nopdf.setText("No Results Found");
+            Nopdf.setVisibility(View.VISIBLE);
+        }
+        else {
+            Nopdf.setVisibility(View.GONE);
+        }
+    }
+
     @Override
     public void onBindViewHolder(MyPdfViewHolder viewHolder, int position) {
       final Pdf pdf = pdfList.get(position);
@@ -211,8 +221,8 @@ public class MyPdfAdapter extends RecyclerView.Adapter<MyPdfViewHolder> implemen
 
             @Override
             protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-
                 pdfList = (ArrayList<Pdf>) filterResults.values;
+                checkNoResultFound();
                 notifyDataSetChanged();
             }
         };
