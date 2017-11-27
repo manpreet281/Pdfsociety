@@ -70,33 +70,28 @@
             android:text="Sign In"
             android:theme="@style/ButtonStyle" />
 
-        <TextView
-            android:id="@+id/resetpwd"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:clickable="true"
-            android:onClick="onreset"
-            android:paddingTop="15dp"
-            android:text="Forget Password"
-            android:textColor="@color/colorPrimary"
 
-            />
 
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="15dp"
-            android:orientation="horizontal">
+            android:layout_marginTop="40dp"
+            android:orientation="vertical">
 
             <TextView
-                android:id="@+id/textView1"
+                android:id="@+id/resetpwd"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:clickable="true"
+                android:onClick="onreset"
+                android:background="@color/offwhite"
+                android:text="Forgot Password ?"
+                android:textColor="@color/colorPrimary"
 
-                android:text="Dont have an account, Click" />
+                />
 
             <TextView
                 android:id="@+id/textViewHere"
@@ -106,8 +101,10 @@
                 android:layout_toRightOf="@+id/textView1"
                 android:background="@color/offwhite"
                 android:clickable="true"
+                android:layout_gravity="center"
+                android:layout_marginTop="25dp"
                 android:onClick="onclick"
-                android:text="here"
+                android:text="Dont have an account, Click here"
                 android:textColor="@color/colorPrimary" />
 
 

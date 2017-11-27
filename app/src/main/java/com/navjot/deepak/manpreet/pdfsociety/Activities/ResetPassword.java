@@ -112,12 +112,12 @@ public class ResetPassword extends Progressdialog{
 
     public void SendMailAlert(){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Reset link send to your registered email.");
+        builder.setMessage("Reset link sent to your registered email");
         builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                Intent intent = new Intent(ResetPassword.this, SignIn.class);
-                startActivity(intent);
+                startActivity(new Intent(ResetPassword.this, SignIn.class));
+                finish();
             }
         });
        // builder.setNegativeButton("Cancel", null);
