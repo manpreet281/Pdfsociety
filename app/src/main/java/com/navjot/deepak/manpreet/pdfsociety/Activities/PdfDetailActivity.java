@@ -1,12 +1,16 @@
 package com.navjot.deepak.manpreet.pdfsociety.Activities;
 
 import android.Manifest;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.Settings;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -34,12 +38,12 @@ public class PdfDetailActivity extends AppCompatActivity implements View.OnClick
     TextView pdfsize;
     TextView uploaddate;
     Button btndownload;
-
     private DatabaseReference mPdfReference;
     private ValueEventListener mPdfListener;
     private static String pdfkey;
     private static String uid;
     Pdf pdf;
+    private SharedPreferences sp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +68,7 @@ public class PdfDetailActivity extends AppCompatActivity implements View.OnClick
         mPdfReference = FirebaseDatabase.getInstance().getReference().child(getString(R.string.DB_Pdfs)).child(pdfkey);
         btndownload = (Button) findViewById(R.id.btnDownload);
         btndownload.setOnClickListener(this);
+        sp = getSharedPreferences(getString(R.string.sharedPreferenceFile), Context.MODE_PRIVATE);
     }
 
     public void pdfListener() {
@@ -102,7 +107,27 @@ public class PdfDetailActivity extends AppCompatActivity implements View.OnClick
                         .setAction(MyDownloadService.ACTION_DOWNLOAD)
         );
 
-        Toast.makeText(PdfDetailActivity.this, getString(R.string.progress_downloading), Toast.LENGTH_SHORT).show();
+        if(isFirstDownload()){
+            showDownloadLocationAlert();
+            SharedPreferences.Editor editor = sp.edit();
+            editor.putBoolean(getString(R.string.isFirstDownload), false);
+            editor.commit();
+        }
+        else {
+            Toast.makeText(PdfDetailActivity.this, getString(R.string.progress_downloading), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private boolean isFirstDownload(){
+        return  sp.getBoolean(getString(R.string.isFirstDownload), true);
+    }
+
+    private void showDownloadLocationAlert(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Your downloaded Pdfs will get stored in InternalStorage/Pdfsociety folder");
+        builder.setPositiveButton("Ok",null);
+        builder.setCancelable(false);
+        builder.create().show();
     }
 
     @Override
