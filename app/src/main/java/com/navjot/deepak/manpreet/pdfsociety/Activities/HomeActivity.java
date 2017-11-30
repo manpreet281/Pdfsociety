@@ -23,12 +23,18 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.navjot.deepak.manpreet.pdfsociety.Activities.MadeByActivity;
 import com.navjot.deepak.manpreet.pdfsociety.Activities.UploadPdfActivity;
 import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 import com.navjot.deepak.manpreet.pdfsociety.Fragments.MyPdfsFragment;
 import com.navjot.deepak.manpreet.pdfsociety.Fragments.RecentPdfsFragment;
+import com.navjot.deepak.manpreet.pdfsociety.Models.Pdf;
 import com.navjot.deepak.manpreet.pdfsociety.R;
 import java.io.File;
 
@@ -50,6 +56,26 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         homeActivityRef=HomeActivity.this;
         init();
         initViewPager();
+        showusernameInNavdrawer();
+    }
+
+    private void showusernameInNavdrawer(){
+        FirebaseDatabase.getInstance().getReference()
+                .child(getString(R.string.DB_Users))
+                .child(FirebaseAuth.getInstance().getUid())
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        Pdf pdf = dataSnapshot.getValue(Pdf.class);
+                        TextView userTextView = (TextView)findViewById(R.id.usertextView);
+                        userTextView.setText(pdf.getUsername());
+                        userTextView.setVisibility(View.VISIBLE);
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                    }
+                });
     }
 
     @Override
