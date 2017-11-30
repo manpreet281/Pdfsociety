@@ -1,18 +1,16 @@
 package com.navjot.deepak.manpreet.pdfsociety.Activities;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Window;
-import android.widget.Toast;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.Transaction;
 import com.navjot.deepak.manpreet.pdfsociety.R;
 
 public class SplashActivity extends AppCompatActivity {
@@ -22,12 +20,20 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         //requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_splash);
+        bounce();
+
         if(FirebaseAuth.getInstance().getCurrentUser() !=null){
             handler.sendEmptyMessageDelayed(102,2000);
         }
         else{
             handler.sendEmptyMessageDelayed(101,2000);
         }
+    }
+
+    public void bounce(){
+        ImageView image = (ImageView)findViewById(R.id.imageView2);
+        Animation animation = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotate);
+        image.startAnimation(animation);
     }
 
     Handler handler = new Handler(){
