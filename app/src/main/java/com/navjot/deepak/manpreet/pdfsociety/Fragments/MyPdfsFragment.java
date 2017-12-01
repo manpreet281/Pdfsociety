@@ -28,6 +28,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
+import com.navjot.deepak.manpreet.pdfsociety.Activities.HomeActivity;
 import com.navjot.deepak.manpreet.pdfsociety.Activities.PdfDetailActivity;
 import com.navjot.deepak.manpreet.pdfsociety.Adapters.MyPdfAdapter;
 import com.navjot.deepak.manpreet.pdfsociety.Adapters.PdfAdapter;
@@ -79,6 +80,7 @@ public class MyPdfsFragment extends PdfListFragment {
                                 pdfList.add(pdf);
                             }
 
+                            HomeActivity.fab.setVisibility(View.VISIBLE);
                             mAdapter = new MyPdfAdapter(mProgressBar, Nopdf, pdfList, context);
                             mRecycler.setAdapter(mAdapter);
 

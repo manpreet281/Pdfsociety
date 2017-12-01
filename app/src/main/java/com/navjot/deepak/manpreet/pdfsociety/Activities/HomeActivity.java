@@ -42,18 +42,15 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         View.OnClickListener
 {
     public ProgressDialog mProgressDialog;
-    private FloatingActionButton fab;
+    public static FloatingActionButton fab;
     private FragmentPagerAdapter mPagerAdapter;
     private ViewPager mViewPager;
     boolean doubleBackToExitPressedOnce = false;
-    public static HomeActivity homeActivityRef;
-    public SearchView searchview;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        homeActivityRef=HomeActivity.this;
         init();
         initViewPager();
         showusernameInNavdrawer();
@@ -121,6 +118,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         setSupportActionBar(toolbar);
 
         fab = (FloatingActionButton) findViewById(R.id.fab);
+        Log.d("Pdfsociety", "Fab home: "+fab);
         fab.setOnClickListener(this);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
