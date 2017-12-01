@@ -45,14 +45,13 @@ public class CategoryListActivity extends AppCompatActivity implements OnItemCli
 
 
         for (int i = 0; i < category_name.length; i++) {
-            Category item = new Category(category_pic.getResourceId(i,-1),category_name[i]);
+            Category item = new Category(category_name[i], category_pic.getResourceId(i,-1));
             categories.add(item);
         }
 
         mylistview = (ListView) findViewById(R.id.list);
         CategoryListAdapter adapter = new CategoryListAdapter(this, categories);
         mylistview.setAdapter(adapter);
-        category_pic.recycle();
         mylistview.setOnItemClickListener(this);
 
     }

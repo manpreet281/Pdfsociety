@@ -18,24 +18,7 @@
 
     <string name="storage_pdfs">Pdfs</string>
 
-    <!-- Names -->
-    <string-array name="categories_name">
-        <item>Action &amp; Adventure</item>
-        <item>Education</item>
-        <item>Comedy</item>
-        <item>Drama</item>
-        <item>Romance</item>
 
-    </string-array>
-
-    <array name="categories_pics">
-        <item>@mipmap/children</item>
-        <item>@mipmap/horror</item>
-        <item>@mipmap/history</item>
-        <item>@mipmap/romancedrama</item>
-        <item>@mipmap/cooking</item>
-
-    </array>
 
 
     <string-array name="india_cities">
@@ -246,31 +229,51 @@
 
     <string name="Select_Pdf">Select Pdf</string>
 
-    <string-array name="Categories">
-        <item>Philosophy</item>
-        <item>Education</item>
-        <item>Comedy</item>
-        <item>Drama</item>
-        <item>Romance</item>
-        <item>Satire</item>
-        <item>Tragedy</item>
-        <item>Fantasy</item>
-        <item>Adventure</item>
-        <item>Science fiction</item>
-        <item>Action</item>
-        <item>Mystery</item>
-        <item>Horror</item>
-        <item>Health, Mind and Body</item>
-        <item>Travel</item>
-        <item>Children's</item>
-        <item>Religion and Spirituality</item>
-        <item>Poetry</item>
+    <string-array name="categories_name">
+        <item>Action &amp; Adventure</item>
+        <item>Biography</item>
+        <item>Children</item>
+        <item>Comedy &amp; Satire</item>
         <item>Comics</item>
-        <item>Cookbooks</item>
-        <item>Biographies</item>
-        <item>IT</item>
+        <item>Cooking</item>
+        <item>Education</item>
+        <item>Fantasy</item>
+        <item>Health &amp; Mind</item>
+        <item>History</item>
+        <item>Horror</item>
+        <item>Literature</item>
+        <item>Mystery</item>
+        <item>Philosophy</item>
+        <item>Religion &amp; Spiritual</item>
+        <item>Romance &amp; Drama</item>
+        <item>Science fiction</item>
+        <item>Travel</item>
         <item>Others</item>
     </string-array>
+
+
+    <array name="categories_pics">
+        <item>@mipmap/actionadventure</item>
+        <item>@mipmap/biography</item>
+        <item>@mipmap/children</item>
+        <item>@mipmap/comedysatire</item>
+        <item>@mipmap/comics</item>
+        <item>@mipmap/cooking</item>
+        <item>@mipmap/education</item>
+        <item>@mipmap/fantasy</item>
+        <item>@mipmap/healthmind</item>
+        <item>@mipmap/history</item>
+        <item>@mipmap/horror</item>
+        <item>@mipmap/mystery</item>
+        <item>@mipmap/philosophy</item>
+        <item>@mipmap/religionspirit</item>
+        <item>@mipmap/romancedrama</item>
+        <item>@mipmap/sciencefiction</item>
+        <item>@mipmap/travel</item>
+        <item>@mipmap/others</item>
+
+    </array>
+
 
     <string name="sharedPreferenceFile">SharedPreferences</string>
     <string name="isFirstDownload">isFirstDownload</string>
