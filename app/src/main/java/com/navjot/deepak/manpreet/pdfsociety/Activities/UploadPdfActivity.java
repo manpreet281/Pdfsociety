@@ -4,9 +4,16 @@ import android.content.Intent;
 import android.net.Uri;
 import android.support.design.widget.TextInputLayout;
 import android.os.Bundle;
+import android.text.InputFilter;
 import android.text.TextUtils;
+import android.text.method.QwertyKeyListener;
+import android.text.method.TextKeyListener;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -21,6 +28,9 @@ import com.navjot.deepak.manpreet.pdfsociety.Models.User;
 import com.navjot.deepak.manpreet.pdfsociety.R;
 import com.navjot.deepak.manpreet.pdfsociety.Services.MyUploadService;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class UploadPdfActivity extends Progressdialog {
 
     EditText description;
@@ -28,6 +38,7 @@ public class UploadPdfActivity extends Progressdialog {
     TextView selectPdf;
     EditText pdfName;
     TextInputLayout textInputPdfName;
+    private AutoCompleteTextView category;
 
     private static final int RC_TAKE_PDF = 101;
     private Uri mFileUri = null;
@@ -36,6 +47,7 @@ public class UploadPdfActivity extends Progressdialog {
     private static final String KEY_DOWNLOAD_URL = "key_download_url";
     private static String username;
     private static String pdfkey;
+    private List<String> categoryList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +81,26 @@ public class UploadPdfActivity extends Progressdialog {
         selectPdf = (TextView) findViewById(R.id.selectPdfTextView);
         pdfName = (EditText) findViewById(R.id.pdfNameEditText);
         textInputPdfName = (TextInputLayout)findViewById(R.id.pdfnameTextInputLayout);
+        category = (AutoCompleteTextView)findViewById(R.id.ac_city);
+        category.setThreshold(1);
+        String[] categories = getResources().getStringArray(R.array.Categories);
+        categoryList = Arrays.asList(categories);
+        ArrayAdapter<String> category_adapter = new ArrayAdapter<String>(this,R.layout.support_simple_spinner_dropdown_item,categories);
+        categoryListener();
+        category.setAdapter(category_adapter);
+    }
+
+    private void categoryListener(){
+        category.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                if(category.getText().toString().trim().length() == 0){
+                    category.showDropDown();
+                }
+                return false;
+            }
+        });
+        
     }
 
     public void uploadbtnClicked(View v){
@@ -101,6 +133,7 @@ public class UploadPdfActivity extends Progressdialog {
                     selectPdf.setError(null);
                     pdfName.setError(null);
                     textInputPdfName.setVisibility(View.VISIBLE);
+                    category.setVisibility(View.VISIBLE);
                     selectPdf.setText(getFileName(mFileUri.getLastPathSegment()) +" selected");
                     pdfName.setText(getFileName(mFileUri.getLastPathSegment()));
                 }
@@ -131,6 +164,7 @@ public class UploadPdfActivity extends Progressdialog {
                 .putExtra("username",username)
                 .putExtra("pdfkey", pdfkey)
                 .putExtra("pdfname", pdfname)
+                .putExtra("category",category.getText().toString().trim())
                 .setAction(MyUploadService.ACTION_UPLOAD));
 
         Toast.makeText(this, getString(R.string.progress_uploading), Toast.LENGTH_LONG).show();
@@ -199,7 +233,22 @@ public class UploadPdfActivity extends Progressdialog {
             valid = false;
         }
         else if(!(selectPdf.getText().toString().trim().contains(".pdf") || selectPdf.getText().toString().trim().contains(".doc"))){
-            Toast.makeText(this,"Only Pdf and Doc format Supported",Toast.LENGTH_SHORT).show();
+            Toast toast = Toast.makeText(this,"Only Pdf and Doc format Supported",Toast.LENGTH_SHORT);
+                  toast.setGravity(Gravity.CENTER,0,0);
+                  toast.show();
+
+            valid = false;
+        }
+        else if(TextUtils.isEmpty(category.getText().toString().trim())){
+            Toast toast = Toast.makeText(this,"Please select a category",Toast.LENGTH_SHORT);
+            toast.setGravity(Gravity.CENTER,0,0);
+            toast.show();
+            valid = false;
+        }
+        else if(!(categoryList.contains(category.getText().toString().trim()))){
+            Toast toast = Toast.makeText(this,"Please select a category from list",Toast.LENGTH_SHORT);
+            toast.setGravity(Gravity.CENTER,0,0);
+            toast.show();
             valid = false;
         }
         else{

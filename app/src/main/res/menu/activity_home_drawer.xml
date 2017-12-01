@@ -3,13 +3,12 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
 
-    <group android:checkableBehavior="single">
+    <group>
         <item
-            android:id="@+id/nav_downloads"
-            android:icon="@drawable/downloads"
-            android:title="Downloads"/>
-
-
+            android:id="@+id/nav_categories"
+            android:icon="@drawable/category"
+            android:title="Categories"
+            />
     </group>
 
 

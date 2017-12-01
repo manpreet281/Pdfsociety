@@ -14,8 +14,29 @@
     <string name="DB_Users">Users</string>
     <string name="DB_Pdfs">Pdfs</string>
     <string name="DB_user_pdfs">User-pdfs</string>
+    <string name="DB_Categories">Categories</string>
 
     <string name="storage_pdfs">Pdfs</string>
+
+    <!-- Names -->
+    <string-array name="categories_name">
+        <item>Action &amp; Adventure</item>
+        <item>Education</item>
+        <item>Comedy</item>
+        <item>Drama</item>
+        <item>Romance</item>
+
+    </string-array>
+
+    <array name="categories_pics">
+        <item>@mipmap/children</item>
+        <item>@mipmap/horror</item>
+        <item>@mipmap/history</item>
+        <item>@mipmap/romancedrama</item>
+        <item>@mipmap/cooking</item>
+
+    </array>
+
 
     <string-array name="india_cities">
         <item>Agartala</item>
@@ -224,6 +245,32 @@
     <string name="send_to">Send To…</string>
 
     <string name="Select_Pdf">Select Pdf</string>
+
+    <string-array name="Categories">
+        <item>Philosophy</item>
+        <item>Education</item>
+        <item>Comedy</item>
+        <item>Drama</item>
+        <item>Romance</item>
+        <item>Satire</item>
+        <item>Tragedy</item>
+        <item>Fantasy</item>
+        <item>Adventure</item>
+        <item>Science fiction</item>
+        <item>Action</item>
+        <item>Mystery</item>
+        <item>Horror</item>
+        <item>Health, Mind and Body</item>
+        <item>Travel</item>
+        <item>Children's</item>
+        <item>Religion and Spirituality</item>
+        <item>Poetry</item>
+        <item>Comics</item>
+        <item>Cookbooks</item>
+        <item>Biographies</item>
+        <item>IT</item>
+        <item>Others</item>
+    </string-array>
 
     <string name="sharedPreferenceFile">SharedPreferences</string>
     <string name="isFirstDownload">isFirstDownload</string>

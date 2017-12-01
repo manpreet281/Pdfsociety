@@ -23,7 +23,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
@@ -193,12 +192,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
+         if (id == R.id.nav_categories){
 
-        if (id == R.id.nav_downloads){
-
-
-
-
+            Intent intent = new Intent(HomeActivity.this, CategoryListActivity.class);
+            startActivity(intent);
         }
 
         else if (id == R.id.nav_share) {
