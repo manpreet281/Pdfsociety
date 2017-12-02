@@ -26,6 +26,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.navjot.deepak.manpreet.pdfsociety.Models.Category;
 import com.navjot.deepak.manpreet.pdfsociety.Models.Pdf;
 import com.navjot.deepak.manpreet.pdfsociety.R;
 import com.navjot.deepak.manpreet.pdfsociety.Services.MyDownloadService;
@@ -37,6 +38,7 @@ public class PdfDetailActivity extends AppCompatActivity implements View.OnClick
     TextView pdfDescription;
     TextView pdfsize;
     TextView uploaddate;
+    TextView pdfCategory;
     Button btndownload;
     private DatabaseReference mPdfReference;
     private ValueEventListener mPdfListener;
@@ -65,6 +67,7 @@ public class PdfDetailActivity extends AppCompatActivity implements View.OnClick
         pdfsize = (TextView) findViewById(R.id.textViewSize);
         pdfDescription = (TextView) findViewById(R.id.pdfDescription);
         uploaddate = (TextView) findViewById(R.id.uploaddate) ;
+        pdfCategory = (TextView) findViewById(R.id.ok);
         mPdfReference = FirebaseDatabase.getInstance().getReference().child(getString(R.string.DB_Pdfs)).child(pdfkey);
         btndownload = (Button) findViewById(R.id.btnDownload);
         btndownload.setOnClickListener(this);
@@ -82,6 +85,7 @@ public class PdfDetailActivity extends AppCompatActivity implements View.OnClick
                 userName.setText(pdf.getUsername());
                 pdfsize.setText(String.format( "%.2f MB",pdf.getPdfsize()));
                 uploaddate.setText(pdf.getUploaddate());
+                pdfCategory.setText(pdf.getCategories());
                 uid = pdf.getUid();
             }
 
