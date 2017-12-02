@@ -1,5 +1,7 @@
 package com.navjot.deepak.manpreet.pdfsociety.Activities;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.content.Intent;
@@ -35,6 +37,8 @@ import com.navjot.deepak.manpreet.pdfsociety.Fragments.MyPdfsFragment;
 import com.navjot.deepak.manpreet.pdfsociety.Fragments.RecentPdfsFragment;
 import com.navjot.deepak.manpreet.pdfsociety.Models.Pdf;
 import com.navjot.deepak.manpreet.pdfsociety.R;
+import com.navjot.deepak.manpreet.pdfsociety.Services.FeedbackNotifyService;
+
 import java.io.File;
 
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,
@@ -45,6 +49,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private FragmentPagerAdapter mPagerAdapter;
     private ViewPager mViewPager;
     boolean doubleBackToExitPressedOnce = false;
+    public static int i=0;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -53,6 +58,11 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         init();
         initViewPager();
         showusernameInNavdrawer();
+
+        if(i==0) {
+            startService(new Intent(getApplicationContext(), FeedbackNotifyService.class));
+        }
+
     }
 
     private void showusernameInNavdrawer(){
@@ -77,7 +87,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onPostResume() {
         super.onPostResume();
-        Log.d("Pdfsociety", "onPostResume: ");
         invalidateOptionsMenu();
     }
 

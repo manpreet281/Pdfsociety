@@ -12,6 +12,7 @@
     <string name="DB_Pdfs">Pdfs</string>
     <string name="DB_user_pdfs">User-pdfs</string>
     <string name="DB_Categories">Categories</string>
+    <string name="DB_Seen_Feedbacks">Seen_Feedbacks</string>
 
 
     <string-array name="india_cities">

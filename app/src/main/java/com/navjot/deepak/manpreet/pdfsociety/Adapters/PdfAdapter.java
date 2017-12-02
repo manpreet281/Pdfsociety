@@ -32,7 +32,6 @@ public class PdfAdapter extends RecyclerView.Adapter<PdfViewHolder> implements F
 
     public PdfAdapter( ProgressBar mprogressBar, TextView nopdf, ArrayList<Pdf> pdfarraylist, Context conText) {
         super();
-        Log.d("Pdfsociety", "PdfAdapter constructor ");
         mProgressBar = mprogressBar;
         Nopdf = nopdf;
         pdfList = pdfarraylist;

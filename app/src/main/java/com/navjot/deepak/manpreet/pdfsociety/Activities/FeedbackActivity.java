@@ -54,7 +54,7 @@ public class FeedbackActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(),"Rating bar cannot be empty",Toast.LENGTH_SHORT).show();
             result = false;
         }
-        if(TextUtils.isEmpty(txtComment.getText().toString().trim())){
+        else if(TextUtils.isEmpty(txtComment.getText().toString().trim())){
             Toast.makeText(getApplicationContext(),"Comment section cannot be empty",Toast.LENGTH_SHORT).show();
             result = false;
         }
@@ -70,17 +70,18 @@ public class FeedbackActivity extends AppCompatActivity {
 
                 if(ValidateFeedback()){
                     Feedback fb = new Feedback(
-
                             RatingBar.getRating(),
-                            txtComment.getText().toString().trim()
-
+                            txtComment.getText().toString().trim(),
+                            mAuth.getCurrentUser().getEmail(),
+                            mAuth.getUid()
                     );
 
                     mDatabase.child(getString(R.string.DB_Feedbacks))
                             .child(mAuth.getCurrentUser().getUid())
                             .setValue(fb);
 
-                    startActivity(new Intent(FeedbackActivity.this, HomeActivity.class));
+                    finish();
+
                 }
 
         }

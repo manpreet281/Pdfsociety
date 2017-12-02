@@ -7,12 +7,16 @@ package com.navjot.deepak.manpreet.pdfsociety.Models;
 public class Feedback {
     private float Rating;
     private String Comment;
+    private String Email;
+    private String Uid;
 
     public Feedback(){}
 
-    public Feedback(float rating, String comment) {
-        this.Rating = rating;
-        this.Comment = comment;
+    public Feedback(float rating, String comment, String email, String uid) {
+        Rating = rating;
+        Comment = comment;
+        Email = email;
+        Uid = uid;
     }
 
     public float getRating() {
@@ -20,7 +24,7 @@ public class Feedback {
     }
 
     public void setRating(float rating) {
-        this.Rating = rating;
+        Rating = rating;
     }
 
     public String getComment() {
@@ -28,14 +32,32 @@ public class Feedback {
     }
 
     public void setComment(String comment) {
-        this.Comment = comment;
+        Comment = comment;
+    }
+
+    public String getEmail() {
+        return Email;
+    }
+
+    public void setEmail(String email) {
+        Email = email;
+    }
+
+    public String getUid() {
+        return Uid;
+    }
+
+    public void setUid(String uid) {
+        Uid = uid;
     }
 
     @Override
     public String toString() {
-        return "FeedbackActivity{" +
+        return "Feedback{" +
                 "Rating=" + Rating +
                 ", Comment='" + Comment + '\'' +
+                ", Email='" + Email + '\'' +
+                ", Uid='" + Uid + '\'' +
                 '}';
     }
 }

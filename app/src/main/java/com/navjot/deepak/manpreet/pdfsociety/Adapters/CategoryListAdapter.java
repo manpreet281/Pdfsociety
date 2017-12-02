@@ -57,9 +57,6 @@ public class CategoryListAdapter extends ArrayAdapter {
 
             Category category_pos = categories.get(position);
 
-
-            Log.d("Pdfsociety", "category_pos: "+category_pos);
-
             category_pic_id.setImageResource(category_pos.getCategory_pic_id());
             category_name.setText(category_pos.getCategory_name());
 

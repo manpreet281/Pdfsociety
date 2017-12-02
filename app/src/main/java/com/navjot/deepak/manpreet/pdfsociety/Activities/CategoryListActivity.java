@@ -48,11 +48,6 @@ public class CategoryListActivity extends AppCompatActivity implements OnItemCli
             categories.add(item);
         }
 
-        for (Category obj:categories
-                ) {
-            Log.d("Pdfsociety", "obj: "+obj);
-        }
-
         mylistview = (ListView) findViewById(R.id.list);
         CategoryListAdapter adapter = new CategoryListAdapter(this, categories);
         mylistview.setAdapter(adapter);
