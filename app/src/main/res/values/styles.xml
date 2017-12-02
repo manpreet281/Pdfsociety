@@ -18,16 +18,6 @@
         <item name="android:background">@drawable/mybutton</item>
     </style>
 
-    <style name="SelectButtonStyle" parent="android:Theme">
-        <item name="android:buttonStyle">@style/CKButton</item>
-    </style>
-
-    <style name="Button" parent="android:Widget.Holo.Button.Borderless">
-        <item name="android:textSize">18sp</item>
-        <item name="android:textColor">@color/white</item>
-        <item name="android:background">@drawable/selectbutton</item>
-    </style>
-
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>

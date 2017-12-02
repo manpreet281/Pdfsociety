@@ -16,7 +16,6 @@
 
 
         <TextView
-            android:id="@+id/textViewTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
@@ -25,7 +24,6 @@
             android:textSize="24dp" />
 
         <TextView
-            android:id="@+id/textViewSignIn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
@@ -81,7 +79,6 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/resetpwd"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -94,7 +91,6 @@
                 />
 
             <TextView
-                android:id="@+id/textViewHere"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="3dp"

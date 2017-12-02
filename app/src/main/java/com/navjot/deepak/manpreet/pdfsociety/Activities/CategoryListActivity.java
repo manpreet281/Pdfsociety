@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Toast;
@@ -21,8 +22,6 @@ public class CategoryListActivity extends AppCompatActivity implements OnItemCli
 
     TypedArray category_pic;
     String[] category_name;
-
-
     List<Category> categories;
     ListView mylistview;
 
@@ -45,14 +44,18 @@ public class CategoryListActivity extends AppCompatActivity implements OnItemCli
 
 
         for (int i = 0; i < category_name.length; i++) {
-            Category item = new Category(category_pic.getResourceId(i,-1),category_name[i]);
+            Category item = new Category(category_name[i], category_pic.getResourceId(i,-1));
             categories.add(item);
+        }
+
+        for (Category obj:categories
+                ) {
+            Log.d("Pdfsociety", "obj: "+obj);
         }
 
         mylistview = (ListView) findViewById(R.id.list);
         CategoryListAdapter adapter = new CategoryListAdapter(this, categories);
         mylistview.setAdapter(adapter);
-        category_pic.recycle();
         mylistview.setOnItemClickListener(this);
 
     }

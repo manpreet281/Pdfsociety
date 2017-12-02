@@ -169,15 +169,14 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-
-            return true;
-        }
         if (id == R.id.action_logout) {
                     showProgressDialog();
                     FirebaseAuth.getInstance().signOut();
-                    startActivity(new Intent(HomeActivity.this, SignIn.class));
+                    startActivity(
+                            new Intent(HomeActivity.this, SignIn.class)
+                            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                            .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                    );
                     finish();
                     return true;
                 }

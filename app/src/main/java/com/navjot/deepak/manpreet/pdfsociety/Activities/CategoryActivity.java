@@ -1,6 +1,8 @@
 package com.navjot.deepak.manpreet.pdfsociety.Activities;
 
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
@@ -15,11 +17,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.navjot.deepak.manpreet.pdfsociety.Adapters.PdfAdapter;
+import com.navjot.deepak.manpreet.pdfsociety.Models.Category;
 import com.navjot.deepak.manpreet.pdfsociety.Models.Pdf;
 import com.navjot.deepak.manpreet.pdfsociety.R;
 
@@ -33,6 +38,7 @@ public class CategoryActivity extends AppCompatActivity {
      TextView Nopdf;
      SearchView searchView;
     PdfAdapter mAdapter;
+    ProgressDialog mProgressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,6 +110,32 @@ public class CategoryActivity extends AppCompatActivity {
         searchView = (SearchView)item.getActionView();
         searchViewListener();
         return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()){
+            case R.id.action_logout:
+                showProgressDialog();
+                FirebaseAuth.getInstance().signOut();
+                startActivity(
+                        new Intent(CategoryActivity.this, SignIn.class)
+                        .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                );
+
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    public void showProgressDialog() {
+        if (mProgressDialog == null) {
+            mProgressDialog = new ProgressDialog(this);
+            mProgressDialog.setMessage(getString(R.string.loading));
+            mProgressDialog.setIndeterminate(true);
+        }
+
+        mProgressDialog.show();
     }
 
     protected void searchViewListener(){

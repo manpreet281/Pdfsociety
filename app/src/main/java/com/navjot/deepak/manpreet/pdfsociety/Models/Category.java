@@ -11,9 +11,9 @@ public class Category {
 
     public Category(){}
 
-    public Category(int category_pic_id, String category_name) {
-        this.category_pic_id = category_pic_id;
+    public Category(String category_name,int category_pic_id) {
         this.category_name = category_name;
+        this.category_pic_id = category_pic_id;
     }
 
     public int getCategory_pic_id() {
@@ -32,4 +32,11 @@ public class Category {
         this.category_name = category_name;
     }
 
+    @Override
+    public String toString() {
+        return "Category{" +
+                "category_pic_id=" + category_pic_id +
+                ", category_name='" + category_name + '\'' +
+                '}';
+    }
 }

@@ -83,7 +83,7 @@ public class UploadPdfActivity extends Progressdialog {
         textInputPdfName = (TextInputLayout)findViewById(R.id.pdfnameTextInputLayout);
         category = (AutoCompleteTextView)findViewById(R.id.ac_city);
         category.setThreshold(1);
-        String[] categories = getResources().getStringArray(R.array.Categories);
+        String[] categories = getResources().getStringArray(R.array.categories_name);
         categoryList = Arrays.asList(categories);
         ArrayAdapter<String> category_adapter = new ArrayAdapter<String>(this,R.layout.support_simple_spinner_dropdown_item,categories);
         categoryListener();
