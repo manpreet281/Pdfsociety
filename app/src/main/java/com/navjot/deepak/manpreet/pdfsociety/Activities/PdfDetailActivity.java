@@ -1,12 +1,16 @@
 package com.navjot.deepak.manpreet.pdfsociety.Activities;
 
 import android.Manifest;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.Settings;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,6 +26,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.navjot.deepak.manpreet.pdfsociety.Models.Category;
 import com.navjot.deepak.manpreet.pdfsociety.Models.Pdf;
 import com.navjot.deepak.manpreet.pdfsociety.R;
 import com.navjot.deepak.manpreet.pdfsociety.Services.MyDownloadService;
@@ -33,13 +38,14 @@ public class PdfDetailActivity extends AppCompatActivity implements View.OnClick
     TextView pdfDescription;
     TextView pdfsize;
     TextView uploaddate;
+    TextView pdfCategory;
     Button btndownload;
-
     private DatabaseReference mPdfReference;
     private ValueEventListener mPdfListener;
     private static String pdfkey;
     private static String uid;
     Pdf pdf;
+    private SharedPreferences sp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,9 +67,11 @@ public class PdfDetailActivity extends AppCompatActivity implements View.OnClick
         pdfsize = (TextView) findViewById(R.id.textViewSize);
         pdfDescription = (TextView) findViewById(R.id.pdfDescription);
         uploaddate = (TextView) findViewById(R.id.uploaddate) ;
+        pdfCategory = (TextView) findViewById(R.id.ok);
         mPdfReference = FirebaseDatabase.getInstance().getReference().child(getString(R.string.DB_Pdfs)).child(pdfkey);
         btndownload = (Button) findViewById(R.id.btnDownload);
         btndownload.setOnClickListener(this);
+        sp = getSharedPreferences(getString(R.string.sharedPreferenceFile), Context.MODE_PRIVATE);
     }
 
     public void pdfListener() {
@@ -77,6 +85,7 @@ public class PdfDetailActivity extends AppCompatActivity implements View.OnClick
                 userName.setText(pdf.getUsername());
                 pdfsize.setText(String.format( "%.2f MB",pdf.getPdfsize()));
                 uploaddate.setText(pdf.getUploaddate());
+                pdfCategory.setText(pdf.getCategories());
                 uid = pdf.getUid();
             }
 
@@ -102,7 +111,27 @@ public class PdfDetailActivity extends AppCompatActivity implements View.OnClick
                         .setAction(MyDownloadService.ACTION_DOWNLOAD)
         );
 
-        Toast.makeText(PdfDetailActivity.this, getString(R.string.progress_downloading), Toast.LENGTH_SHORT).show();
+        if(isFirstDownload()){
+            showDownloadLocationAlert();
+            SharedPreferences.Editor editor = sp.edit();
+            editor.putBoolean(getString(R.string.isFirstDownload), false);
+            editor.commit();
+        }
+        else {
+            Toast.makeText(PdfDetailActivity.this, getString(R.string.progress_downloading), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private boolean isFirstDownload(){
+        return  sp.getBoolean(getString(R.string.isFirstDownload), true);
+    }
+
+    private void showDownloadLocationAlert(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Your downloaded Pdfs will get stored in InternalStorage/Pdfsociety folder");
+        builder.setPositiveButton("Ok",null);
+        builder.setCancelable(false);
+        builder.create().show();
     }
 
     @Override

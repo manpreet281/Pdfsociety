@@ -2,6 +2,7 @@ package com.navjot.deepak.manpreet.pdfsociety.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -31,7 +32,6 @@ public class PdfAdapter extends RecyclerView.Adapter<PdfViewHolder> implements F
 
     public PdfAdapter( ProgressBar mprogressBar, TextView nopdf, ArrayList<Pdf> pdfarraylist, Context conText) {
         super();
-        Log.d("Pdfsociety", "PdfAdapter constructor ");
         mProgressBar = mprogressBar;
         Nopdf = nopdf;
         pdfList = pdfarraylist;
@@ -91,7 +91,6 @@ public class PdfAdapter extends RecyclerView.Adapter<PdfViewHolder> implements F
                 intent.putExtra("pdfkey", PdfKey);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 v.getContext().startActivity(intent);
             }
         });

@@ -1,5 +1,7 @@
 package com.navjot.deepak.manpreet.pdfsociety.Activities;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.content.Intent;
@@ -23,39 +25,68 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.navjot.deepak.manpreet.pdfsociety.Activities.MadeByActivity;
 import com.navjot.deepak.manpreet.pdfsociety.Activities.UploadPdfActivity;
 import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 import com.navjot.deepak.manpreet.pdfsociety.Fragments.MyPdfsFragment;
 import com.navjot.deepak.manpreet.pdfsociety.Fragments.RecentPdfsFragment;
+import com.navjot.deepak.manpreet.pdfsociety.Models.Pdf;
 import com.navjot.deepak.manpreet.pdfsociety.R;
+import com.navjot.deepak.manpreet.pdfsociety.Services.FeedbackNotifyService;
+
 import java.io.File;
 
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,
         View.OnClickListener
 {
     public ProgressDialog mProgressDialog;
-    private FloatingActionButton fab;
+    public static FloatingActionButton fab;
     private FragmentPagerAdapter mPagerAdapter;
     private ViewPager mViewPager;
     boolean doubleBackToExitPressedOnce = false;
-    public static HomeActivity homeActivityRef;
-    public SearchView searchview;
+    public static int i=0;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        homeActivityRef=HomeActivity.this;
         init();
         initViewPager();
+        showusernameInNavdrawer();
+
+        if(i==0) {
+            startService(new Intent(getApplicationContext(), FeedbackNotifyService.class));
+        }
+
+    }
+
+    private void showusernameInNavdrawer(){
+        FirebaseDatabase.getInstance().getReference()
+                .child(getString(R.string.DB_Users))
+                .child(FirebaseAuth.getInstance().getUid())
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        Pdf pdf = dataSnapshot.getValue(Pdf.class);
+                        TextView userTextView = (TextView)findViewById(R.id.usertextView);
+                        userTextView.setText(pdf.getUsername());
+                        userTextView.setVisibility(View.VISIBLE);
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                    }
+                });
     }
 
     @Override
     protected void onPostResume() {
         super.onPostResume();
-        Log.d("Pdfsociety", "onPostResume: ");
         invalidateOptionsMenu();
     }
 
@@ -95,6 +126,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         setSupportActionBar(toolbar);
 
         fab = (FloatingActionButton) findViewById(R.id.fab);
+        Log.d("Pdfsociety", "Fab home: "+fab);
         fab.setOnClickListener(this);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -146,15 +178,14 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-
-            return true;
-        }
         if (id == R.id.action_logout) {
                     showProgressDialog();
                     FirebaseAuth.getInstance().signOut();
-                    startActivity(new Intent(HomeActivity.this, SignIn.class));
+                    startActivity(
+                            new Intent(HomeActivity.this, SignIn.class)
+                            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                            .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                    );
                     finish();
                     return true;
                 }
@@ -169,12 +200,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
+         if (id == R.id.nav_categories){
 
-        if (id == R.id.nav_downloads){
-
-
-
-
+            Intent intent = new Intent(HomeActivity.this, CategoryListActivity.class);
+            startActivity(intent);
         }
 
         else if (id == R.id.nav_share) {

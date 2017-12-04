@@ -1,12 +1,9 @@
 <resources>
     <string name="app_name">Pdfsociety</string>
-    <string name="hint_dob">Enter D.O.B (DD/MM/YYYY)</string>
     <string name="hint_password">Password</string>
     <string name="hint_gender">I am</string>
     <string name="male">Male</string>
     <string name="female">Female</string>
-    <string name="err_msg_dob">Enter a valid D.O.B</string>
-    <string name="pick_country">Pick Country</string>
     <string name="loading">loading</string>
     <string name="tag">Pdfsociety</string>
 
@@ -14,8 +11,9 @@
     <string name="DB_Users">Users</string>
     <string name="DB_Pdfs">Pdfs</string>
     <string name="DB_user_pdfs">User-pdfs</string>
+    <string name="DB_Categories">Categories</string>
+    <string name="DB_Seen_Feedbacks">Seen_Feedbacks</string>
 
-    <string name="storage_pdfs">Pdfs</string>
 
     <string-array name="india_cities">
         <item>Agartala</item>
@@ -206,12 +204,10 @@
         <item>Yercaud</item>
         <item>Zanskar</item>
     </string-array>
-    <string name="title_activity_home">HomeActivity</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <string name="action_settings">Settings</string>
     <string name="progress_uploading">Uploading…</string>
     <string name="upload_success">Upload finished</string>
     <string name="upload_failure">Upload failed</string>
@@ -221,10 +217,57 @@
 
     <string name="progress_downloading">Downloading…</string>
 
-    <string name="send_to">Send To…</string>
-
     <string name="Select_Pdf">Select Pdf</string>
 
+    <string-array name="categories_name">
+        <item>Action &amp; Adventure</item>
+        <item>Biography</item>
+        <item>Children</item>
+        <item>Comedy &amp; Satire</item>
+        <item>Comics</item>
+        <item>Cooking</item>
+        <item>Education</item>
+        <item>Fantasy</item>
+        <item>Health &amp; Mind</item>
+        <item>History</item>
+        <item>Horror</item>
+        <item>Literature</item>
+        <item>Mystery</item>
+        <item>Philosophy</item>
+        <item>Religion &amp; Spiritual</item>
+        <item>Romance &amp; Drama</item>
+        <item>Science fiction</item>
+        <item>Travel</item>
+        <item>Others</item>
+    </string-array>
+
+
+    <array name="categories_pics">
+        <item>@mipmap/actionadventure</item>
+        <item>@mipmap/biography</item>
+        <item>@mipmap/children</item>
+        <item>@mipmap/comedysatire</item>
+        <item>@mipmap/comics</item>
+        <item>@mipmap/cooking</item>
+        <item>@mipmap/education</item>
+        <item>@mipmap/fantasy</item>
+        <item>@mipmap/healthmind</item>
+        <item>@mipmap/history</item>
+        <item>@mipmap/horror</item>
+        <item>@mipmap/literature</item>
+        <item>@mipmap/mystery</item>
+        <item>@mipmap/philosophy</item>
+        <item>@mipmap/religionspirit</item>
+        <item>@mipmap/romancedrama</item>
+        <item>@mipmap/sciencefiction</item>
+        <item>@mipmap/travel</item>
+        <item>@mipmap/others</item>
+
+    </array>
+
+
+    <string name="sharedPreferenceFile">SharedPreferences</string>
+    <string name="isFirstDownload">isFirstDownload</string>
+
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

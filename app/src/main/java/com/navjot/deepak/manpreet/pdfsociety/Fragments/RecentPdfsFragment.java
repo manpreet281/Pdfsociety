@@ -10,6 +10,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.navjot.deepak.manpreet.pdfsociety.Activities.HomeActivity;
 import com.navjot.deepak.manpreet.pdfsociety.Models.Pdf;
 import com.navjot.deepak.manpreet.pdfsociety.Adapters.PdfAdapter;
 import com.navjot.deepak.manpreet.pdfsociety.R;
@@ -37,6 +38,7 @@ public class RecentPdfsFragment extends PdfListFragment {
                                 pdfList.add(pdf);
                             }
 
+                            HomeActivity.fab.setVisibility(View.VISIBLE);
                             mAdapter = new PdfAdapter(mProgressBar, Nopdf, pdfList, context);
                             mRecycler.setAdapter(mAdapter);
 

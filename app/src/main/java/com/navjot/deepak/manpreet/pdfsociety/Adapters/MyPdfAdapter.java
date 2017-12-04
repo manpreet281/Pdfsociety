@@ -102,7 +102,6 @@ public class MyPdfAdapter extends RecyclerView.Adapter<MyPdfViewHolder> implemen
                 intent.putExtra("pdfkey", PdfKey);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 v.getContext().startActivity(intent);
             }
         });
