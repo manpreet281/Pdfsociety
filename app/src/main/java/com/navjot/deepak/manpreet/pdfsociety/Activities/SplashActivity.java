@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.navjot.deepak.manpreet.pdfsociety.R;
@@ -21,7 +22,8 @@ public class SplashActivity extends AppCompatActivity {
         //requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_splash);
 
-        bounce();
+        rotate();
+        fadein();
 
         if(FirebaseAuth.getInstance().getCurrentUser() !=null && FirebaseAuth.getInstance().getCurrentUser().isEmailVerified()){
             handler.sendEmptyMessageDelayed(102,2000);
@@ -31,10 +33,17 @@ public class SplashActivity extends AppCompatActivity {
         }
     }
 
-    public void bounce(){
-        ImageView image = (ImageView)findViewById(R.id.imageView2);
+    public void rotate(){
+        ImageView image = (ImageView)findViewById(R.id.SplashImage);
         Animation animation = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotate);
         image.startAnimation(animation);
+    }
+
+    public void fadein(){
+        TextView text = (TextView)findViewById(R.id.SplashTextView);
+        Animation animation = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fade_in);
+        text.startAnimation(animation);
+
     }
 
     Handler handler = new Handler(){
