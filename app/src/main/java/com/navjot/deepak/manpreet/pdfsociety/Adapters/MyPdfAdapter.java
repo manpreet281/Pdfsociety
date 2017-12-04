@@ -160,6 +160,8 @@ public class MyPdfAdapter extends RecyclerView.Adapter<MyPdfViewHolder> implemen
                         Toast.makeText(context, pdf.getPdfname()+" deleted", Toast.LENGTH_SHORT).show();
                         DatabaseReference globalPdfRef = mDatabase.child(context.getString(R.string.DB_Pdfs)).child(PdfKey);
                         DatabaseReference userPdfRef = mDatabase.child(context.getString(R.string.DB_user_pdfs)).child(getUid()).child(PdfKey);
+                        DatabaseReference categoryRef = mDatabase.child(context.getString(R.string.DB_Categories)).child(pdf.getCategories()).child(PdfKey);
+                        deletePdfOnFirebaseDB(categoryRef);
                         deletePdfOnFirebaseDB(globalPdfRef);
                         deletePdfOnFirebaseDB(userPdfRef);
                     }
