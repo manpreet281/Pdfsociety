@@ -6,7 +6,6 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
-import android.media.SoundPool;
 import android.os.IBinder;
 import android.util.Log;
 
@@ -14,28 +13,28 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.navjot.deepak.manpreet.pdfsociety.Activities.HomeActivity;
 import com.navjot.deepak.manpreet.pdfsociety.Models.Feedback;
-import com.navjot.deepak.manpreet.pdfsociety.Models.User;
 import com.navjot.deepak.manpreet.pdfsociety.R;
 
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class FeedbackNotifyService extends Service {
 
-    int i=0;
-    Feedback feedback;
+    int notificationCount=0;
+    public static int serviceStartCount =0;
+    int listenerCount=0;
     FirebaseUser fuser;
-    ArrayList DataList;
-    ArrayList SeenFBList = new ArrayList();
-    ArrayList NotifyList = new ArrayList();
+    ValueEventListener FeedbackListener;
+    DatabaseReference FeedbackReference;
 
     @Override
     public void onCreate() {
         super.onCreate();
-        HomeActivity.i++;
+
         fuser = FirebaseAuth.getInstance().getCurrentUser();
         if(
             !(
@@ -51,48 +50,57 @@ public class FeedbackNotifyService extends Service {
         }
     }
 
+    private void init(){
+        FeedbackReference = FirebaseDatabase.getInstance().getReference().child(getString(R.string.DB_Feedbacks));
+    }
+
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
             Log.i("Pdfsociety", "Service Started");
+
+            init();
+
             listenForFeedback();
             return START_STICKY;
     }
 
     private void listenForFeedback(){
+        FeedbackListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Log.d("Pdfsociety", "Feedback onDataChange");
+                Feedback feedback;
+
+                if (listenerCount == 0){
+                    for (DataSnapshot postSnapShot : dataSnapshot.getChildren()) {
+                        feedback = postSnapShot.getValue(Feedback.class);
+
+                        getSeenByAdminsMap(feedback);
+                    }
+                    listenerCount = 1;
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.d("Pdfsociety", "Feedback onCancelled "+databaseError.getMessage());
+            }
+        };
+
+        FeedbackReference.addValueEventListener(FeedbackListener);
+    }
+
+    void getSeenByAdminsMap(final Feedback fb){
+        Log.d("Pdfsociety", "getSeenByAdminsMap");
         FirebaseDatabase.getInstance().getReference()
                 .child(getString(R.string.DB_Feedbacks))
-                .addValueEventListener(new ValueEventListener() {
+                .child(fb.getUid())
+                .child(getString(R.string.DB_SeenByAdmins))
+                .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        Log.d("Pdfsociety", "Feedback onDataChange");
-                        DataList = new ArrayList();
-                        for (DataSnapshot postSnapShot : dataSnapshot.getChildren()) {
-                            feedback =  postSnapShot.getValue(Feedback.class);
-                            DataList.add(feedback);
-                        }
-
-                        getSeenFeedbackList();
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                        Log.d("Pdfsociety", "Feedback onCancelled "+databaseError.getMessage());
-                    }
-                });
-    }
-
-    private void getSeenFeedbackList(){
-        FirebaseDatabase.getInstance().getReference()
-                .child(getString(R.string.DB_Seen_Feedbacks))
-                .child(fuser.getUid())
-                .addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        for (DataSnapshot postSnapShot : dataSnapshot.getChildren()) {
-                            Feedback seenFeedBack =  postSnapShot.getValue(Feedback.class);
-                            SeenFBList.add(seenFeedBack);
-                        }
-                        generateUpdatedList();
+                        Map<String,Object> map = (Map<String,Object>) dataSnapshot.getValue();
+                        checkSeen(fb, map);
                     }
 
                     @Override
@@ -100,25 +108,20 @@ public class FeedbackNotifyService extends Service {
 
                     }
                 });
-
     }
 
-    private void generateUpdatedList(){
-        NotifyList.addAll(DataList);
-        NotifyList.removeAll(SeenFBList);
+    private void checkSeen(Feedback fb, Map<String, Object> adminMap){
+        Log.d("Pdfsociety", "checkSeen");
 
-        for (Object obj: NotifyList){
-            Feedback fb = (Feedback)obj;
-            Log.d("Pdfsociety", "notifylist: "+fb);
+        listenerCount = 0;
+
+        if (adminMap != null){
+            Boolean value = (Boolean) adminMap.get(fuser.getUid());
+            if (!(value)){
+                showNotification(fb);
+            }
         }
 
-        for (Object list:NotifyList) {
-            Feedback feedback = (Feedback) list;
-            showNotification(feedback);
-        }
-        DataList.clear();
-        SeenFBList.clear();
-        NotifyList.clear();
     }
 
     public String usernameFromEmail(String email) {
@@ -130,23 +133,36 @@ public class FeedbackNotifyService extends Service {
     }
 
     private void showNotification(Feedback feedback) {
+        Log.d("Pdfsociety", "showNotification");
         Notification.Builder builder = new Notification.Builder(this)
                 .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.a))
                 .setSmallIcon(R.drawable.a)
                 .setContentTitle(usernameFromEmail(feedback.getEmail()))
                 .setContentText(feedback.getRating()+"\n"+feedback.getComment());
         NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        manager.notify(i,builder.build());
-        i++;
-        addToSeenFeedbacks(feedback);
+        manager.notify(notificationCount,builder.build());
+        notificationCount++;
+        putSeenTrue(feedback);
     }
 
-    private void addToSeenFeedbacks(Feedback feedback){
+    private void putSeenTrue(Feedback feedback){
+        Log.d("Pdfsociety","putSeenTrue method");
+
+//        FirebaseDatabase.getInstance().getReference()
+//                .child(getString(R.string.DB_Feedbacks))
+//                .child(feedback.getUid())
+//                .child(getString(R.string.DB_SeenByAdmins))
+//                .child(fuser.getUid())
+//                .setValue(true);
+        Map<String,Object> map = new HashMap<>();
+        map.put(fuser.getUid(), true);
+
         FirebaseDatabase.getInstance().getReference()
-                .child(getString(R.string.DB_Seen_Feedbacks))
-                .child(fuser.getUid())
+                .child(getString(R.string.DB_Feedbacks))
                 .child(feedback.getUid())
-                .setValue(feedback);
+                .child(getString(R.string.DB_SeenByAdmins))
+                .updateChildren(map);
+
     }
 
     @Override

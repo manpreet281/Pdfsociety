@@ -12,8 +12,7 @@
     <string name="DB_Pdfs">Pdfs</string>
     <string name="DB_user_pdfs">User-pdfs</string>
     <string name="DB_Categories">Categories</string>
-    <string name="DB_Seen_Feedbacks">Seen_Feedbacks</string>
-
+    <string name="DB_SeenByAdmins">SeenByAdmins</string>
 
     <string-array name="india_cities">
         <item>Agartala</item>
@@ -268,6 +267,9 @@
 
     <string name="sharedPreferenceFile">SharedPreferences</string>
     <string name="isFirstDownload">isFirstDownload</string>
+    <string name="navjot">rUxILFywZAOpqlNKcNjN7CPDnBs2</string>
+    <string name="deepak">rIMWG64E5Sct02sN3tWArSPSefR2</string>
+    <string name="manpreet">PjNFJgnA7TdLMZ5ykdtm6BML9uw2</string>
 
     <!-- TODO: Remove or change this placeholder text -->
 </resources>

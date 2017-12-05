@@ -1,5 +1,8 @@
 package com.navjot.deepak.manpreet.pdfsociety.Models;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Created by manpreet on 25/10/17.
  */
