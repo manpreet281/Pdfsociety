@@ -172,17 +172,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        if (id == R.id.action_logout) {
-                    showProgressDialog();
-                    FirebaseAuth.getInstance().signOut();
-                    startActivity(
-                            new Intent(HomeActivity.this, SignIn.class)
-                            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                            .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                    );
-                    finish();
-                    return true;
-                }
+
 
 
         return super.onOptionsItemSelected(item);
@@ -219,6 +209,19 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             Intent intent = new Intent(HomeActivity.this, MadeByActivity.class);
             startActivity(intent);
         }
+
+        else if (id == R.id.action_logout) {
+            showProgressDialog();
+            FirebaseAuth.getInstance().signOut();
+            startActivity(
+                    new Intent(HomeActivity.this, SignIn.class)
+                            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                            .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+            );
+            finish();
+            return true;
+        }
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

@@ -18,14 +18,12 @@ public class PdfViewHolder extends RecyclerView.ViewHolder {
         super(itemView);
         pdfname = itemView.findViewById(R.id.pdfname);
         username = itemView.findViewById(R.id.username);
-        uploadDate = itemView.findViewById(R.id.uploadDate);
         pdfCategory = itemView.findViewById(R.id.pdf_category);
     }
 
     public void bindToPdf(Pdf Pdf) {
         pdfname.setText(Pdf.getPdfname());
         username.setText(Pdf.getUsername());
-        uploadDate.setText(Pdf.getUploaddate());
         pdfCategory.setText(Pdf.getCategories());
     }
 

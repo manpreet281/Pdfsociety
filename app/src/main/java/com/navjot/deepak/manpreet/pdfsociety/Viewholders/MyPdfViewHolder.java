@@ -20,7 +20,6 @@ public class MyPdfViewHolder extends RecyclerView.ViewHolder{
         super(itemView);
 
         pdfname = itemView.findViewById(R.id.pdfname);
-        username = itemView.findViewById(R.id.username);
         deleteImage = itemView.findViewById(R.id.deleteImageView);
         pdfCategory = itemView.findViewById(R.id.pdf_category);
     }
@@ -28,7 +27,6 @@ public class MyPdfViewHolder extends RecyclerView.ViewHolder{
     public void bindToPdf(Pdf Pdf, View.OnClickListener deletePdfClickListener) {
         Log.d("Pdfsociety", "bindToPdf pdf: " + Pdf);
         pdfname.setText(Pdf.getPdfname());
-        username.setText(Pdf.getUsername());
         pdfCategory.setText(Pdf.getCategories());
         deleteImage.setOnClickListener(deletePdfClickListener);
     }
