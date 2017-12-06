@@ -1,7 +1,5 @@
 package com.navjot.deepak.manpreet.pdfsociety.Activities;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.content.Intent;
@@ -13,7 +11,6 @@ import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -29,9 +26,6 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.navjot.deepak.manpreet.pdfsociety.Activities.MadeByActivity;
-import com.navjot.deepak.manpreet.pdfsociety.Activities.UploadPdfActivity;
-import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 import com.navjot.deepak.manpreet.pdfsociety.Fragments.MyPdfsFragment;
 import com.navjot.deepak.manpreet.pdfsociety.Fragments.RecentPdfsFragment;
@@ -49,7 +43,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private FragmentPagerAdapter mPagerAdapter;
     private ViewPager mViewPager;
     boolean doubleBackToExitPressedOnce = false;
-    public static int i=0;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -59,8 +52,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         initViewPager();
         showusernameInNavdrawer();
 
-        if(i==0) {
+        if(FeedbackNotifyService.serviceStartCount ==0) {
             startService(new Intent(getApplicationContext(), FeedbackNotifyService.class));
+            FeedbackNotifyService.serviceStartCount++;
         }
 
     }

@@ -16,6 +16,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.navjot.deepak.manpreet.pdfsociety.Models.Feedback;
 import com.navjot.deepak.manpreet.pdfsociety.R;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class FeedbackActivity extends AppCompatActivity {
 
     RatingBar RatingBar;
@@ -69,6 +72,12 @@ public class FeedbackActivity extends AppCompatActivity {
         private void Submit() {
 
                 if(ValidateFeedback()){
+
+                    Map<String,Object> adminMap = new HashMap();
+                    adminMap.put(getString(R.string.navjot), false);
+                    adminMap.put(getString(R.string.deepak), false);
+                    adminMap.put(getString(R.string.manpreet), false);
+
                     Feedback fb = new Feedback(
                             RatingBar.getRating(),
                             txtComment.getText().toString().trim(),
@@ -79,6 +88,10 @@ public class FeedbackActivity extends AppCompatActivity {
                     mDatabase.child(getString(R.string.DB_Feedbacks))
                             .child(mAuth.getCurrentUser().getUid())
                             .setValue(fb);
+                    mDatabase.child(getString(R.string.DB_Feedbacks))
+                            .child(mAuth.getCurrentUser().getUid())
+                            .child(getString(R.string.DB_SeenByAdmins))
+                            .setValue(adminMap);
 
                     finish();
 
