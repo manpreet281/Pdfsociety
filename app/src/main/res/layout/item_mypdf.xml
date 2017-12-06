@@ -32,13 +32,7 @@
                 android:layout_weight="1"
                 />
 
-            <ImageView
-                android:id="@+id/deleteImageView"
-                android:src="@drawable/garbage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                />
+
 
         </LinearLayout>
 
@@ -50,23 +44,23 @@
             android:layout_marginTop="6dp">
 
             <TextView
-                android:id="@+id/username"
+                android:id="@+id/pdf_category"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/colorPrimary"
-                android:text="username"
-                android:textSize="15dp" />
+                android:text="pdf_category"
+                android:textSize="15dp"/>
 
             <View
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_weight="1"/>
-            <TextView
-            android:id="@+id/pdf_category"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="pdf_category"
-            android:textSize="15dp"/>
+            <ImageView
+                android:id="@+id/deleteImageView"
+                android:src="@drawable/garbage"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_gravity="right"
+                />
 
         </LinearLayout>
 
