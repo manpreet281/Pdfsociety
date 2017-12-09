@@ -6,9 +6,11 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.IBinder;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
-
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -18,7 +20,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.navjot.deepak.manpreet.pdfsociety.Models.Feedback;
 import com.navjot.deepak.manpreet.pdfsociety.R;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -134,11 +135,22 @@ public class FeedbackNotifyService extends Service {
 
     private void showNotification(Feedback feedback) {
         Log.d("Pdfsociety", "showNotification");
+
+        Uri uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+
         Notification.Builder builder = new Notification.Builder(this)
                 .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.a))
                 .setSmallIcon(R.drawable.a)
+                .setSound(uri)
                 .setContentTitle(usernameFromEmail(feedback.getEmail()))
-                .setContentText(feedback.getRating()+"\n"+feedback.getComment());
+                .setContentText("Rating "+feedback.getRating())
+                .setStyle(
+                        new Notification.BigTextStyle()
+                        .bigText(feedback.getComment())
+                        .setBigContentTitle(usernameFromEmail(feedback.getEmail()))
+                        .setSummaryText("Rating "+feedback.getRating())
+                );
+
         NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         manager.notify(notificationCount,builder.build());
         notificationCount++;
