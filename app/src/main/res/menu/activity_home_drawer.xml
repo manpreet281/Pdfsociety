@@ -3,27 +3,45 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
 
-    <group>
+    <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_categories"
             android:icon="@drawable/category"
             android:title="Categories"
             />
-
-        <item
-            android:id="@+id/nav_share"
-            android:icon="@drawable/ic_menu_share"
-            android:title="Share"
-            android:actionProviderClass="android.widget.ShareActionProvider" />
-        <item
-            android:id="@+id/nav_feedback"
-            android:icon="@drawable/ic_menu_send"
-            android:title="Feedback" />
-
-        <item
-            android:id="@+id/nav_madeby"
-            android:icon="@drawable/madeby"
-            android:title="Made by" />
     </group>
+
+    <item android:title="Communicate">
+        <menu>
+            <item
+                android:id="@+id/nav_share"
+                android:icon="@drawable/ic_menu_share"
+                android:title="Share"
+                android:actionProviderClass="android.widget.ShareActionProvider" />
+            <item
+                android:id="@+id/nav_feedback"
+                android:icon="@drawable/ic_menu_send"
+                android:title="Feedback" />
+
+            <item
+                android:id="@+id/nav_madeby"
+                android:icon="@drawable/madeby"
+                android:title="Made by" />
+
+        </menu>
+    </item>
+
+    <item android:title="User">
+
+        <menu>
+            <item
+                android:id="@+id/action_logout"
+                android:orderInCategory="101"
+                android:icon="@drawable/logout"
+                android:title="Log Out"
+                app:showAsAction="never" />
+        </menu>
+    </item>
+
 
 </menu>
