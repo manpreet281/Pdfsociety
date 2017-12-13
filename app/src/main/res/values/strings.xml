@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Pdfsociety</string>
+    <string name="app_name">E-Club</string>
     <string name="hint_password">Password</string>
     <string name="hint_gender">I am</string>
     <string name="male">Male</string>
