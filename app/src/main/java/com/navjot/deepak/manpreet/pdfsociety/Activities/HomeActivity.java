@@ -93,7 +93,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             };
             private final String[] mFragmentNames = new String[] {
                     "Recent",
-                    "My Pdfs"
+                    "My Ebooks"
             };
             @Override
             public Fragment getItem(int position) {
