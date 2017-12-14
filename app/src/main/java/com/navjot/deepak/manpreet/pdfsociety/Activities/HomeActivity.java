@@ -212,6 +212,12 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         else if (id == R.id.action_logout) {
             showProgressDialog();
+
+            if (FeedbackNotifyService.serviceStartCount != 0){
+                FeedbackNotifyService.serviceStartCount = 0;
+                stopService(new Intent(getApplicationContext(), FeedbackNotifyService.class));
+            }
+
             FirebaseAuth.getInstance().signOut();
             startActivity(
                     new Intent(HomeActivity.this, SignIn.class)
