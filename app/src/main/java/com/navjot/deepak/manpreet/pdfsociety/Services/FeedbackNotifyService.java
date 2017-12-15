@@ -139,8 +139,8 @@ public class FeedbackNotifyService extends Service {
         Uri uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 
         Notification.Builder builder = new Notification.Builder(this)
-                .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.a))
-                .setSmallIcon(R.drawable.a)
+                .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.splashpic))
+                .setSmallIcon(R.drawable.smallicon)
                 .setSound(uri)
                 .setContentTitle(usernameFromEmail(feedback.getEmail()))
                 .setContentText("Rating "+feedback.getRating())
