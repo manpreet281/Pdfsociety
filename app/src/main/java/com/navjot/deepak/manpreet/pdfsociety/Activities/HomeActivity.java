@@ -93,7 +93,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             };
             private final String[] mFragmentNames = new String[] {
                     "Recent",
-                    "My Pdfs"
+                    "My Ebooks"
             };
             @Override
             public Fragment getItem(int position) {
@@ -212,6 +212,12 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         else if (id == R.id.action_logout) {
             showProgressDialog();
+
+            if (FeedbackNotifyService.serviceStartCount != 0){
+                FeedbackNotifyService.serviceStartCount = 0;
+                stopService(new Intent(getApplicationContext(), FeedbackNotifyService.class));
+            }
+
             FirebaseAuth.getInstance().signOut();
             startActivity(
                     new Intent(HomeActivity.this, SignIn.class)

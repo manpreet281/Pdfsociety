@@ -6,5 +6,7 @@
     <color name="white">#ffffff</color>
     <color name="offwhite">#ededed</color>
     <color name="black">#000000</color>
+    <color name="text">#830000</color>
+
 
 </resources>
