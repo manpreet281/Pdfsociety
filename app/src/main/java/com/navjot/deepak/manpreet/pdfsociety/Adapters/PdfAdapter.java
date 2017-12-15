@@ -43,7 +43,7 @@ public class PdfAdapter extends RecyclerView.Adapter<PdfViewHolder> implements F
     private void checkNoPdf() {
         if(allDataList.isEmpty()) {
             mProgressBar.setVisibility(View.GONE);
-            Nopdf.setText("No PDF Uploaded");
+            Nopdf.setText("No Ebook Uploaded");
             Nopdf.setVisibility(View.VISIBLE);
         }
         Log.d("Pdfsociety", "checkNoPdf");
